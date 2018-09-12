@@ -23,4 +23,13 @@ public class RandomStringGeneratorTest {
             Assert.assertEquals(generated.length(), i);
         }
     }
+    
+    @Test
+    public void testRandomStringDifference() {
+        // If the generator is ok, this test case would have ignorable chances to fail
+        final int LENGTH = 128;
+        String s1 = generator.generate(LENGTH);
+        String s2 = generator.generate(LENGTH);
+        Assert.assertNotEquals(s1, s2);
+    }
 }
