@@ -1,0 +1,37 @@
+@import "_global.scss";
+@import "_footer.scss";
+
+// Fullscreen
+#layout-container {
+    min-height: 100vh;
+    display: flex;
+    flex-flow: column nowrap;
+    align-content: center;
+    #main-aside-container-outer {
+        flex: 1 0 auto;
+    }
+    #header, #footer {
+        flex: 0 0 auto;
+    }
+}
+
+body {
+    // Clear body margin for header and footer lines
+    margin: 0;
+}
+
+#main-aside-container-inner {
+    max-width: 60rem;
+    margin: 0 auto;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: flex-start;
+    justify-content: center;
+    align-content: flex-start;
+    #main {
+        flex: 1 1 40rem;
+    }
+    #aside {
+        flex: 1 1 auto;
+    }
+}

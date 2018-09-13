@@ -1,0 +1,21 @@
+#footer {
+    display: flex;
+    justify-content: center;
+    flex-flow: row wrap;
+    .footer-item {
+        flex: 0 0 auto;
+    }
+}
+
+#footer {
+    background-color: $footer-background;
+    /*border-top: solid 0.0625rem black;*/
+    /*box-shadow: 0 -0.0625rem 0.125rem black;*/
+    padding: .5rem;
+    .footer-item {
+        margin: .125rem 2rem;
+        .footer-item-label {
+            margin-right: .5rem;
+        }
+    }
+}
