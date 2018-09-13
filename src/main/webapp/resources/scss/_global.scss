@@ -1,6 +1,17 @@
-$footer-background: #f7f7f7;
+$header-footer-background: #f7f7f7;
+
+$fonts-serif: Georgia, 'Times New Roman', serif;
+$fonts-sans: Verdana, Arial, sans-serif;
+$fonts-mono: 'Courier New', Courier, monospace;
+$fonts-fant: Papyrus, Impact, fantasy;
+$fonts-curs: 'Apple Chancery', 'Lucida Calligraphy', cursive;
 
 * {
     box-sizing: border-box;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: $fonts-sans;
+}
+
+a {
+    text-decoration: none;
+    color: black;
 }

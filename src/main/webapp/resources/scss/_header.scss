@@ -1,0 +1,56 @@
+$header-background: #f7f7f7;
+$header-height: 4rem;
+$header-padding: .5rem;
+$hover-color: darken($header-background, 3%);
+
+#header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-flow: row wrap;
+    .footer-item {
+        flex: 0 0 auto;
+    }
+}
+
+#header {
+    background-color: $header-background;
+}
+
+.shop-logo-title-container {
+    display: flex;
+    align-items: center;
+    > * {
+        margin: 0 .5rem;
+    }
+
+    .shop-title {
+        font-family: $fonts-curs;
+        font-weight: 300;
+    }
+    .shop-logo img {
+        max-height: $header-height - 2 * $header-padding;
+        max-width: 100%;
+    }
+    max-height: $header-height;
+    padding: $header-padding 1rem;
+}
+
+.shop-logo-title-container:hover {
+    background: $hover-color;
+}
+
+.global-nav-form {
+    margin: 0 1rem;
+    .global-nav-link {
+        font-size: 1.5rem;
+        padding: $header-padding 1rem;
+        border: none;
+        background: none;
+        height: $header-height;
+        cursor: pointer;
+    }
+    .global-nav-link:hover {
+        background: $hover-color;
+    }
+}
