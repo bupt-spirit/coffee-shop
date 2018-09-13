@@ -106,7 +106,7 @@
                                     <include>*.scss</include>
                                 </includes>
                             </source>
-                            <destination>src/main/webapp/resources/compiled_css</destination>
+                            <destination>src/main/webapp/resources/compiled-css</destination>
                         </resource>
                     </resources>
                 </configuration>
