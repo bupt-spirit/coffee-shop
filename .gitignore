@@ -7,3 +7,4 @@ src/main/webapp/resources/css/*.map
 
 # IDE generated files
 nb-configuration.xml
+*.NavData
