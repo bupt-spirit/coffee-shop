@@ -2,8 +2,9 @@
 target
 
 # Generated css and map Files
-src/main/webapp/resources/css/*.css
-src/main/webapp/resources/css/*.map
+src/main/webapp/resources/compiled_css/*.css
+src/main/webapp/resources/compiled_css/*.map
 
 # IDE generated files
 nb-configuration.xml
+*.NavData

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns = "http://www.w3.org/1999/xhtml"   
+      xmlns:h = "http://java.sun.com/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:composite = "http://java.sun.com/jsf/composite">
+    <h:body>
+        <composite:interface>
+            <composite:attribute name = "title" required="true" />
+        </composite:interface>
+        <composite:implementation>
+            <h:form>
+                <h:commandLink action="index">
+                    <h1 class="shop-title header-item"><h:outputText value="${cc.attrs.title}" /></h1>
+                </h:commandLink>
+            </h:form>
+
+            <nav id="global-nav">
+                <h:form id="global-nav-form">
+                    <h:commandLink action="index" value="${bundle['Ui.Nav.MainPage']}" />
+                    <h:commandLink action="login" value="${bundle['Ui.Nav.Login']}" />
+                    <ui:insert name="global-nav-extra" />
+                </h:form>
+            </nav>
+        </composite:implementation>
+    </h:body>
+</html>
