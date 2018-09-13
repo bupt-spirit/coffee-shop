@@ -9,19 +9,24 @@
             <composite:attribute name = "title" required="true" />
         </composite:interface>
         <composite:implementation>
-            <h:form>
-                <h:commandLink action="index">
-                    <h1 class="shop-title header-item"><h:outputText value="${cc.attrs.title}" /></h1>
+            <h:form class="header-item">
+                <h:commandLink action="index" styleClass="shop-logo-title-container">
+                    <div class="shop-logo"><h:graphicImage name="logo.svg" library="images" /></div>
+                    <h1 class="shop-title"><h:outputText value="${cc.attrs.title}" /></h1>
                 </h:commandLink>
             </h:form>
-
-            <nav id="global-nav">
-                <h:form id="global-nav-form">
-                    <h:commandLink action="index" value="${bundle['Ui.Nav.MainPage']}" />
-                    <h:commandLink action="login" value="${bundle['Ui.Nav.Login']}" />
-                    <ui:insert name="global-nav-extra" />
-                </h:form>
-            </nav>
+            <div class="header-item header-right-container">
+                <ui:insert name="header-extra"></ui:insert>
+                <nav id="global-nav">
+                    <h:form id="global-nav-form" styleClass="global-nav-form">
+                        <h:button outcome="index" styleClass="global-nav-link"
+                                       value="${bundle['Ui.Nav.MainPage']}" />
+                        <h:button outcome="login" styleClass="global-nav-link"
+                                       value="${bundle['Ui.Nav.Login']}" />
+                        <ui:insert name="global-nav-extra" />
+                    </h:form>
+                </nav>
+            </div>
         </composite:implementation>
     </h:body>
 </html>
