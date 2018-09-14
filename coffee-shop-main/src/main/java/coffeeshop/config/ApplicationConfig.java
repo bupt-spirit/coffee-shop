@@ -12,11 +12,9 @@ import javax.security.enterprise.identitystore.Pbkdf2PasswordHash;
         callerQuery = "SELECT password FROM user_info WHERE username = ?",
         groupsQuery = "SELECT role FROM user_info WHERE username = ?",
         hashAlgorithm = Pbkdf2PasswordHash.class,
-        priorityExpression = "#{100}",
+        priorityExpression = "${100}",
         hashAlgorithmParameters = {
-            "Pbkdf2PasswordHash.Iterations=3072",
-            "Pbkdf2PasswordHash.Algorithm=PBKDF2WithHmacSHA512",
-            "Pbkdf2PasswordHash.SaltSizeBytes=64"
+            "${applicationConfig.hashAlgorithmParameters}"
         })
 @CustomFormAuthenticationMechanismDefinition(
         loginToContinue = @LoginToContinue(
@@ -26,4 +24,12 @@ import javax.security.enterprise.identitystore.Pbkdf2PasswordHash;
 @Named
 @ApplicationScoped
 public class ApplicationConfig {
+
+    public String[] getHashAlgorithmParameters() {
+        return new String []{
+            "Pbkdf2PasswordHash.Iterations=3072",
+            "Pbkdf2PasswordHash.Algorithm=PBKDF2WithHmacSHA512",
+            "Pbkdf2PasswordHash.SaltSizeBytes=64"
+        };
+    }
 }

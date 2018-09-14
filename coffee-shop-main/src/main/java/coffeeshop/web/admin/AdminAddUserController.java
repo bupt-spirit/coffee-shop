@@ -5,6 +5,7 @@ import coffeeshop.web.util.MessageBundle;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
@@ -30,6 +31,11 @@ public class AdminAddUserController implements Serializable {
     private String password;
     private String role;
     private Collection<String> roles;
+    
+    @PostConstruct
+    void init() {
+        this.roles = userManager.getRoles();
+    }
 
     public String getUsername() {
         return username;
@@ -56,7 +62,6 @@ public class AdminAddUserController implements Serializable {
     }
 
     public Collection<String> getRoles() {
-        this.roles = userManager.getRoles();
         return roles;
     }
 

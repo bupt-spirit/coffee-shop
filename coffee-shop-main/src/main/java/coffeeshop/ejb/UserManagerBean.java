@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.PostConstruct;
+import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -16,6 +18,7 @@ import javax.persistence.PersistenceContext;
 import javax.security.enterprise.identitystore.Pbkdf2PasswordHash;
 
 @Stateless
+@DeclareRoles({"admin", "staff", "customer"})
 public class UserManagerBean implements UserManager {
 
     @PersistenceContext
@@ -25,7 +28,6 @@ public class UserManagerBean implements UserManager {
     private Pbkdf2PasswordHash passwordHash;
 
     private static final Collection<String> ROLES = new ArrayList<>();
-
     static {
         ROLES.add("admin");
         ROLES.add("customer");
@@ -54,7 +56,7 @@ public class UserManagerBean implements UserManager {
             if (!getRoles().contains(role)) {
                 throw new EJBException("Invalid role " + role);
             }
-            UserInfo newUser = new UserInfo(0, username, new Date(),
+            UserInfo newUser = new UserInfo(null, username, new Date(),
                     passwordHash.generate(password.toCharArray()), role);
             em.persist(newUser);
         }
@@ -69,7 +71,7 @@ public class UserManagerBean implements UserManager {
     @Override
     public boolean isUserExisting(String username) {
         try {
-            em.createQuery("SELECT u FROM UserInfo u WHERE u.username = :username", UserInfo.class)
+            em.createNamedQuery("User.findByUsername", UserInfo.class)
                     .setParameter("username", username)
                     .getSingleResult();
             return true;
@@ -78,11 +80,18 @@ public class UserManagerBean implements UserManager {
         }
     }
 
+    @RolesAllowed("admin")
     @Override
     public String getUserRole(String username) throws NoResultException {
         String role = em.createQuery("SELECT u.role FROM UserInfo u WHERE u.username = :username", String.class)
                 .setParameter("username", username)
                 .getSingleResult();
         return role;
+    }
+
+    @Override
+    public void verifyPassword(String username, String password) {
+        // TODO: add verifyPassword method
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }
