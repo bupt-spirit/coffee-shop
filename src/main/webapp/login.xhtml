@@ -3,5 +3,19 @@
 <ui:composition template="templates/main-only.xhtml"
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <ui:define name="main">
+        <h:form>
+            <p:panelGrid columns="2">
+                <p:outputLabel for="test-username" value="${bundle['Ui.Label.Username']}" />
+                <p:inputText type="text" id="test-username" value="#{loginController.username}" />
+                <p:outputLabel for="test-password" value="${bundle['Ui.Label.Password']}" />
+                <p:inputText type="password" id="test-password" value="#{loginController.password}" />
+            </p:panelGrid>
+            <p:commandButton action="#{loginController.login}" type="submit"
+                             value="${bundle['Ui.Button.Login']}" ajax="off" />
+            <p:commandButton type="reset" value="Reset" />
+        </h:form>
+    </ui:define>
 </ui:composition>
