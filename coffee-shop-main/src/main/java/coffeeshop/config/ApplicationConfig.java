@@ -1,5 +1,6 @@
 package coffeeshop.config;
 
+import javax.annotation.security.DeclareRoles;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 import javax.security.enterprise.authentication.mechanism.http.CustomFormAuthenticationMechanismDefinition;
@@ -21,12 +22,13 @@ import javax.security.enterprise.identitystore.Pbkdf2PasswordHash;
                 loginPage = "/faces/login.xhtml",
                 errorPage = "/faces/login-error.xhtml"
         ))
+@DeclareRoles({"admin", "staff", "customer"})
 @Named
 @ApplicationScoped
 public class ApplicationConfig {
 
     public String[] getHashAlgorithmParameters() {
-        return new String []{
+        return new String[]{
             "Pbkdf2PasswordHash.Iterations=3072",
             "Pbkdf2PasswordHash.Algorithm=PBKDF2WithHmacSHA512",
             "Pbkdf2PasswordHash.SaltSizeBytes=64"
