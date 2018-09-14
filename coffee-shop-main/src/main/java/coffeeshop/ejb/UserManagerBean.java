@@ -7,7 +7,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.PostConstruct;
-import javax.annotation.security.DeclareRoles;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
@@ -18,7 +17,6 @@ import javax.persistence.PersistenceContext;
 import javax.security.enterprise.identitystore.Pbkdf2PasswordHash;
 
 @Stateless
-@DeclareRoles({"admin", "staff", "customer"})
 public class UserManagerBean implements UserManager {
 
     @PersistenceContext
@@ -28,6 +26,7 @@ public class UserManagerBean implements UserManager {
     private Pbkdf2PasswordHash passwordHash;
 
     private static final Collection<String> ROLES = new ArrayList<>();
+
     static {
         ROLES.add("admin");
         ROLES.add("customer");
