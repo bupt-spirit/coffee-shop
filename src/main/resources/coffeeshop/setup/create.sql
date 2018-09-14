@@ -16,11 +16,11 @@ CREATE SCHEMA IF NOT EXISTS `coffee_shop` DEFAULT CHARACTER SET utf8 ;
 USE `coffee_shop` ;
 
 -- -----------------------------------------------------
--- Table `coffee_shop`.`user`
+-- Table `coffee_shop`.`user_info`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `coffee_shop`.`user` ;
+DROP TABLE IF EXISTS `coffee_shop`.`user_info` ;
 
-CREATE TABLE IF NOT EXISTS `coffee_shop`.`user` (
+CREATE TABLE IF NOT EXISTS `coffee_shop`.`user_info` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(45) NOT NULL,
   `date_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS `coffee_shop`.`customer` (
   PRIMARY KEY (`user_id`),
   CONSTRAINT `fk_customer_user1`
     FOREIGN KEY (`user_id`)
-    REFERENCES `coffee_shop`.`user` (`id`)
+    REFERENCES `coffee_shop`.`user_info` (`id`)
     ON DELETE RESTRICT
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
@@ -334,7 +334,7 @@ CREATE TABLE IF NOT EXISTS `coffee_shop`.`staff` (
   PRIMARY KEY (`user_id`),
   CONSTRAINT `fk_staff_user1`
     FOREIGN KEY (`user_id`)
-    REFERENCES `coffee_shop`.`user` (`id`)
+    REFERENCES `coffee_shop`.`user_info` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `fk_staff_store1`
