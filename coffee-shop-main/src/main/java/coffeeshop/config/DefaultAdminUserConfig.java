@@ -1,14 +1,18 @@
-package coffeeshop.ejb;
+package coffeeshop.config;
 
+import coffeeshop.ejb.UserManager;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.Stateless;
+import javax.annotation.PostConstruct;
+import javax.ejb.Singleton;
+import javax.ejb.Startup;
 import javax.inject.Inject;
 
-@Stateless
-public class DefaultAdminUserBean {
+@Startup
+@Singleton // Must use javax.ejb.Singleton
+public class DefaultAdminUserConfig {
 
-    private static final Logger LOG = Logger.getLogger(DefaultAdminUserBean.class.getName());
+    private static final Logger LOG = Logger.getLogger(DefaultAdminUserConfig.class.getName());
 
     private static final String DEFAULT_ADMIN_USERNAME = "admin";
     private static final String DEFAULT_ADMIN_PASSWORD = "admin";
@@ -16,7 +20,9 @@ public class DefaultAdminUserBean {
     @Inject
     private UserManager userManager;
 
+    @PostConstruct
     public void checkAndAddDefaultAdminUser() {
+        LOG.log(Level.INFO, "Start check and add default admin user");
         if (!userManager.isUserExisting(DEFAULT_ADMIN_USERNAME)) {
             LOG.log(Level.INFO, "Default admin user does not exists");
             userManager.addUser(DEFAULT_ADMIN_USERNAME, DEFAULT_ADMIN_PASSWORD, "admin");

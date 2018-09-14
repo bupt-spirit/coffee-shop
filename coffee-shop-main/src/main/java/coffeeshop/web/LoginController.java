@@ -1,6 +1,6 @@
 package coffeeshop.web;
 
-import coffeeshop.ejb.DefaultAdminUserBean;
+import coffeeshop.config.DefaultAdminUserConfig;
 import coffeeshop.ejb.UserManager;
 import coffeeshop.web.util.MessageBundle;
 import java.security.Principal;
@@ -39,7 +39,7 @@ public class LoginController {
     private UserManager userManager;
 
     @Inject
-    private DefaultAdminUserBean defaultAdminUserBean;
+    private DefaultAdminUserConfig defaultAdminUserBean;
 
     private FacesContext facesContext;
 
@@ -71,9 +71,9 @@ public class LoginController {
         if (isLoggedIn()) {
             logout();
         }
-        if (username.equals("admin")) {
-            defaultAdminUserBean.checkAndAddDefaultAdminUser();
-        }
+//        if (username.equals("admin")) {
+//            defaultAdminUserBean.checkAndAddDefaultAdminUser();
+//        }
         Credential credential = new UsernamePasswordCredential(username, new Password(password));
         AuthenticationStatus status = securityContext.authenticate(
                 getRequest(),
@@ -112,7 +112,7 @@ public class LoginController {
                 facesContext.responseComplete();
                 break;
             case SUCCESS:
-                if (userManager.getUserRole(username).equals("admin")) {
+                if (securityContext.isCallerInRole("admin")) {
                     outcome = "admin";
                 } else {
                     outcome = "index";
