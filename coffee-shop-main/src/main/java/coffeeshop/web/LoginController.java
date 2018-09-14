@@ -10,6 +10,7 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.security.enterprise.AuthenticationStatus;
@@ -77,28 +78,29 @@ public class LoginController {
         AuthenticationStatus status = securityContext.authenticate(
                 getRequest(),
                 getResponse(),
-                AuthenticationParameters.withParams().credential(credential));
+                AuthenticationParameters.withParams()
+                        .credential(credential));
         LOG.log(Level.INFO, "Called authentication, status: {0}", status);
-        Principal paticipal = securityContext.getCallerPrincipal();
-        if (paticipal != null) {
+        Principal principal = securityContext.getCallerPrincipal();
+        if (principal != null) {
             LOG.log(Level.INFO, "User current pricipal: {0}, name: {1}",
-                    new Object[]{paticipal, paticipal.getName()});
+                    new Object[]{principal, principal.getName()});
         }
         switch (status) {
             case NOT_DONE:
-//                throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR,
-//                        "Authentication Failed",
-//                        "Internal error occurred"
-//                ));
+                throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                        "Authentication Failed",
+                        "Internal error occurred"
+                ));
             case SEND_FAILURE:
-                facesContext.addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
                         bundle.getString("Ui.Message.AuthFailedTitle"),
                         bundle.getString("Ui.Message.AuthFailedDetail")
                 ));
                 break;
             case SEND_CONTINUE:
             case SUCCESS:
-                facesContext.addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_INFO,
+                facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                         bundle.getString("Ui.Message.AuthSuccessTitle"),
                         bundle.getFormated("Ui.Message.AuthSuccessDetail", username)
                 ));
@@ -117,7 +119,7 @@ public class LoginController {
                 }
                 break;
             case SEND_FAILURE:
-//                outcome = "login-error";
+                outcome = "login-error";
                 break;
             default:
                 break;
@@ -132,7 +134,7 @@ public class LoginController {
     private String logout() throws ServletException {
         if (isLoggedIn()) {
             getRequest().logout();
-            facesContext.addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_INFO,
+            facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                     bundle.getString("Ui.Message.LogoutTitle"),
                     null
             ));

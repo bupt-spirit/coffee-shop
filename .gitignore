@@ -2,8 +2,8 @@
 target
 
 # Generated css and map Files
-coffee-shop-main/src/main/webapp/resources/compiled_css/*.css
-coffee-shop-main/src/main/webapp/resources/compiled_css/*.map
+coffee-shop-main/src/main/webapp/resources/compiled-css/*.css
+coffee-shop-main/src/main/webapp/resources/compiled-css/*.map
 
 # IDE generated files
 nb-configuration.xml
