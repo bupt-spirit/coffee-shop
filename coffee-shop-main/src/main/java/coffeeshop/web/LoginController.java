@@ -93,14 +93,14 @@ public class LoginController {
                         "Internal error occurred"
                 ));
             case SEND_FAILURE:
-                facesContext.addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
                         bundle.getString("Ui.Message.AuthFailedTitle"),
                         bundle.getString("Ui.Message.AuthFailedDetail")
                 ));
                 break;
             case SEND_CONTINUE:
             case SUCCESS:
-                facesContext.addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_INFO,
+                facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                         bundle.getString("Ui.Message.AuthSuccessTitle"),
                         bundle.getFormated("Ui.Message.AuthSuccessDetail", username)
                 ));
@@ -134,7 +134,7 @@ public class LoginController {
     private String logout() throws ServletException {
         if (isLoggedIn()) {
             getRequest().logout();
-            facesContext.addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_INFO,
+            facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                     bundle.getString("Ui.Message.LogoutTitle"),
                     null
             ));
