@@ -8,45 +8,10 @@
     <groupId>bupt-spirit.projects</groupId>
     <artifactId>coffee-shop</artifactId>
     <version>0.1-SNAPSHOT</version>
-    <packaging>war</packaging>
-    <dependencies>
-        <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-api</artifactId>
-            <version>8.0</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.primefaces</groupId>
-            <artifactId>primefaces</artifactId>
-            <version>6.2</version>
-        </dependency>
-        <dependency>
-            <groupId>org.primefaces.themes</groupId>
-            <artifactId>all-themes</artifactId>
-            <version>1.0.10</version>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.weld.se</groupId>
-            <artifactId>weld-se</artifactId>
-            <version>2.4.7.Final</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jglue.cdi-unit</groupId>
-            <artifactId>cdi-unit</artifactId>
-            <version>4.0.2</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
-    <!--<parent></parent>-->
-    <dependencyManagement></dependencyManagement>
+    <packaging>pom</packaging>
+    <modules>
+        <module>coffee-shop-main</module>
+    </modules>
     <properties>
         <!-- Use JRE 1.8 for GlassFish -->
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -92,34 +57,6 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>nl.geodienstencentrum.maven</groupId>
-                <artifactId>sass-maven-plugin</artifactId>
-                <version>3.5.5</version>
-                <configuration>
-                    <resources>
-                        <resource>
-                            <source>
-                                <directory>
-                                    ${project.basedir}/src/main/webapp/resources/scss
-                                </directory>
-                                <includes>
-                                    <include>*.scss</include>
-                                </includes>
-                            </source>
-                            <destination>src/main/webapp/resources/compiled-css</destination>
-                        </resource>
-                    </resources>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>generate-css-using-sass</id>
-                        <goals>
-                            <goal>update-stylesheets</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-clean-plugin</artifactId>
                 <version>3.1.0</version>
@@ -156,22 +93,11 @@
             </plugin>
         </plugins>
     </build>
-    <!--<reporting></reporting>-->
 
     <!-- More Project Information -->
     <name>Coffee Shop</name>
     <description>A online coffee shop project written in Java EE</description>
-    <!--<url></url>-->
     <inceptionYear>2018</inceptionYear>
-    <!--<licenses></licenses>-->
-    <!--<organization></organization>-->
-    <!--<developers></developers>-->
-    <!--<contributors></contributors>-->
-
-    <!-- Environment Settings -->
-    <!--<issueManagement></issueManagement>-->
-    <!--<ciManagement></ciManagement>-->
-    <!--<mailingLists></mailingLists>-->
     <scm>
         <url>https://github.com/bupt-spirit/coffee-shop</url>
         <connection>
@@ -181,16 +107,4 @@
             scm:git:git@github.com:bupt-spirit/coffee-shop.git
         </developerConnection>
     </scm>
-    <!--<prerequisites></prerequisites>-->
-    <repositories>
-        <repository>
-            <id>primefaces-repo</id>
-            <name>PrimeFaces Maven Repository</name>
-            <url>http://repository.primefaces.org</url>
-            <layout>default</layout>
-        </repository>
-    </repositories>
-    <!--<pluginRepositories></pluginRepositories>-->
-    <!--<distributionManagement></distributionManagement>-->
-    <!--<profiles></profiles>-->
 </project>
