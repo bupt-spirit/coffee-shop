@@ -4,6 +4,7 @@ import coffeeshop.web.admin.InitController;
 import coffeeshop.ejb.UserManager;
 import coffeeshop.web.util.MessageBundle;
 import java.security.Principal;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -34,7 +35,7 @@ public class LoginController {
 
     @Inject
     private MessageBundle bundle;
-    
+
     @Inject
     private UserManager userManager;
 
@@ -71,9 +72,6 @@ public class LoginController {
         if (isLoggedIn()) {
             logout();
         }
-//        if (username.equals("admin")) {
-//            defaultAdminUserBean.checkAndAddDefaultAdminUser();
-//        }
         Credential credential = new UsernamePasswordCredential(username, new Password(password));
         AuthenticationStatus status = securityContext.authenticate(
                 getRequest(),
@@ -113,13 +111,13 @@ public class LoginController {
                 break;
             case SUCCESS:
                 if (securityContext.isCallerInRole("admin")) {
-                    outcome = "admin";
+                    outcome = "/admin/console";
                 } else {
-                    outcome = "index";
+                    outcome = "/index";
                 }
                 break;
             case SEND_FAILURE:
-                outcome = "login-error";
+                outcome = "/login-error";
                 break;
             default:
                 break;

@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <cc:interface>
+    </cc:interface>
+
+    <cc:implementation>
+        <c:when test="#{userNavController.loggedIn}">
+            <c:choose>
+                <c:when test="#{userNavController.role eq 'customer'}">
+                    <h:button outcome="/customer/console" styleClass="global-nav-link"
+                              value="${userNavController.nickname}" />
+                </c:when>
+                <c:when test="#{userNavController.role eq 'admin'}">
+                    <h:button outcome="/admin/console" styleClass="global-nav-link"
+                              value="${bundle['Ui.Admin.AdminConsole']}" />
+                </c:when>
+                <c:when test="#{userNavController.role eq 'staff'}">
+                    <h:button outcome="/store/console" styleClass="global-nav-link"
+                              value="${bundle['Ui.Admin.AdminConsole']}" />
+                </c:when>
+                <c:otherwise>
+                    <h:button outcome="/login" styleClass="global-nav-link"
+                              value="${bundle['Ui.Nav.Login']}" />
+                </c:otherwise>
+            </c:choose>
+        </c:when>
+    </cc:implementation>
+</html>

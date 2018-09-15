@@ -84,6 +84,9 @@ public class AdminAddUserController implements Serializable {
         } else {
             switch (role) {
                 case "customer":
+                    if (nickname == null || nickname.isEmpty()) {
+                        nickname = username;
+                    }
                     userManager.addCustomer(username, password, nickname);
                     break;
                 case "admin":
