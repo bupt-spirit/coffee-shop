@@ -5,9 +5,9 @@ import java.util.Collection;
 
 public interface UserManager {
 
-    void addAdmin(String username, String password);
-
     void addCustomer(String username, String password, String nickname);
+
+    void addAdmin(String username, String password);
 
     void addStaff(String username, String password, Store store);
 
