@@ -7,6 +7,7 @@ import java.security.Principal;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -35,7 +36,7 @@ public class LoginController {
     @Inject
     private MessageBundle bundle;
 
-    @Inject
+    @EJB
     private UserManager userManager;
 
     @Inject

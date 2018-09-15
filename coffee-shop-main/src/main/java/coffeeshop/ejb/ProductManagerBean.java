@@ -5,6 +5,7 @@ import coffeeshop.entity.Ingredient;
 import coffeeshop.entity.IngredientCategory;
 import coffeeshop.entity.Product;
 import coffeeshop.facade.CategoryFacade;
+import coffeeshop.facade.IngredientCategoryFacade;
 import coffeeshop.facade.ProductFacade;
 import java.util.List;
 import java.util.logging.Logger;
@@ -21,6 +22,9 @@ public class ProductManagerBean implements ProductManager {
 
     @EJB
     private ProductFacade productFacade;
+    
+    @EJB
+    private IngredientCategoryFacade ingredientCategoryFacade;
 
     @Override
     public List<Category> getCategories() {
@@ -31,19 +35,27 @@ public class ProductManagerBean implements ProductManager {
     public List<Product> getCategoryProducts(String categoryName) throws ProductManagerException {
         Category category = categoryFacade.findByName(categoryName);
         if (category == null) {
-            throw new ProductManagerException("no such category");
+            throw new ProductManagerException("no such product category [" + categoryName + "]");
         }
         return category.getProductList();
     }
 
     @Override
-    public List<Ingredient> getIngredientsByCategory(String ingredientCategoryName) {
-       
+    public List<Ingredient> getIngredientsByCategory(String categoryName) throws ProductManagerException {
+       IngredientCategory category = ingredientCategoryFacade.findByName(categoryName);
+       if (category == null) {
+           throw new ProductManagerException("no such ingredient category [" + categoryName + "]");
+       }
+       return category.getIngredientList();
     }
 
 
     @Override
-    public List<IngredientCategory> getIngredientCategoryByProduct(String productName) {
-        return productFacade.findByName(productName).getIngredientCategoryList();
+    public List<IngredientCategory> getIngredientCategoryByProduct(String productName) throws ProductManagerException {
+        Product product = productFacade.findByName(productName);
+        if (product == null) {
+            throw new ProductManagerException("no such product [" + productName + "]");
+        }
+        return product.getIngredientCategoryList();
     }
 }

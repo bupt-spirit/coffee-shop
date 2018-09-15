@@ -16,7 +16,7 @@ public class InitController {
     private static final String DEFAULT_ADMIN_USERNAME = "admin";
     private static final String DEFAULT_ADMIN_PASSWORD = "admin";
     
-    @Inject
+    @EJB
     private UserManager userManager;
 
     public void checkAndAddDefaultAdminUser() {

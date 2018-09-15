@@ -13,7 +13,7 @@
         <h:form>
             <ui:repeat var="category" value="#{productController.categories}">
                 <div class="category-link">
-                    <p:commandLink value="#{category.name}" action="catagory-detail">
+                    <p:commandLink value="#{category.name}" action="category-detail">
                         <f:setPropertyActionListener value="#{category.name}"
                                                      target="#{productController.selectedCatagory}"/>
                     </p:commandLink>
