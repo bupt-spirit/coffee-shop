@@ -26,7 +26,8 @@ CREATE TABLE IF NOT EXISTS `coffee_shop`.`user_info` (
   `date_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `password` VARCHAR(256) NOT NULL,
   `role` VARCHAR(32) NOT NULL COMMENT 'customer/staff/admin',
-  PRIMARY KEY (`id`))
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `username_UNIQUE` (`username` ASC) VISIBLE)
 ENGINE = InnoDB;
 
 
@@ -82,7 +83,8 @@ DROP TABLE IF EXISTS `coffee_shop`.`category` ;
 CREATE TABLE IF NOT EXISTS `coffee_shop`.`category` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id`))
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE)
 ENGINE = InnoDB;
 
 
@@ -111,14 +113,15 @@ DROP TABLE IF EXISTS `coffee_shop`.`product` ;
 CREATE TABLE IF NOT EXISTS `coffee_shop`.`product` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
-  `description` VARCHAR(100) NULL,
+  `description` VARCHAR(512) NULL,
   `last_update` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `cost` DECIMAL(4,2) UNSIGNED NOT NULL,
+  `cost` DECIMAL(6,2) UNSIGNED NOT NULL,
   `category_id` INT UNSIGNED NOT NULL,
   `nutrition_id` INT UNSIGNED NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_product_category1_idx` (`category_id` ASC) VISIBLE,
   INDEX `fk_product_nutrition1_idx` (`nutrition_id` ASC) VISIBLE,
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE,
   CONSTRAINT `fk_product_category1`
     FOREIGN KEY (`category_id`)
     REFERENCES `coffee_shop`.`category` (`id`)
@@ -140,7 +143,8 @@ DROP TABLE IF EXISTS `coffee_shop`.`ingredient_category` ;
 CREATE TABLE IF NOT EXISTS `coffee_shop`.`ingredient_category` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id`))
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE)
 ENGINE = InnoDB;
 
 
@@ -186,11 +190,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `coffee_shop`.`order`
+-- Table `coffee_shop`.`order_info`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `coffee_shop`.`order` ;
+DROP TABLE IF EXISTS `coffee_shop`.`order_info` ;
 
-CREATE TABLE IF NOT EXISTS `coffee_shop`.`order` (
+CREATE TABLE IF NOT EXISTS `coffee_shop`.`order_info` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `date_create` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `amount` DECIMAL(6,2) UNSIGNED NOT NULL,
@@ -248,30 +252,6 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `coffee_shop`.`product_option`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `coffee_shop`.`product_option` ;
-
-CREATE TABLE IF NOT EXISTS `coffee_shop`.`product_option` (
-  `product_id` INT UNSIGNED NOT NULL,
-  `ingredient_id` INT UNSIGNED NOT NULL,
-  PRIMARY KEY (`product_id`, `ingredient_id`),
-  INDEX `fk_product_has_ingredient_ingredient1_idx` (`ingredient_id` ASC) VISIBLE,
-  INDEX `fk_product_has_ingredient_product1_idx` (`product_id` ASC) VISIBLE,
-  CONSTRAINT `fk_product_has_ingredient_product1`
-    FOREIGN KEY (`product_id`)
-    REFERENCES `coffee_shop`.`product` (`id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
-  CONSTRAINT `fk_product_has_ingredient_ingredient1`
-    FOREIGN KEY (`ingredient_id`)
-    REFERENCES `coffee_shop`.`ingredient` (`id`)
-    ON DELETE RESTRICT
-    ON UPDATE CASCADE)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `coffee_shop`.`ordered_product`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `coffee_shop`.`ordered_product` ;
@@ -285,7 +265,7 @@ CREATE TABLE IF NOT EXISTS `coffee_shop`.`ordered_product` (
   INDEX `fk_order_has_product_order1_idx` (`order_id` ASC) VISIBLE,
   CONSTRAINT `fk_order_has_product_order1`
     FOREIGN KEY (`order_id`)
-    REFERENCES `coffee_shop`.`order` (`id`)
+    REFERENCES `coffee_shop`.`order_info` (`id`)
     ON DELETE RESTRICT
     ON UPDATE CASCADE,
   CONSTRAINT `fk_order_has_product_product1`
@@ -342,6 +322,30 @@ CREATE TABLE IF NOT EXISTS `coffee_shop`.`staff` (
     REFERENCES `coffee_shop`.`store` (`id`)
     ON DELETE RESTRICT
     ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `coffee_shop`.`product_option`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `coffee_shop`.`product_option` ;
+
+CREATE TABLE IF NOT EXISTS `coffee_shop`.`product_option` (
+  `product_id` INT UNSIGNED NOT NULL,
+  `ingredient_category_id` INT UNSIGNED NOT NULL,
+  PRIMARY KEY (`product_id`, `ingredient_category_id`),
+  INDEX `fk_product_has_ingredient_category_ingredient_category1_idx` (`ingredient_category_id` ASC) VISIBLE,
+  INDEX `fk_product_has_ingredient_category_product1_idx` (`product_id` ASC) VISIBLE,
+  CONSTRAINT `fk_product_has_ingredient_category_product1`
+    FOREIGN KEY (`product_id`)
+    REFERENCES `coffee_shop`.`product` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_product_has_ingredient_category_ingredient_category1`
+    FOREIGN KEY (`ingredient_category_id`)
+    REFERENCES `coffee_shop`.`ingredient_category` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 

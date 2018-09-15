@@ -12,12 +12,13 @@
                 <h:form>
                     <p:panelGrid columns="3">
                         <p:outputLabel for="admin-add-user-username" value="${bundle['Ui.Label.Username']}" />
-                        <p:inputText id="admin-add-user-username" value="#{adminAddUserController.username}" />
+                        <p:inputText id="admin-add-user-username" value="#{adminAddUserController.username}"
+                                     required="true" />
                         <p:message for="admin-add-user-username" />
 
                         <p:outputLabel for="admin-add-user-password" value="${bundle['Ui.Label.Password']}" />
                         <p:inputText id="admin-add-user-password" value="#{adminAddUserController.password}"
-                                     type="password" />
+                                     type="password" required="true" />
                         <p:message for="admin-add-user-password" />
 
                         <p:outputLabel for="admin-add-user-role" value="${bundle['Ui.Admin.Label.Role']}" />

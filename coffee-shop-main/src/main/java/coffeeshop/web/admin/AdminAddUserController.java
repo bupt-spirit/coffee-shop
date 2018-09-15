@@ -30,6 +30,7 @@ public class AdminAddUserController implements Serializable {
     private String username;
     private String password;
     private String role;
+    private String nickname;
     private Collection<String> roles;
     
     @PostConstruct
@@ -63,6 +64,14 @@ public class AdminAddUserController implements Serializable {
 
     public Collection<String> getRoles() {
         return roles;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public void addUser() {

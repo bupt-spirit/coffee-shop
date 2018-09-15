@@ -1,12 +1,13 @@
 package coffeeshop.ejb;
 
 import coffeeshop.config.ApplicationConfig;
+import coffeeshop.entity.Customer;
 import coffeeshop.entity.UserInfo;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJBException;
@@ -19,6 +20,8 @@ import javax.security.enterprise.identitystore.Pbkdf2PasswordHash;
 
 @Stateless
 public class UserManagerBean implements UserManager {
+
+    private static final Logger LOG = Logger.getLogger(UserManagerBean.class.getName());
 
     @PersistenceContext
     private EntityManager em;
@@ -58,6 +61,13 @@ public class UserManagerBean implements UserManager {
             UserInfo newUser = new UserInfo(null, username, new Date(),
                     passwordHash.generate(password.toCharArray()), role);
             em.persist(newUser);
+            if (role.equals("customer")) {
+                LOG.log(Level.INFO, "Set new customer's nickname to its username: {0}", username);
+                Customer customer = new Customer(null, username);
+                customer.setUserInfo(newUser);
+                newUser.setCustomer(customer);
+                em.persist(customer);
+            }
         }
     }
 
@@ -70,7 +80,7 @@ public class UserManagerBean implements UserManager {
     @Override
     public boolean isUserExisting(String username) {
         try {
-            em.createNamedQuery("User.findByUsername", UserInfo.class)
+            em.createNamedQuery("UserInfo.findByUsername", UserInfo.class)
                     .setParameter("username", username)
                     .getSingleResult();
             return true;
@@ -82,9 +92,9 @@ public class UserManagerBean implements UserManager {
     @RolesAllowed("admin")
     @Override
     public String getUserRole(String username) throws NoResultException {
-        String role = em.createQuery("SELECT u.role FROM UserInfo u WHERE u.username = :username", String.class)
+        String role = em.createNamedQuery("UserInfo.findByUsername", UserInfo.class)
                 .setParameter("username", username)
-                .getSingleResult();
+                .getSingleResult().getRole();
         return role;
     }
 
