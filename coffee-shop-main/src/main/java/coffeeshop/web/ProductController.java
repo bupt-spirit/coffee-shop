@@ -10,16 +10,18 @@ import coffeeshop.ejb.ProductManagerException;
 import coffeeshop.entity.Category;
 import coffeeshop.entity.Ingredient;
 import coffeeshop.entity.Product;
+import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
-import javax.faces.validator.ValidatorException;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
 @Named
-@RequestScoped
-public class ProductController {
+@SessionScoped
+public class ProductController implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+    
     @EJB
     ProductManager productManagerBean;
 

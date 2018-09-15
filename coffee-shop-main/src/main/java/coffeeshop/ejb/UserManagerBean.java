@@ -29,10 +29,10 @@ public class UserManagerBean implements UserManager {
     @EJB
     private StoreFacade storeFacade;
 
-    @EJB
+    @Inject
     private Pbkdf2PasswordHash passwordHash;
 
-    @EJB
+    @Inject
     private ApplicationConfig applicationConfig;
 
     private static final List<String> ROLES = new ArrayList<>();

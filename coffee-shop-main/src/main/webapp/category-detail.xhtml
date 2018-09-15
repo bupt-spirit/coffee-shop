@@ -10,8 +10,7 @@
             <ui:repeat var="category"
                        value="#{productController.selectedCategoryProducts}">
                 <div class="category-link">
-                    <p:commandLink value="#{category.name}">
-                    </p:commandLink>
+                    <p:commandLink value="#{category.name}" action="#" />
                 </div>
             </ui:repeat>
         </h:form>
