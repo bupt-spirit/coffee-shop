@@ -5,9 +5,11 @@ import coffeeshop.entity.Customer;
 import coffeeshop.entity.Staff;
 import coffeeshop.entity.Store;
 import coffeeshop.entity.UserInfo;
+import coffeeshop.util.ConstraintViolationTester;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Set;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.annotation.security.RolesAllowed;
@@ -19,6 +21,10 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.security.enterprise.identitystore.PasswordHash;
 import javax.security.enterprise.identitystore.Pbkdf2PasswordHash;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 
 @Stateless
 public class UserManagerBean implements UserManager {
@@ -69,7 +75,7 @@ public class UserManagerBean implements UserManager {
             return false;
         }
     }
-    
+
     @Override
     public String getUserRole(String username) throws NoResultException {
         String role = em.createNamedQuery("UserInfo.findByUsername", UserInfo.class)
@@ -95,10 +101,9 @@ public class UserManagerBean implements UserManager {
             customer.setUserInfo(newUser);
             newUser.setCustomer(customer);
             em.persist(newUser);
-            em.persist(customer);
         }
     }
-    
+
     @Override
     public void addAdmin(String username, String password) {
         if (isUserExisting(username)) {

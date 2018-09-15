@@ -181,9 +181,6 @@ CREATE TABLE IF NOT EXISTS `coffee_shop`.`store` (
   `city` VARCHAR(45) NOT NULL,
   `district` VARCHAR(45) NOT NULL,
   `detail` VARCHAR(45) NOT NULL,
-  `open_date` DATE NOT NULL,
-  `open_time` TIME NOT NULL,
-  `close_time` TIME NOT NULL,
   `is_available` TINYINT NOT NULL DEFAULT 1,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
@@ -252,15 +249,16 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `coffee_shop`.`ordered_product`
+-- Table `coffee_shop`.`suborder`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `coffee_shop`.`ordered_product` ;
+DROP TABLE IF EXISTS `coffee_shop`.`suborder` ;
 
-CREATE TABLE IF NOT EXISTS `coffee_shop`.`ordered_product` (
+CREATE TABLE IF NOT EXISTS `coffee_shop`.`suborder` (
+  `id` INT UNSIGNED NOT NULL,
   `order_id` INT UNSIGNED NOT NULL,
   `product_id` INT UNSIGNED NOT NULL,
   `quantity` SMALLINT UNSIGNED NOT NULL,
-  PRIMARY KEY (`order_id`, `product_id`),
+  PRIMARY KEY (`id`),
   INDEX `fk_order_has_product_product1_idx` (`product_id` ASC) VISIBLE,
   INDEX `fk_order_has_product_order1_idx` (`order_id` ASC) VISIBLE,
   CONSTRAINT `fk_order_has_product_order1`
@@ -271,31 +269,6 @@ CREATE TABLE IF NOT EXISTS `coffee_shop`.`ordered_product` (
   CONSTRAINT `fk_order_has_product_product1`
     FOREIGN KEY (`product_id`)
     REFERENCES `coffee_shop`.`product` (`id`)
-    ON DELETE RESTRICT
-    ON UPDATE CASCADE)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `coffee_shop`.`ordered_product_ingredient`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `coffee_shop`.`ordered_product_ingredient` ;
-
-CREATE TABLE IF NOT EXISTS `coffee_shop`.`ordered_product_ingredient` (
-  `order_has_product_order_id` INT UNSIGNED NOT NULL,
-  `order_has_product_product_id` INT UNSIGNED NOT NULL,
-  `ingredient_id` INT UNSIGNED NOT NULL,
-  PRIMARY KEY (`order_has_product_order_id`, `order_has_product_product_id`, `ingredient_id`),
-  INDEX `fk_order_has_product_has_ingredient_ingredient1_idx` (`ingredient_id` ASC) VISIBLE,
-  INDEX `fk_order_has_product_has_ingredient_order_has_product1_idx` (`order_has_product_order_id` ASC, `order_has_product_product_id` ASC) VISIBLE,
-  CONSTRAINT `fk_ordered_product_ingredient1`
-    FOREIGN KEY (`order_has_product_order_id` , `order_has_product_product_id`)
-    REFERENCES `coffee_shop`.`ordered_product` (`order_id` , `product_id`)
-    ON DELETE RESTRICT
-    ON UPDATE CASCADE,
-  CONSTRAINT `fk_ordered_product_ingredient2`
-    FOREIGN KEY (`ingredient_id`)
-    REFERENCES `coffee_shop`.`ingredient` (`id`)
     ON DELETE RESTRICT
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
@@ -344,6 +317,30 @@ CREATE TABLE IF NOT EXISTS `coffee_shop`.`product_option` (
   CONSTRAINT `fk_product_has_ingredient_category_ingredient_category1`
     FOREIGN KEY (`ingredient_category_id`)
     REFERENCES `coffee_shop`.`ingredient_category` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `coffee_shop`.`ordered_product_has_ingredient`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `coffee_shop`.`ordered_product_has_ingredient` ;
+
+CREATE TABLE IF NOT EXISTS `coffee_shop`.`ordered_product_has_ingredient` (
+  `ordered_product_id` INT UNSIGNED NOT NULL,
+  `ingredient_id` INT UNSIGNED NOT NULL,
+  PRIMARY KEY (`ordered_product_id`, `ingredient_id`),
+  INDEX `fk_ordered_product_has_ingredient_ingredient1_idx` (`ingredient_id` ASC) VISIBLE,
+  INDEX `fk_ordered_product_has_ingredient_ordered_product1_idx` (`ordered_product_id` ASC) VISIBLE,
+  CONSTRAINT `fk_ordered_product_has_ingredient_ordered_product1`
+    FOREIGN KEY (`ordered_product_id`)
+    REFERENCES `coffee_shop`.`suborder` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_ordered_product_has_ingredient_ingredient1`
+    FOREIGN KEY (`ingredient_id`)
+    REFERENCES `coffee_shop`.`ingredient` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

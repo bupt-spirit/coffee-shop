@@ -23,18 +23,16 @@
                         <p:message for="admin-add-user-password" />
 
                         <p:outputLabel for="admin-add-user-role" value="${bundle['Ui.Admin.Label.Role']}" />
-                        <p:selectOneButton  id="admin-add-user-role" value="#{adminAddUserController.role}">
+                        <p:selectOneMenu  id="admin-add-user-role" value="#{adminAddUserController.role}">
                             <f:selectItems value="#{adminAddUserController.roles}" />
-                            <!--<p:ajax />-->
-                        </p:selectOneButton>
+                        </p:selectOneMenu>
                         <p:message for="admin-add-user-role" />
-<!--
-                        <c:if test="#{adminAddUserController.role eq 'customer'}">
-                            <p:outputLabel for="admin-add-user-nickname" value="${bundle['Ui.Label.Nickname']}" />
-                            <p:inputText id="admin-add-user-nickname" value="#{adminAddUserController.nickname}"
-                                         type="text" required="true" />
-                            <p:message for="admin-add-user-nickname" />
-                        </c:if>-->
+
+                        <p:outputLabel for="admin-add-user-nickname" value="${bundle['Ui.Label.Nickname']}" />
+                        <p:inputText id="admin-add-user-nickname" value="#{adminAddUserController.nickname}"
+                                     type="text" required="true" />
+                        <p:message for="admin-add-user-nickname" />
+
                     </p:panelGrid>
                     <p:commandButton action="#{adminAddUserController.addUser}" type="submit"
                                      value="${bundle['Ui.Admin.Button.AddUser']}" ajax="off" />

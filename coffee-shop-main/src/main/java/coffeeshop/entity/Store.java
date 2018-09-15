@@ -1,7 +1,6 @@
 package coffeeshop.entity;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -14,8 +13,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -32,9 +29,6 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Store.findByCity", query = "SELECT s FROM Store s WHERE s.city = :city")
     , @NamedQuery(name = "Store.findByDistrict", query = "SELECT s FROM Store s WHERE s.district = :district")
     , @NamedQuery(name = "Store.findByDetail", query = "SELECT s FROM Store s WHERE s.detail = :detail")
-    , @NamedQuery(name = "Store.findByOpenDate", query = "SELECT s FROM Store s WHERE s.openDate = :openDate")
-    , @NamedQuery(name = "Store.findByOpenTime", query = "SELECT s FROM Store s WHERE s.openTime = :openTime")
-    , @NamedQuery(name = "Store.findByCloseTime", query = "SELECT s FROM Store s WHERE s.closeTime = :closeTime")
     , @NamedQuery(name = "Store.findByIsAvailable", query = "SELECT s FROM Store s WHERE s.isAvailable = :isAvailable")})
 public class Store implements Serializable {
 
@@ -71,21 +65,6 @@ public class Store implements Serializable {
     private String detail;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "open_date", nullable = false)
-    @Temporal(TemporalType.DATE)
-    private Date openDate;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "open_time", nullable = false)
-    @Temporal(TemporalType.TIME)
-    private Date openTime;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "close_time", nullable = false)
-    @Temporal(TemporalType.TIME)
-    private Date closeTime;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "is_available", nullable = false)
     private short isAvailable;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "storeId")
@@ -100,16 +79,13 @@ public class Store implements Serializable {
         this.id = id;
     }
 
-    public Store(Integer id, String country, String province, String city, String district, String detail, Date openDate, Date openTime, Date closeTime, short isAvailable) {
+    public Store(Integer id, String country, String province, String city, String district, String detail, short isAvailable) {
         this.id = id;
         this.country = country;
         this.province = province;
         this.city = city;
         this.district = district;
         this.detail = detail;
-        this.openDate = openDate;
-        this.openTime = openTime;
-        this.closeTime = closeTime;
         this.isAvailable = isAvailable;
     }
 
@@ -159,30 +135,6 @@ public class Store implements Serializable {
 
     public void setDetail(String detail) {
         this.detail = detail;
-    }
-
-    public Date getOpenDate() {
-        return openDate;
-    }
-
-    public void setOpenDate(Date openDate) {
-        this.openDate = openDate;
-    }
-
-    public Date getOpenTime() {
-        return openTime;
-    }
-
-    public void setOpenTime(Date openTime) {
-        this.openTime = openTime;
-    }
-
-    public Date getCloseTime() {
-        return closeTime;
-    }
-
-    public void setCloseTime(Date closeTime) {
-        this.closeTime = closeTime;
     }
 
     public short getIsAvailable() {
