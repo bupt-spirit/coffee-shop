@@ -11,11 +11,11 @@ public interface UserManager {
 
     void addStaff(String username, String password, Store store);
 
-    String getUserRole(String username);
+    String getUserRole(String username) throws UserManagerException;
 
-    void changePassword(String username, String password);
+    void changePassword(String username, String password) throws UserManagerException;
 
-    void verifyPassword(String username, String password);
+    boolean verifyPassword(String username, String password) throws UserManagerException;
 
     boolean isUserExisting(String username);
 
