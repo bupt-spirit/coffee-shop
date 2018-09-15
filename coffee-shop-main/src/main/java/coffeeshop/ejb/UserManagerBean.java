@@ -1,7 +1,7 @@
 package coffeeshop.ejb;
 
-import coffeeshop.entity.Customer;
 import coffeeshop.config.ApplicationConfig;
+import coffeeshop.entity.Customer;
 import coffeeshop.entity.UserInfo;
 import java.util.ArrayList;
 import java.util.Collection;
