@@ -6,10 +6,15 @@
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:components="http://xmlns.jcp.org/jsf/composite/components">
 
     <ui:define name="aside">
-        <h1>Menu</h1>
+        <h1>
+            <h:form>
+                <h:button value="#{bundle['Ui.Nav.Menu']}"/>
+            </h:form>
+        </h1>
         <h:form>
             <ui:repeat var="category" value="#{productController.categories}">
                 <div class="category-link">
@@ -20,5 +25,26 @@
                 </div>
             </ui:repeat>
         </h:form>
+    </ui:define>
+
+    <ui:define name="main" >
+        <div id="index-main-layout">
+            <h1 class="main-title">
+                <h:outputText value="#{bundle['Ui.Title']}"/>
+            </h1>
+            <div class="news">
+                <h:outputText value="#{bundle['Ui.News']}"/>
+            </div>
+            <div class="main-products">
+                <components:product description="From Java and really bitty" link="Not exsit" picture="resources/images/logo.png"
+                                    price="10$" />
+                <components:product description="From Java and really bitty" link="Not exsit" picture="resources/images/logo.png"
+                                    price="10$" />
+                <components:product description="From Java and really bitty" link="Not exsit" picture="resources/images/logo.png"
+                                    price="10$" />
+                <components:product description="From Java and really bitty" link="Not exsit" picture="resources/images/logo.png"
+                                    price="10$" />
+            </div>
+        </div>
     </ui:define>
 </ui:composition>
