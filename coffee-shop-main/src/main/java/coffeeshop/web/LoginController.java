@@ -34,7 +34,7 @@ public class LoginController {
 
     @Inject
     private MessageBundle bundle;
-    
+
     @Inject
     private UserManager userManager;
 
@@ -69,11 +69,9 @@ public class LoginController {
 
     public String login() throws ServletException {
         if (isLoggedIn()) {
-            logout();
+            facesContext.addMessage(null, new FacesMessage(bundle.getString("Ui.Message.LogoutFirst")));
+            return null;
         }
-//        if (username.equals("admin")) {
-//            defaultAdminUserBean.checkAndAddDefaultAdminUser();
-//        }
         Credential credential = new UsernamePasswordCredential(username, new Password(password));
         AuthenticationStatus status = securityContext.authenticate(
                 getRequest(),
@@ -101,8 +99,8 @@ public class LoginController {
             case SEND_CONTINUE:
             case SUCCESS:
                 facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-                        bundle.getString("Ui.Message.AuthSuccessTitle"),
-                        bundle.getFormated("Ui.Message.AuthSuccessDetail", username)
+                        bundle.getFormated("Ui.Message.AuthSuccess", username),
+                        null
                 ));
                 break;
         }
@@ -113,13 +111,13 @@ public class LoginController {
                 break;
             case SUCCESS:
                 if (securityContext.isCallerInRole("admin")) {
-                    outcome = "admin";
+                    outcome = "/admin/console";
                 } else {
-                    outcome = "index";
+                    outcome = "/index";
                 }
                 break;
             case SEND_FAILURE:
-                outcome = "login-error";
+                outcome = "/login-error";
                 break;
             default:
                 break;
