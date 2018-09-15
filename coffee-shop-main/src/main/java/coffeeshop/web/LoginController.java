@@ -117,7 +117,6 @@ public class LoginController {
                 }
                 break;
             case SEND_FAILURE:
-                outcome = "/login-error";
                 break;
             default:
                 break;

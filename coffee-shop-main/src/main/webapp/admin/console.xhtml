@@ -7,8 +7,8 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:define name="main">
-        <p:panel header="${bundle['Ui.Admin.Title']}">
-            <h:form>
+        <p:panel header="${bundle['Ui.Admin.AddUser.Title']}">
+            <h:form id="add-user-form">
                 <p:panelGrid columns="3" styleClass="ui-panelgrid-blank">
                     <p:outputLabel for="admin-add-user-username" value="${bundle['Ui.Label.Username']}" />
                     <p:inputText id="admin-add-user-username" value="#{adminAddUserController.username}"
@@ -36,6 +36,7 @@
                                  value="${bundle['Ui.Admin.Button.AddUser']}" ajax="off" />
                 <p:commandButton type="reset" value="Reset" />
             </h:form>
+            <p:messages for="add-user-form" />
         </p:panel>
     </ui:define>
 </ui:composition>
