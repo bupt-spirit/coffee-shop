@@ -190,11 +190,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `coffee_shop`.`order`
+-- Table `coffee_shop`.`order_info`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `coffee_shop`.`order` ;
+DROP TABLE IF EXISTS `coffee_shop`.`order_info` ;
 
-CREATE TABLE IF NOT EXISTS `coffee_shop`.`order` (
+CREATE TABLE IF NOT EXISTS `coffee_shop`.`order_info` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `date_create` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `amount` DECIMAL(6,2) UNSIGNED NOT NULL,
@@ -265,7 +265,7 @@ CREATE TABLE IF NOT EXISTS `coffee_shop`.`ordered_product` (
   INDEX `fk_order_has_product_order1_idx` (`order_id` ASC) VISIBLE,
   CONSTRAINT `fk_order_has_product_order1`
     FOREIGN KEY (`order_id`)
-    REFERENCES `coffee_shop`.`order` (`id`)
+    REFERENCES `coffee_shop`.`order_info` (`id`)
     ON DELETE RESTRICT
     ON UPDATE CASCADE,
   CONSTRAINT `fk_order_has_product_product1`
