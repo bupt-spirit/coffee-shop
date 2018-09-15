@@ -6,6 +6,7 @@ import coffeeshop.ejb.UserManager;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.validator.ValidatorException;
@@ -17,10 +18,10 @@ import javax.security.enterprise.SecurityContext;
 @RequestScoped
 public class UserNavController {
 
-    @Inject
+    @EJB
     private UserManager userManager;
     
-    @Inject
+    @EJB
     private CustomerInfoManager customerInfoManager;
 
     @Inject

@@ -3,8 +3,8 @@ package coffeeshop.web.admin;
 import coffeeshop.ejb.UserManager;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
 
 @Named
@@ -16,7 +16,7 @@ public class InitController {
     private static final String DEFAULT_ADMIN_USERNAME = "admin";
     private static final String DEFAULT_ADMIN_PASSWORD = "admin";
     
-    @Inject
+    @EJB
     private UserManager userManager;
 
     public void checkAndAddDefaultAdminUser() {

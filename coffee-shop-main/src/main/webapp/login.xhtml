@@ -7,15 +7,20 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <ui:define name="main">
         <h:form>
-            <p:panelGrid columns="2">
+            <p:panelGrid columns="3" styleClass="ui-panelgrid-blank">
                 <p:outputLabel for="test-username" value="${bundle['Ui.Label.Username']}" />
-                <p:inputText type="text" id="test-username" value="#{loginController.username}" />
+                <p:inputText type="text" id="test-username" value="#{loginController.username}"
+                             required="true" />
+                <p:messages for="test-username" />
                 <p:outputLabel for="test-password" value="${bundle['Ui.Label.Password']}" />
-                <p:inputText type="password" id="test-password" value="#{loginController.password}" />
+                <p:inputText type="password" id="test-password" value="#{loginController.password}"
+                             required="true" />
+                <p:messages for="test-password" />
             </p:panelGrid>
             <p:commandButton action="#{loginController.login}" type="submit"
                              value="${bundle['Ui.Button.Login']}" ajax="off" />
             <p:commandButton type="reset" value="Reset" />
         </h:form>
+        <p:messages />
     </ui:define>
 </ui:composition>

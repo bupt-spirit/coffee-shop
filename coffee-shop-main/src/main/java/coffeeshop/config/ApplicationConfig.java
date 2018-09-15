@@ -23,8 +23,7 @@ import javax.security.enterprise.identitystore.Pbkdf2PasswordHash;
         })
 @CustomFormAuthenticationMechanismDefinition(
         loginToContinue = @LoginToContinue(
-                loginPage = "/faces/login.xhtml",
-                errorPage = "/faces/login-error.xhtml"
+                loginPage = "/faces/login.xhtml"
         ))
 @DeclareRoles({"admin", "staff", "customer"})
 @Named

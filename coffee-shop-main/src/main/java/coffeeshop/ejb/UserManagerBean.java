@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -22,10 +23,10 @@ public class UserManagerBean implements UserManager {
 
     private static final Logger LOG = Logger.getLogger(UserManagerBean.class.getName());
 
-    @Inject
+    @EJB
     private UserInfoFacade userInfoFacade;
     
-    @Inject
+    @EJB
     private StoreFacade storeFacade;
 
     @Inject

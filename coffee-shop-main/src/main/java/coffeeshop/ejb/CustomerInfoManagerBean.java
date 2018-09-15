@@ -2,13 +2,13 @@ package coffeeshop.ejb;
 
 import coffeeshop.entity.Customer;
 import coffeeshop.facade.CustomerFacade;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.inject.Inject;
 
 @Stateless
 public class CustomerInfoManagerBean implements CustomerInfoManager {
     
-    @Inject
+    @EJB
     CustomerFacade customerFacade;
 
     @Override

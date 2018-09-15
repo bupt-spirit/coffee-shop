@@ -2,10 +2,9 @@ package coffeeshop.facade;
 
 import coffeeshop.entity.Customer;
 import coffeeshop.entity.UserInfo;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 @Stateless
@@ -23,7 +22,7 @@ public class CustomerFacade extends AbstractFacade<Customer> {
         super(Customer.class);
     }
 
-    @Inject
+    @EJB
     private UserInfoFacade userInfoFacade;
 
     public Customer findByUsername(String username) {
