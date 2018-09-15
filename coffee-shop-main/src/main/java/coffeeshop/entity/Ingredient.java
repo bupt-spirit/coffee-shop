@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -50,8 +51,11 @@ public class Ingredient implements Serializable {
     @NotNull
     @Column(nullable = false, precision = 3, scale = 2)
     private BigDecimal cost;
-    @ManyToMany(mappedBy = "ingredientList")
-    private List<OrderedProduct> orderedProductList;
+    @JoinTable(name = "ordered_product_has_ingredient", joinColumns = {
+        @JoinColumn(name = "ingredient_id", referencedColumnName = "id", nullable = false)}, inverseJoinColumns = {
+        @JoinColumn(name = "ordered_product_id", referencedColumnName = "id", nullable = false)})
+    @ManyToMany
+    private List<Suborder> suborderList;
     @JoinColumn(name = "ingredient_category_id", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false)
     private IngredientCategory ingredientCategoryId;
@@ -102,12 +106,12 @@ public class Ingredient implements Serializable {
     }
 
     @XmlTransient
-    public List<OrderedProduct> getOrderedProductList() {
-        return orderedProductList;
+    public List<Suborder> getSuborderList() {
+        return suborderList;
     }
 
-    public void setOrderedProductList(List<OrderedProduct> orderedProductList) {
-        this.orderedProductList = orderedProductList;
+    public void setSuborderList(List<Suborder> suborderList) {
+        this.suborderList = suborderList;
     }
 
     public IngredientCategory getIngredientCategoryId() {

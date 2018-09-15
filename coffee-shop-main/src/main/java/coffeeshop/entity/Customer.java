@@ -29,23 +29,17 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Customer implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
-    //@NotNull // Use MapsId
     @Id
     @Basic(optional = false)
     @Column(name = "user_id", nullable = false)
     private Integer userId;
-    
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
+    @Size(min = 1, max = 45) 
     @Column(nullable = false, length = 45)
     private String nickname;
-    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customerUserId")
     private List<Address> addressList;
-    
-    //@JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     @OneToOne(optional = false)
     @NotNull
@@ -121,5 +115,5 @@ public class Customer implements Serializable {
     public String toString() {
         return "coffeeshop.entity.Customer[ userId=" + userId + " ]";
     }
-
+    
 }

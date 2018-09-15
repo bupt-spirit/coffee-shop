@@ -72,8 +72,8 @@ public class Product implements Serializable {
     @JoinColumn(name = "nutrition_id", referencedColumnName = "id")
     @ManyToOne
     private Nutrition nutritionId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
-    private List<OrderedProduct> orderedProductList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "productId")
+    private List<Suborder> suborderList;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "product")
     private SeasonSpecial seasonSpecial;
 
@@ -157,12 +157,12 @@ public class Product implements Serializable {
     }
 
     @XmlTransient
-    public List<OrderedProduct> getOrderedProductList() {
-        return orderedProductList;
+    public List<Suborder> getSuborderList() {
+        return suborderList;
     }
 
-    public void setOrderedProductList(List<OrderedProduct> orderedProductList) {
-        this.orderedProductList = orderedProductList;
+    public void setSuborderList(List<Suborder> suborderList) {
+        this.suborderList = suborderList;
     }
 
     public SeasonSpecial getSeasonSpecial() {

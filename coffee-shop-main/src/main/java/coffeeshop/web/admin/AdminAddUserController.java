@@ -4,6 +4,7 @@ import coffeeshop.ejb.UserManager;
 import coffeeshop.web.util.MessageBundle;
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -97,7 +98,7 @@ public class AdminAddUserController implements Serializable {
                     ));
             }
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
-                    bundle.getFormated("Ui.Admin.Message.AddUserSuccessDetail", username, role)
+                    bundle.getFormated("Ui.Admin.Message.AddUserSuccess", username, role)
             ));
         }
     }

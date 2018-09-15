@@ -64,8 +64,8 @@ public class OrderInfo implements Serializable {
     @NotNull
     @Column(name = "is_finished", nullable = false)
     private short isFinished;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "orderInfo")
-    private List<OrderedProduct> orderedProductList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "orderId")
+    private List<Suborder> suborderList;
     @JoinColumn(name = "address_id", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false)
     private Address addressId;
@@ -138,12 +138,12 @@ public class OrderInfo implements Serializable {
     }
 
     @XmlTransient
-    public List<OrderedProduct> getOrderedProductList() {
-        return orderedProductList;
+    public List<Suborder> getSuborderList() {
+        return suborderList;
     }
 
-    public void setOrderedProductList(List<OrderedProduct> orderedProductList) {
-        this.orderedProductList = orderedProductList;
+    public void setSuborderList(List<Suborder> suborderList) {
+        this.suborderList = suborderList;
     }
 
     public Address getAddressId() {
