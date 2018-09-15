@@ -1,15 +1,20 @@
 package coffeeshop.ejb;
 
+import coffeeshop.entity.Store;
 import java.util.Collection;
 
 public interface UserManager {
 
-    void addUser(String username, String password, String role);
+    void addAdmin(String username, String password);
+
+    void addCustomer(String username, String password, String nickname);
+
+    void addStaff(String username, String password, Store store);
 
     String getUserRole(String username);
 
     void changePassword(String username, String password);
-    
+
     void verifyPassword(String username, String password);
 
     boolean isUserExisting(String username);

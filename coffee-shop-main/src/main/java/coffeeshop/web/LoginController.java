@@ -1,6 +1,6 @@
 package coffeeshop.web;
 
-import coffeeshop.config.DefaultAdminUserConfig;
+import coffeeshop.web.admin.InitController;
 import coffeeshop.ejb.UserManager;
 import coffeeshop.web.util.MessageBundle;
 import java.security.Principal;
@@ -39,7 +39,7 @@ public class LoginController {
     private UserManager userManager;
 
     @Inject
-    private DefaultAdminUserConfig defaultAdminUserBean;
+    private InitController defaultAdminUserBean;
 
     private FacesContext facesContext;
 
