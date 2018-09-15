@@ -7,7 +7,7 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <ui:define name="main">
         <h:form>
-            <p:panelGrid columns="2">
+            <p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
                 <p:outputLabel for="test-username" value="${bundle['Ui.Label.Username']}" />
                 <p:inputText type="text" id="test-username" value="#{loginController.username}" />
                 <p:outputLabel for="test-password" value="${bundle['Ui.Label.Password']}" />

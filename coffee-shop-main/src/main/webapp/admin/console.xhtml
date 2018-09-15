@@ -5,40 +5,37 @@
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                xmlns:f="http://xmlns.jcp.org/jsf/core"
-                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:define name="main">
         <p:panel header="${bundle['Ui.Admin.Title']}">
-            <p:panelGrid>
-                <h:form>
-                    <p:panelGrid columns="3">
-                        <p:outputLabel for="admin-add-user-username" value="${bundle['Ui.Label.Username']}" />
-                        <p:inputText id="admin-add-user-username" value="#{adminAddUserController.username}"
-                                     type="text" required="true" />
-                        <p:message for="admin-add-user-username" />
+            <h:form>
+                <p:panelGrid columns="3" styleClass="ui-panelgrid-blank">
+                    <p:outputLabel for="admin-add-user-username" value="${bundle['Ui.Label.Username']}" />
+                    <p:inputText id="admin-add-user-username" value="#{adminAddUserController.username}"
+                                 type="text" required="true" />
+                    <p:message for="admin-add-user-username" />
 
-                        <p:outputLabel for="admin-add-user-password" value="${bundle['Ui.Label.Password']}" />
-                        <p:inputText id="admin-add-user-password" value="#{adminAddUserController.password}"
-                                     type="password" required="true" />
-                        <p:message for="admin-add-user-password" />
+                    <p:outputLabel for="admin-add-user-password" value="${bundle['Ui.Label.Password']}" />
+                    <p:inputText id="admin-add-user-password" value="#{adminAddUserController.password}"
+                                 type="password" required="true" />
+                    <p:message for="admin-add-user-password" />
 
-                        <p:outputLabel for="admin-add-user-role" value="${bundle['Ui.Admin.Label.Role']}" />
-                        <p:selectOneMenu  id="admin-add-user-role" value="#{adminAddUserController.role}">
-                            <f:selectItems value="#{adminAddUserController.roles}" />
-                        </p:selectOneMenu>
-                        <p:message for="admin-add-user-role" />
+                    <p:outputLabel for="admin-add-user-role" value="${bundle['Ui.Admin.Label.Role']}" />
+                    <p:selectOneButton  id="admin-add-user-role" value="#{adminAddUserController.role}">
+                        <f:selectItems value="#{adminAddUserController.roles}" />
+                    </p:selectOneButton>
+                    <p:message for="admin-add-user-role" />
 
-                        <p:outputLabel for="admin-add-user-nickname" value="${bundle['Ui.Label.Nickname']}" />
-                        <p:inputText id="admin-add-user-nickname" value="#{adminAddUserController.nickname}"
-                                     type="text" />
-                        <p:message for="admin-add-user-nickname" />
+                    <p:outputLabel for="admin-add-user-nickname" value="${bundle['Ui.Label.Nickname']}" />
+                    <p:inputText id="admin-add-user-nickname" value="#{adminAddUserController.nickname}"
+                                 type="text" />
+                    <p:message for="admin-add-user-nickname" />
 
-                    </p:panelGrid>
-                    <p:commandButton action="#{adminAddUserController.addUser}" type="submit"
-                                     value="${bundle['Ui.Admin.Button.AddUser']}" ajax="off" />
-                    <p:commandButton type="reset" value="Reset" />
-                </h:form>
-            </p:panelGrid>
+                </p:panelGrid>
+                <p:commandButton action="#{adminAddUserController.addUser}" type="submit"
+                                 value="${bundle['Ui.Admin.Button.AddUser']}" ajax="off" />
+                <p:commandButton type="reset" value="Reset" />
+            </h:form>
         </p:panel>
     </ui:define>
 </ui:composition>
