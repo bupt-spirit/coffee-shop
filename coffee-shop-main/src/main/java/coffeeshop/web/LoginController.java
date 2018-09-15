@@ -4,7 +4,6 @@ import coffeeshop.web.admin.InitController;
 import coffeeshop.ejb.UserManager;
 import coffeeshop.web.util.MessageBundle;
 import java.security.Principal;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -70,7 +69,8 @@ public class LoginController {
 
     public String login() throws ServletException {
         if (isLoggedIn()) {
-            logout();
+            facesContext.addMessage(null, new FacesMessage(bundle.getString("Ui.Message.LogoutFirst")));
+            return null;
         }
         Credential credential = new UsernamePasswordCredential(username, new Password(password));
         AuthenticationStatus status = securityContext.authenticate(
@@ -99,8 +99,8 @@ public class LoginController {
             case SEND_CONTINUE:
             case SUCCESS:
                 facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-                        bundle.getString("Ui.Message.AuthSuccessTitle"),
-                        bundle.getFormated("Ui.Message.AuthSuccessDetail", username)
+                        bundle.getFormated("Ui.Message.AuthSuccess", username),
+                        null
                 ));
                 break;
         }

@@ -94,7 +94,6 @@ public class AdminAddUserController implements Serializable {
                     break;
                 case "staff":
                     throw new UnsupportedOperationException("Not supported yet.");
-//                    break;
                 default:
                     throw new ValidatorException(new FacesMessage(
                             bundle.getString("Ui.Admin.Message.InvalidRole")
