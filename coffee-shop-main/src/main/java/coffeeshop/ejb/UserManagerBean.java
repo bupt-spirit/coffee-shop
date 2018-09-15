@@ -1,6 +1,7 @@
 package coffeeshop.ejb;
 
 import coffeeshop.entity.Customer;
+import coffeeshop.config.ApplicationConfig;
 import coffeeshop.entity.UserInfo;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -29,6 +30,9 @@ public class UserManagerBean implements UserManager {
 
     @Inject
     private Pbkdf2PasswordHash passwordHash;
+    
+    @Inject
+    private ApplicationConfig applicationConfig;
 
     private static final Collection<String> ROLES = new ArrayList<>();
 
@@ -45,11 +49,7 @@ public class UserManagerBean implements UserManager {
 
     @PostConstruct
     private void init() {
-        Map<String, String> parameters = new HashMap<>();
-        parameters.put("Pbkdf2PasswordHash.Iterations", "3072");
-        parameters.put("Pbkdf2PasswordHash.Algorithm", "PBKDF2WithHmacSHA512");
-        parameters.put("Pbkdf2PasswordHash.SaltSizeBytes", "64");
-        passwordHash.initialize(parameters);
+        passwordHash.initialize(applicationConfig.getHashAlgorithmParameters());
     }
 
     @Override
