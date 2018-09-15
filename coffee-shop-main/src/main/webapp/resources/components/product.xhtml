@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns = "http://www.w3.org/1999/xhtml"   
+      xmlns:h = "http://java.sun.com/jsf/html"
+      xmlns:composite = "http://java.sun.com/jsf/composite"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:components="http://xmlns.jcp.org/jsf/composite/components">
+
+    <h:body>
+        <composite:interface>
+            <composite:attribute name = "description" required="true" />
+            <composite:attribute name = "price" required="true" />
+            <composite:attribute name="picture" required="true"/>
+            <composite:attribute name = "link" required="true" />
+        </composite:interface>
+        <composite:implementation>
+            <div>
+                <div class="product-picture">
+                    <h:form>
+                        <h:commandLink action="${cc.attrs.link}">
+                            <p:graphicImage  url="${cc.attrs.picture}" />
+                        </h:commandLink>
+                    </h:form>
+                </div>
+
+                <div class="product-description"  >
+                    <h:outputText value="${cc.attrs.description}"/>
+                </div >
+
+                <div class="product-price">
+                    <h:outputText value="${cc.attrs.price}"/>
+                </div>
+            </div>
+        </composite:implementation>
+    </h:body>
+</html>
+

@@ -1,0 +1,18 @@
+#index-main-layout{
+    max-width: 50em;
+    display: flex;
+    flex-direction: column;
+    .main-products{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: warp;
+        justify-content: flex-start;
+            
+    }
+    .news .main-title{
+        margin: 0 auto;
+    }
+}
+
+
+
