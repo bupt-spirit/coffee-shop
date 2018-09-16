@@ -11,13 +11,13 @@ public class IngredientFacade extends AbstractFacade<Ingredient> {
     @PersistenceContext(unitName = "bupt-spirit.projects.coffeeshop")
     private EntityManager em;
 
+    public IngredientFacade() {
+        super(Ingredient.class);
+    }
+
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
 
-    public IngredientFacade() {
-        super(Ingredient.class);
-    }
-    
 }

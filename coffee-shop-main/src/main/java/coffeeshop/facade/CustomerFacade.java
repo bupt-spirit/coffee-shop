@@ -12,18 +12,17 @@ public class CustomerFacade extends AbstractFacade<Customer> {
 
     @PersistenceContext(unitName = "bupt-spirit.projects.coffeeshop")
     private EntityManager em;
-
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }
+    @EJB
+    private UserInfoFacade userInfoFacade;
 
     public CustomerFacade() {
         super(Customer.class);
     }
 
-    @EJB
-    private UserInfoFacade userInfoFacade;
+    @Override
+    protected EntityManager getEntityManager() {
+        return em;
+    }
 
     public Customer findByUsername(String username) {
         UserInfo userInfo = userInfoFacade.findByUsername(username);

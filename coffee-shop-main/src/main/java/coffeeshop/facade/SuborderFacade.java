@@ -11,13 +11,13 @@ public class SuborderFacade extends AbstractFacade<Suborder> {
     @PersistenceContext(unitName = "bupt-spirit.projects.coffeeshop")
     private EntityManager em;
 
+    public SuborderFacade() {
+        super(Suborder.class);
+    }
+
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
 
-    public SuborderFacade() {
-        super(Suborder.class);
-    }
-    
 }

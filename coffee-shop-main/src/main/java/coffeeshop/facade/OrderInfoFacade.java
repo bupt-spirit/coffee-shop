@@ -11,13 +11,13 @@ public class OrderInfoFacade extends AbstractFacade<OrderInfo> {
     @PersistenceContext(unitName = "bupt-spirit.projects.coffeeshop")
     private EntityManager em;
 
+    public OrderInfoFacade() {
+        super(OrderInfo.class);
+    }
+
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
 
-    public OrderInfoFacade() {
-        super(OrderInfo.class);
-    }
-    
 }
