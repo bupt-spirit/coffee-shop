@@ -23,8 +23,6 @@ import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
-import javax.inject.Inject;
-import org.primefaces.component.log.Log;
 
 @Stateful
 public class CartManagerBean implements CartManager, Serializable {
