@@ -22,7 +22,7 @@ public class CustomerInfoManagerBean implements CustomerInfoManager {
     }
 
     @Override
-    public boolean isCustomer(String username) throws CustomerInfoManagerException {
+    public boolean isCustomer(String username) {
         return customerFacade.findByUsername(username) != null;
     }
 }
