@@ -40,17 +40,27 @@ $hover-color: darken($header-background, 3%);
     background: $hover-color;
 }
 
-.global-nav-form {
-    margin: 0 1rem;
-    .global-nav-link {
-        font-size: 1.5rem;
-        padding: $header-padding 1rem;
-        border: none;
-        background: none;
+#global-nav {
+    display: flex;
+    align-items: flex-end;
+    .global-nav-form {
         height: $header-height;
-        cursor: pointer;
+        .global-nav-link {
+            display: block;
+            height: $header-height;
+            text-align: center;
+            font-size: 1.25rem;
+            padding: 0 .5rem;
+            display: table-cell;
+            vertical-align: middle;
+        }
+        .global-nav-link.multiline-nav-link {
+            font-size: 1rem;
+        }
     }
-    .global-nav-link:hover {
+
+    .global-nav-form:hover {
         background: $hover-color;
     }
 }
+

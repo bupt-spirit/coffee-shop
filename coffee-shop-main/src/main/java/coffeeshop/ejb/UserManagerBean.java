@@ -8,10 +8,11 @@ import coffeeshop.entity.UserInfo;
 import coffeeshop.facade.StoreFacade;
 import coffeeshop.facade.UserInfoFacade;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -22,10 +23,10 @@ public class UserManagerBean implements UserManager {
 
     private static final Logger LOG = Logger.getLogger(UserManagerBean.class.getName());
 
-    @Inject
+    @EJB
     private UserInfoFacade userInfoFacade;
     
-    @Inject
+    @EJB
     private StoreFacade storeFacade;
 
     @Inject
@@ -34,7 +35,7 @@ public class UserManagerBean implements UserManager {
     @Inject
     private ApplicationConfig applicationConfig;
 
-    private static final Collection<String> ROLES = new ArrayList<>();
+    private static final List<String> ROLES = new ArrayList<>();
 
     static {
         ROLES.add("admin");
@@ -43,7 +44,7 @@ public class UserManagerBean implements UserManager {
     }
 
     @Override
-    public Collection<String> getRoles() {
+    public List<String> getRoles() {
         return ROLES;
     }
 

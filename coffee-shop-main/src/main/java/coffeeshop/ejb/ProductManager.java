@@ -12,7 +12,7 @@ public interface ProductManager {
 
     public List<Product> getCategoryProducts(String categoryName) throws ProductManagerException;
     
-    public List<Ingredient> getIngredientsByCategory(String ingredientCategoryName);
+    public List<Ingredient> getIngredientsByCategory(String ingredientCategoryName) throws ProductManagerException;
     
-    public List<IngredientCategory> getIngredientCategoryByProduct(String productName);
+    public List<IngredientCategory> getIngredientCategoryByProduct(String productName) throws ProductManagerException;
 }

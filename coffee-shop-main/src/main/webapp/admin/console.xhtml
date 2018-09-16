@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<ui:composition template="/templates/main-only.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:define name="main">
+        <h1><h:outputText value="${bundle['Ui.Admin.AdminConsoleTitle']}" /></h1>
+        <p:panel header="${bundle['Ui.Admin.InitData.Title']}">
+            <h:form id="init-demo-data-form">
+                <p:commandButton action="#{initController.insertDemoData}" type="submit"
+                                 value="${bundle['Ui.Admin.InitData.Button.InitData']}" ajax="false" />
+            </h:form>
+        </p:panel>
+        <p:panel header="${bundle['Ui.Admin.AddUser.Title']}">
+            <h:form id="add-user-form">
+                <p:panelGrid columns="3" styleClass="ui-panelgrid-blank">
+                    <p:outputLabel for="admin-add-user-username" value="${bundle['Ui.Label.Username']}" />
+                    <p:inputText id="admin-add-user-username" value="#{adminAddUserController.username}"
+                                 type="text" required="true" />
+                    <p:message for="admin-add-user-username" />
+
+                    <p:outputLabel for="admin-add-user-password" value="${bundle['Ui.Label.Password']}" />
+                    <p:inputText id="admin-add-user-password" value="#{adminAddUserController.password}"
+                                 type="password" required="true" />
+                    <p:message for="admin-add-user-password" />
+
+                    <p:outputLabel for="admin-add-user-role" value="${bundle['Ui.Admin.AddUser.Label.Role']}" />
+                    <p:selectOneButton  id="admin-add-user-role" value="#{adminAddUserController.role}" required="true">
+                        <f:selectItems value="#{adminAddUserController.roles}" />
+                    </p:selectOneButton>
+                    <p:message for="admin-add-user-role" />
+
+                    <p:outputLabel for="admin-add-user-nickname" value="${bundle['Ui.Label.Nickname']}" />
+                    <p:inputText id="admin-add-user-nickname" value="#{adminAddUserController.nickname}"
+                                 type="text" />
+                    <p:message for="admin-add-user-nickname" />
+
+                </p:panelGrid>
+                <p:commandButton action="#{adminAddUserController.addUser}" type="submit" ajax="false"
+                                 value="${bundle['Ui.Admin.AddUser.Button.AddUser']}" />
+                <p:commandButton type="reset" value="Reset" />
+            </h:form>
+            <p:messages for="add-user-form" />
+        </p:panel>
+    </ui:define>
+</ui:composition>

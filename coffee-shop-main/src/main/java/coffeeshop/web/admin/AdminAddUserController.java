@@ -84,6 +84,9 @@ public class AdminAddUserController implements Serializable {
         } else {
             switch (role) {
                 case "customer":
+                    if (nickname == null || nickname.isEmpty()) {
+                        nickname = username;
+                    }
                     userManager.addCustomer(username, password, nickname);
                     break;
                 case "admin":
@@ -91,7 +94,6 @@ public class AdminAddUserController implements Serializable {
                     break;
                 case "staff":
                     throw new UnsupportedOperationException("Not supported yet.");
-//                    break;
                 default:
                     throw new ValidatorException(new FacesMessage(
                             bundle.getString("Ui.Admin.Message.InvalidRole")
