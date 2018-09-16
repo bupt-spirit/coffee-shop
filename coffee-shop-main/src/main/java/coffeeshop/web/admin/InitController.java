@@ -67,7 +67,7 @@ public class InitController {
 
         IngredientCategory ingredientCategorySize = createIngredientCategory("Size");
         IngredientCategory ingredientCategorySweetness = createIngredientCategory("Sweetness");
-        IngredientCategory ingredientCategoryIce = createIngredientCategory("Temprature");
+        IngredientCategory ingredientCategoryIce = createIngredientCategory("Ice");
         IngredientCategory ingredientCategoryMilk = createIngredientCategory("Milk");
         IngredientCategory ingredientCategoryCream = createIngredientCategory("Cream");
         IngredientCategory ingredientCategoryEspresso = createIngredientCategory("Espresso");
