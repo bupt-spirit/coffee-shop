@@ -1,13 +1,10 @@
 package coffeeshop.web;
 
-import coffeeshop.web.admin.InitController;
-import coffeeshop.ejb.UserManager;
 import coffeeshop.web.util.MessageBundle;
 import java.security.Principal;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -35,12 +32,6 @@ public class LoginController {
 
     @Inject
     private MessageBundle bundle;
-
-    @EJB
-    private UserManager userManager;
-
-    @Inject
-    private InitController defaultAdminUserBean;
 
     private FacesContext facesContext;
 

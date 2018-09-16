@@ -7,6 +7,7 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:define name="main">
+        <h1>${bundle['Ui.Admin.AdminConsoleTitle']}</h1>
         <p:panel header="${bundle['Ui.Admin.AddUser.Title']}">
             <h:form id="add-user-form">
                 <p:panelGrid columns="3" styleClass="ui-panelgrid-blank">
@@ -20,8 +21,8 @@
                                  type="password" required="true" />
                     <p:message for="admin-add-user-password" />
 
-                    <p:outputLabel for="admin-add-user-role" value="${bundle['Ui.Admin.Label.Role']}" />
-                    <p:selectOneButton  id="admin-add-user-role" value="#{adminAddUserController.role}">
+                    <p:outputLabel for="admin-add-user-role" value="${bundle['Ui.Admin.AddUser.Label.Role']}" />
+                    <p:selectOneButton  id="admin-add-user-role" value="#{adminAddUserController.role}" required="true">
                         <f:selectItems value="#{adminAddUserController.roles}" />
                     </p:selectOneButton>
                     <p:message for="admin-add-user-role" />
@@ -33,7 +34,7 @@
 
                 </p:panelGrid>
                 <p:commandButton action="#{adminAddUserController.addUser}" type="submit"
-                                 value="${bundle['Ui.Admin.Button.AddUser']}" ajax="off" />
+                                 value="${bundle['Ui.Admin.AddUser.Button.AddUser']}" ajax="off" />
                 <p:commandButton type="reset" value="Reset" />
             </h:form>
             <p:messages for="add-user-form" />
