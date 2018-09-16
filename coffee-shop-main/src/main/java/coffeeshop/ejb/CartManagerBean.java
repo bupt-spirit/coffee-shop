@@ -16,6 +16,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateful;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -99,7 +100,7 @@ public class CartManagerBean implements CartManager, Serializable {
     @Override
     public BigDecimal getOrderAmount() {
         List<Suborder> suborders = orderInfo.getSuborderList();
-        BigDecimal amount = BigDecimal.ZERO;
+        BigDecimal amount = BigDecimal.ZERO.setScale(2, RoundingMode.CEILING);
         for (Suborder suborder : suborders) {
             amount = amount.add(getSuborderAmount(suborder));
         }
@@ -107,7 +108,7 @@ public class CartManagerBean implements CartManager, Serializable {
     }
 
     private BigDecimal getSuborderAmount(Suborder suborder) {
-        BigDecimal amount = BigDecimal.ZERO;
+        BigDecimal amount = BigDecimal.ZERO.setScale(2, RoundingMode.CEILING);
         amount = amount.add(suborder.getProductId().getCost());
         for (Ingredient ingredient : suborder.getIngredientList()) {
             amount = amount.add(ingredient.getCost());
