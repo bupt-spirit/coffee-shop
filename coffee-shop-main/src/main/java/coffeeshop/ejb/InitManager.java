@@ -1,31 +1,36 @@
-package coffeeshop.web.admin;
+package coffeeshop.ejb;
 
-import coffeeshop.ejb.UserManager;
 import coffeeshop.entity.Category;
+import coffeeshop.entity.Image;
 import coffeeshop.entity.Ingredient;
 import coffeeshop.entity.IngredientCategory;
 import coffeeshop.entity.Nutrition;
 import coffeeshop.entity.Product;
 import coffeeshop.facade.CategoryFacade;
+import coffeeshop.facade.ImageFacade;
 import coffeeshop.facade.IngredientCategoryFacade;
 import coffeeshop.facade.IngredientFacade;
 import coffeeshop.facade.NutritionFacade;
 import coffeeshop.facade.ProductFacade;
+import coffeeshop.util.ConstraintViolationTester;
+import java.io.IOException;
 import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Named;
 import java.math.BigDecimal;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.Stateless;
 
-@Named
-@RequestScoped
-public class InitController {
+@Stateless
+public class InitManager {
 
-    private static final Logger LOG = Logger.getLogger(InitController.class.getName());
+    private static final Logger LOG = Logger.getLogger(InitManager.class.getName());
 
     private static final String DEFAULT_ADMIN_USERNAME = "admin";
     private static final String DEFAULT_ADMIN_PASSWORD = "admin";
@@ -42,19 +47,21 @@ public class InitController {
     private IngredientCategoryFacade ingredientCategoryFacade;
     @EJB
     private IngredientFacade ingredientFacade;
+    @EJB
+    private ImageFacade imageFacade;
 
     public void checkAndAddDefaultAdminUser() {
         if (!userManager.isUserExisting(DEFAULT_ADMIN_USERNAME)) {
             LOG.log(Level.INFO, "Default admin user does not exists");
             userManager.addAdmin(DEFAULT_ADMIN_USERNAME, DEFAULT_ADMIN_PASSWORD);
             LOG.log(Level.INFO, "New admin user added, username: {0}, password: {1}", new String[]{
-                    DEFAULT_ADMIN_USERNAME,
-                    DEFAULT_ADMIN_PASSWORD
+                DEFAULT_ADMIN_USERNAME,
+                DEFAULT_ADMIN_PASSWORD
             });
         }
     }
 
-    public void insertDemoData() {
+    public void insertDemoData() throws IOException, URISyntaxException {
         Category categoryDrinks = createCategory("Drinks");
         Category categoryFood = createCategory("Food");
         Category categoryCoffeeBean = createCategory("Coffee Bean");
@@ -283,7 +290,8 @@ public class InitController {
     }
 
     private Product createProduct(String name, String description,
-                                  BigDecimal price, Category category, Nutrition nutrition) {
+            BigDecimal price, Category category, Nutrition nutrition)
+            throws IOException, URISyntaxException {
         Product product = new Product();
         product.setName(name);
         product.setDescription(description);
@@ -291,9 +299,13 @@ public class InitController {
         product.setCategoryId(category);
         product.setNutritionId(nutrition);
         product.setLastUpdate(new Date());
+        Image image = createImage(category.getName(), name);
+        product.setImageUuid(image);
+        image.setProduct(product);
         product.setIngredientCategoryList(new ArrayList<>());
         category.getProductList().add(product);
         productFacade.create(product);
+        imageFacade.edit(image);
         categoryFacade.edit(category);
         return product;
     }
@@ -326,7 +338,7 @@ public class InitController {
     }
 
     private Ingredient createIngredient(String name, String description,
-                                        BigDecimal cost, IngredientCategory ingredientCategory) {
+            BigDecimal cost, IngredientCategory ingredientCategory) {
         Ingredient ingredient = new Ingredient();
         ingredient.setName(name);
         ingredient.setDescription(description);
@@ -347,5 +359,25 @@ public class InitController {
             ingredientCategoryFacade.edit(category);
         }
         productFacade.edit(product);
+    }
+
+    private byte[] readResourceFile(String name) throws IOException, URISyntaxException {
+        LOG.log(Level.INFO, "About to read resource image: {0}", name);
+        ClassLoader classLoader = getClass().getClassLoader();
+        return Files.readAllBytes(Paths.get(classLoader.getResource(name).toURI()));
+    }
+
+    private Image createImage(String category, String product) throws IOException, URISyntaxException {
+        Image image = new Image();
+        image.setContent(readResourceFile("coffeeshop/setup/images/"
+                + category + "/" + product + ".jpg"));
+        image.setMediaType("image/jpeg");
+        String uuid = null;
+        do {
+            uuid = UUID.randomUUID().toString();
+        } while (imageFacade.find(uuid) != null);
+        image.setUuid(uuid);
+        imageFacade.create(image);
+        return image;
     }
 }
