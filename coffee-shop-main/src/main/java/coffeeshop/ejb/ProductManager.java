@@ -2,6 +2,7 @@ package coffeeshop.ejb;
 
 import coffeeshop.entity.Category;
 import coffeeshop.entity.Ingredient;
+import coffeeshop.entity.IngredientCategory;
 import coffeeshop.entity.Product;
 import java.util.List;
 
