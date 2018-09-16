@@ -41,7 +41,8 @@ $hover-color: darken($header-background, 3%);
 }
 
 .global-nav-form {
-    margin: 0 1rem;
+    display: inline-block;
+/*    margin: 0 1rem;*/
     .global-nav-link {
         font-size: 1.5rem;
         padding: $header-padding 1rem;
@@ -50,7 +51,8 @@ $hover-color: darken($header-background, 3%);
         height: $header-height;
         cursor: pointer;
     }
-    .global-nav-link:hover {
-        background: $hover-color;
-    }
+}
+
+.global-nav-form:hover {
+    background: $hover-color;
 }

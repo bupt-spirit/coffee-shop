@@ -4,8 +4,6 @@ import coffeeshop.ejb.CustomerInfoManager;
 import coffeeshop.ejb.CustomerInfoManagerException;
 import coffeeshop.ejb.UserManager;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;

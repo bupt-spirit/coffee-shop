@@ -5,7 +5,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:cc = "http://java.sun.com/jsf/composite"
       xmlns:components = "http://xmlns.jcp.org/jsf/composite/components">
-    
+
     <cc:interface>
         <cc:attribute name = "title" required="true" />
     </cc:interface>
@@ -20,12 +20,12 @@
         <div class="header-item header-right-container">
             <ui:insert name="header-extra"></ui:insert>
             <nav id="global-nav">
-                <h:form id="global-nav-form" styleClass="global-nav-form">
+                <h:form styleClass="global-nav-form">
                     <h:button outcome="/index" styleClass="global-nav-link"
                               value="${bundle['Ui.Nav.MainPage']}" />
-                    <components:userNav />
-                    <ui:insert name="global-nav-extra" />
                 </h:form>
+                <components:userNav />
+                <ui:insert name="global-nav-extra" />
             </nav>
         </div>
     </cc:implementation>

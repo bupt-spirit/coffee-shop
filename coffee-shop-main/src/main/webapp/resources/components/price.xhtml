@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <cc:interface>
+        <cc:attribute name="price" required="true" type="java.math.BigDecimal" />
+    </cc:interface>
+
+    <cc:implementation>
+        <h:outputText value="#{cc.attrs.price}">
+            <f:convertNumber currencyCode="${bundle['Ui.CurrencyCode']}"
+                             currencySymbol="${bundle['Ui.CurrencyCode']}" />
+        </h:outputText>
+    </cc:implementation>
+</html>

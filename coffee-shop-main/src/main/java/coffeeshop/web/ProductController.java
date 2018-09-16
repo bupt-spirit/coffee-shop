@@ -25,6 +25,7 @@ public class ProductController implements Serializable {
     private List<Ingredient> ingredients;
 
     private String selectedCatagory;
+    private Product selectedProduct;
 
     public String getSelectedCatagory() {
         return selectedCatagory;
@@ -32,6 +33,14 @@ public class ProductController implements Serializable {
 
     public void setSelectedCatagory(String selectedCatagory) {
         this.selectedCatagory = selectedCatagory;
+    }
+
+    public Product getSelectedProduct() {
+        return selectedProduct;
+    }
+
+    public void setSelectedProduct(Product selectedProduct) {
+        this.selectedProduct = selectedProduct;
     }
 
     public List<Category> getCategories() {
