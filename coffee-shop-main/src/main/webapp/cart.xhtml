@@ -10,6 +10,7 @@
         <h1 class="page-title"><h:outputText value="${bundle['Ui.Cart.Title']}" /></h1>
         <ui:repeat var="suborder"
                    value="#{cartController.suborders}">
+            <components:suborderSummary suborder="#{suborder}" />
         </ui:repeat>
     </ui:define>
 </ui:composition>

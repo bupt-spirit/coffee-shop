@@ -11,7 +11,7 @@
         <p:panel header="${bundle['Ui.Admin.InitData.Title']}">
             <h:form id="init-demo-data-form">
                 <p:commandButton action="#{initController.insertDemoData}" type="submit"
-                                 value="${bundle['Ui.Admin.InitData.Button.InitData']}" ajax="off" />
+                                 value="${bundle['Ui.Admin.InitData.Button.InitData']}" ajax="false" />
             </h:form>
         </p:panel>
         <p:panel header="${bundle['Ui.Admin.AddUser.Title']}">
@@ -39,8 +39,8 @@
                     <p:message for="admin-add-user-nickname" />
 
                 </p:panelGrid>
-                <p:commandButton action="#{adminAddUserController.addUser}" type="submit"
-                                 value="${bundle['Ui.Admin.AddUser.Button.AddUser']}" ajax="off" />
+                <p:commandButton action="#{adminAddUserController.addUser}" type="submit" ajax="false"
+                                 value="${bundle['Ui.Admin.AddUser.Button.AddUser']}" />
                 <p:commandButton type="reset" value="Reset" />
             </h:form>
             <p:messages for="add-user-form" />
