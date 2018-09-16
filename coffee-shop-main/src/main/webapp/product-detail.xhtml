@@ -6,11 +6,14 @@
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:components="http://xmlns.jcp.org/jsf/composite/components">
 
     <ui:define name="aside">
     </ui:define>
     <ui:define name="main">
-        <h1><h:outputText value="#bundle['Ui.Customize.Title']"</h1>
+        <c:set var="product" value="#{productController.selectedProduct}" />
+        <components:productDetail product="#{product}" />
+        <components:productCustomize product="#{product}" />
     </ui:define>
 </ui:composition>

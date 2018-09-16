@@ -15,11 +15,11 @@ INSERT INTO nutrition VALUES (null,0,0,0,0,0,0);
 INSERT INTO product VALUES(null,"Iced Coffee","Freshly brewed Starbucks Iced Coffee Blend served chilled and lightly sweetened over ice",
 now(),30.00,1,3);
 
-INSERT INTO product VALUES(null,"Iced Coffee with Milk","Freshly brewed Starbucks Iced Coffee Blend with milk ¨C served chilled and lightly sweetened over ice.",
+INSERT INTO product VALUES(null,"Iced Coffee with Milk","Freshly brewed Starbucks Iced Coffee Blend with milk - served chilled and lightly sweetened over ice.",
 now(),35.00,1,null);
 
 INSERT INTO nutrition VALUES(null,5,0,0,0,0,10);
-INSERT INTO product VALUES(null,"Nitro Cold Brew","Our small-batch cold brew¡ªslow-steeped for a super smooth taste¡ªgets even better. We're infusing it with nitrogen for a naturally sweet flavor and cascading, velvety crema. Perfection is served.",
+INSERT INTO product VALUES(null,"Nitro Cold Brew","Our small-batch cold brew - slow-steeped for a super smooth tasteâ€”gets even better. We're infusing it with nitrogen for a naturally sweet flavor and cascading, velvety crema. Perfection is served.",
 now(),36.00,1,4);
 
 INSERT INTO nutrition VALUES(null,70,5,5,0,1,15);

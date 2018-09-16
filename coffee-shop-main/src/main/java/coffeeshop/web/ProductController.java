@@ -4,6 +4,7 @@ import coffeeshop.ejb.ProductManager;
 import coffeeshop.ejb.ProductManagerException;
 import coffeeshop.entity.Category;
 import coffeeshop.entity.Ingredient;
+import coffeeshop.entity.IngredientCategory;
 import coffeeshop.entity.Product;
 import java.io.Serializable;
 import java.util.List;
@@ -18,11 +19,7 @@ public class ProductController implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @EJB
-    ProductManager productManagerBean;
-
-    private List<Category> categories;
-    private List<Product> products;
-    private List<Ingredient> ingredients;
+    ProductManager productManager;
 
     private String selectedCatagory;
     private Product selectedProduct;
@@ -44,13 +41,11 @@ public class ProductController implements Serializable {
     }
 
     public List<Category> getCategories() {
-        this.categories = productManagerBean.getCategories();
-        return categories;
+        return productManager.getCategories();
     }
 
     public List<Product> getCategoryProducts(String categoryName) throws ProductManagerException {
-        this.products = productManagerBean.getCategoryProducts(categoryName);
-        return products;
+        return productManager.getCategoryProducts(categoryName);
     }
 
     public List<Product> getSelectedCategoryProducts() throws ProductManagerException {

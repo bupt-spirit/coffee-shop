@@ -1,11 +1,9 @@
 package coffeeshop.ejb;
 
-import coffeeshop.entity.Address;
 import coffeeshop.entity.Ingredient;
 import coffeeshop.entity.IngredientCategory;
 import coffeeshop.entity.OrderInfo;
 import coffeeshop.entity.Product;
-import coffeeshop.entity.Store;
 import coffeeshop.entity.Suborder;
 import coffeeshop.facade.OrderInfoFacade;
 import java.io.Serializable;
@@ -15,7 +13,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateful;
 import javax.inject.Inject;
@@ -85,5 +82,17 @@ public class CartManagerBean implements CartManager, Serializable {
             amount = amount.add(ingredient.getCost());
         }
         return amount;
+    }
+
+    @Override
+    public List<Suborder> getSuborders() {
+        return orderInfo.getSuborderList();
+    }
+
+    @Override
+    public void remove(Suborder suborder) throws CartManagerException {
+        if (!orderInfo.getSuborderList().remove(suborder)) {
+            throw new CartManagerException("Suborder not contained in cart");
+        }
     }
 }
