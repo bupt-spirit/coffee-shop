@@ -4,7 +4,6 @@
       xmlns:cc="http://xmlns.jcp.org/jsf/composite"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:components="http://xmlns.jcp.org/jsf/composite/components"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <cc:interface>
@@ -13,15 +12,14 @@
 
     <cc:implementation>
         <div class="ingredient-selector">
-            <h:outputLabel value="#{cc.attrs.category.name}" />
-            <div>
-                <p:selectOneButton>
-                    <f:attribute name="question-category" value="#{cc.attrs.category}" />
-                    <f:selectItems value="#{cc.attrs.category.ingredientList}" var="ingredient"
-                                   itemValue="#{ingredient}" itemLabel="#{ingredient.name}"
-                                   itemDescription="#{ingredient.description}"/>
-                </p:selectOneButton>
-            </div>
+            <h:outputLabel for="ingredient-category-selector" value="#{cc.attrs.category.name}" />
+            <p:selectOneButton id="ingredient-category-selector"
+                               valueChangeListener="#{productController.ingredientChanged}">
+                <f:selectItems value="#{cc.attrs.category.ingredientList}" var="ingredient"
+                               itemValue="#{ingredient.id}" itemLabel="#{ingredient.name}"
+                               itemDescription="#{ingredient.description}"/>
+                <p:ajax event="change"/>
+            </p:selectOneButton> 
         </div>
     </cc:implementation>
 </html>

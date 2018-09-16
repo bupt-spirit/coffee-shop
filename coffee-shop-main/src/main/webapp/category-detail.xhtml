@@ -12,10 +12,10 @@
                    value="#{productController.selectedCategoryProducts}">
 
             <h:form>
-                <p:commandLink action="/product-detail" ajax="off">
+                <h:commandLink action="/product-detail">
                     <components:productSummary product="#{product}" />
                     <f:setPropertyActionListener target="#{productController.selectedProduct}" value="#{product}" />
-                </p:commandLink>
+                </h:commandLink>
             </h:form>
         </ui:repeat>
     </ui:define>
