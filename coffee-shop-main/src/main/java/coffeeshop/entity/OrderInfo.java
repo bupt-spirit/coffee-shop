@@ -184,7 +184,7 @@ public class OrderInfo implements Serializable {
 
     @Override
     public String toString() {
-        return "coffeeshop.entity.OrderInfo[ id=" + id + "]";
+        return "coffeeshop.entity.OrderInfo[ id=" + id + " ]";
     }
     
 }
