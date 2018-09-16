@@ -46,7 +46,7 @@ public class Ingredient implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Basic(optional = false)
     @NotNull
-    @Column(nullable = false, precision = 3, scale = 2)
+    @Column(nullable = false, precision = 5, scale = 2)
     private BigDecimal cost;
     @JoinTable(name = "ordered_product_has_ingredient", joinColumns = {
             @JoinColumn(name = "ingredient_id", referencedColumnName = "id", nullable = false)}, inverseJoinColumns = {

@@ -113,7 +113,7 @@ public class CartManagerBean implements CartManager, Serializable {
         for (Ingredient ingredient : suborder.getIngredientList()) {
             amount = amount.add(ingredient.getCost());
         }
-        return amount;
+        return amount.multiply(new BigDecimal(suborder.getQuantity()));
     }
 
     @Override

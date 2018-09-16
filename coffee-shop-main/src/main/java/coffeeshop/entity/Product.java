@@ -60,7 +60,7 @@ public class Product implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Basic(optional = false)
     @NotNull
-    @Column(nullable = false, precision = 6, scale = 2)
+    @Column(nullable = false, precision = 12, scale = 2)
     private BigDecimal cost;
     @ManyToMany(mappedBy = "productList")
     private List<IngredientCategory> ingredientCategoryList;
