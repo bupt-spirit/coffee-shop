@@ -1,7 +1,5 @@
 package coffeeshop.entity;
 
-import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,23 +9,22 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import java.io.Serializable;
+import java.util.List;
 
 @Entity
-@Table(catalog = "coffee_shop", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Suborder.findAll", query = "SELECT s FROM Suborder s")
-    , @NamedQuery(name = "Suborder.findById", query = "SELECT s FROM Suborder s WHERE s.id = :id")
-    , @NamedQuery(name = "Suborder.findByQuantity", query = "SELECT s FROM Suborder s WHERE s.quantity = :quantity")})
+        @NamedQuery(name = "Suborder.findAll", query = "SELECT s FROM Suborder s"),
+        @NamedQuery(name = "Suborder.findById", query = "SELECT s FROM Suborder s WHERE s.id = :id"),
+        @NamedQuery(name = "Suborder.findByQuantity", query = "SELECT s FROM Suborder s WHERE s.quantity = :quantity")})
 public class Suborder implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @Basic(optional = false)
     @NotNull
     @Column(nullable = false)
     private Integer id;
@@ -111,15 +108,12 @@ public class Suborder implements Serializable {
             return false;
         }
         Suborder other = (Suborder) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return (this.id != null || other.id == null) && (this.id == null || this.id.equals(other.id));
     }
 
     @Override
     public String toString() {
         return "coffeeshop.entity.Suborder[ id=" + id + " ]";
     }
-    
+
 }

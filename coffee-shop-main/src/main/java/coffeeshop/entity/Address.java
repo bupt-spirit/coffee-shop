@@ -1,7 +1,5 @@
 package coffeeshop.entity;
 
-import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,32 +12,31 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import java.io.Serializable;
+import java.util.List;
 
 @Entity
-@Table(catalog = "coffee_shop", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Address.findAll", query = "SELECT a FROM Address a")
-    , @NamedQuery(name = "Address.findById", query = "SELECT a FROM Address a WHERE a.id = :id")
-    , @NamedQuery(name = "Address.findByCountry", query = "SELECT a FROM Address a WHERE a.country = :country")
-    , @NamedQuery(name = "Address.findByProvince", query = "SELECT a FROM Address a WHERE a.province = :province")
-    , @NamedQuery(name = "Address.findByCity", query = "SELECT a FROM Address a WHERE a.city = :city")
-    , @NamedQuery(name = "Address.findByDistrict", query = "SELECT a FROM Address a WHERE a.district = :district")
-    , @NamedQuery(name = "Address.findByDetail", query = "SELECT a FROM Address a WHERE a.detail = :detail")
-    , @NamedQuery(name = "Address.findByReceiver", query = "SELECT a FROM Address a WHERE a.receiver = :receiver")
-    , @NamedQuery(name = "Address.findByReceiverPhone", query = "SELECT a FROM Address a WHERE a.receiverPhone = :receiverPhone")
-    , @NamedQuery(name = "Address.findByIsAvailable", query = "SELECT a FROM Address a WHERE a.isAvailable = :isAvailable")})
+        @NamedQuery(name = "Address.findAll", query = "SELECT a FROM Address a"),
+        @NamedQuery(name = "Address.findById", query = "SELECT a FROM Address a WHERE a.id = :id"),
+        @NamedQuery(name = "Address.findByCountry", query = "SELECT a FROM Address a WHERE a.country = :country"),
+        @NamedQuery(name = "Address.findByProvince", query = "SELECT a FROM Address a WHERE a.province = :province"),
+        @NamedQuery(name = "Address.findByCity", query = "SELECT a FROM Address a WHERE a.city = :city"),
+        @NamedQuery(name = "Address.findByDistrict", query = "SELECT a FROM Address a WHERE a.district = :district"),
+        @NamedQuery(name = "Address.findByDetail", query = "SELECT a FROM Address a WHERE a.detail = :detail"),
+        @NamedQuery(name = "Address.findByReceiver", query = "SELECT a FROM Address a WHERE a.receiver = :receiver"),
+        @NamedQuery(name = "Address.findByReceiverPhone", query = "SELECT a FROM Address a WHERE a.receiverPhone = :receiverPhone"),
+        @NamedQuery(name = "Address.findByIsAvailable", query = "SELECT a FROM Address a WHERE a.isAvailable = :isAvailable")})
 public class Address implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(nullable = false)
     private Integer id;
     @Basic(optional = false)
@@ -209,15 +206,12 @@ public class Address implements Serializable {
             return false;
         }
         Address other = (Address) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return (this.id != null || other.id == null) && (this.id == null || this.id.equals(other.id));
     }
 
     @Override
     public String toString() {
         return "coffeeshop.entity.Address[ id=" + id + " ]";
     }
-    
+
 }
