@@ -8,26 +8,26 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-    <cc:interface>
-        <cc:attribute name="suborder" required="true" type="coffeeshop.entity.Suborder" />
-    </cc:interface>
+<cc:interface>
+    <cc:attribute name="suborder" required="true" type="coffeeshop.entity.Suborder"/>
+</cc:interface>
 
-    <cc:implementation>
-        <c:set var="product" value="#{cc.attrs.suborder.productId}" />
-        <div class="suborder-summary">
-            <h:form>
-                <components:productSummary product="#{product}" />
-                
-                <div class="suborder-quality">
-                    <h:outputLabel value="${bundle['Ui.Suborder.Quality']}" />
-                    <h:outputText value="#{cc.attrs.suborder.quantity}" />
-                </div>
-                
-                <p:commandButton action="#{cartController.removeSuborder}">
-                    <f:setPropertyActionListener target="#{cartController.setSelectedSuborder}"
-                                                 value="#{cc.attrs.suborder}" />
-                </p:commandButton>
-            </h:form>
-        </div>
-    </cc:implementation>
+<cc:implementation>
+    <c:set var="product" value="#{cc.attrs.suborder.productId}"/>
+    <div class="suborder-summary">
+        <h:form>
+            <components:productSummary product="#{product}"/>
+
+            <div class="suborder-quality">
+                <h:outputLabel value="${bundle['Ui.Suborder.Quality']}"/>
+                <h:outputText value="#{cc.attrs.suborder.quantity}"/>
+            </div>
+
+            <p:commandButton action="#{cartController.removeSuborder}">
+                <f:setPropertyActionListener target="#{cartController.setSelectedSuborder}"
+                                             value="#{cc.attrs.suborder}"/>
+            </p:commandButton>
+        </h:form>
+    </div>
+</cc:implementation>
 </html>

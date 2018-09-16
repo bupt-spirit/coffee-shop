@@ -1,34 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
-<html xmlns = "http://www.w3.org/1999/xhtml"   
-      xmlns:h = "http://java.sun.com/jsf/html"
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:cc = "http://java.sun.com/jsf/composite"
-      xmlns:components = "http://xmlns.jcp.org/jsf/composite/components"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:components="http://xmlns.jcp.org/jsf/composite/components"
+>
 
-    <cc:interface>
-        <cc:attribute name = "title" required="true" />
-    </cc:interface>
+<cc:interface>
+    <cc:attribute name="title" required="true"/>
+</cc:interface>
 
-    <cc:implementation>
-        <h:form class="header-item">
-            <h:link outcome="/index" styleClass="shop-logo-title-container">
-                <div class="shop-logo"><h:graphicImage name="logo.svg" library="images" /></div>
-                <h1 class="shop-title"><h:outputText value="${cc.attrs.title}" /></h1>
-            </h:link>
-        </h:form>
-        <div class="header-item header-right-container">
-            <ui:insert name="header-extra"></ui:insert>
-            <nav id="global-nav">
-                <components:cartIndicator />
-                <h:form styleClass="global-nav-form">
-                    <h:link outcome="/index" styleClass="global-nav-link"
-                              value="${bundle['Ui.Nav.MainPage']}" />
-                </h:form>
-                <components:userNav />
-                <ui:insert name="global-nav-extra" />
-            </nav>
-        </div>
-    </cc:implementation>
+<cc:implementation>
+    <h:form class="header-item">
+        <h:link outcome="/index" styleClass="shop-logo-title-container">
+            <div class="shop-logo"><h:graphicImage name="logo.svg" library="images"/></div>
+            <h1 class="shop-title"><h:outputText value="#{cc.attrs.title}"/></h1>
+        </h:link>
+    </h:form>
+    <div class="header-item header-right-container">
+        <ui:insert name="header-extra"/>
+        <nav id="global-nav">
+            <components:cartIndicator/>
+            <h:form styleClass="global-nav-form">
+                <h:link outcome="/index" styleClass="global-nav-link"
+                        value="#{bundle['Ui.Nav.MainPage']}"/>
+            </h:form>
+            <components:userNav/>
+            <ui:insert name="global-nav-extra"/>
+        </nav>
+    </div>
+</cc:implementation>
 </html>

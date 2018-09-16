@@ -6,17 +6,17 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html">
 
-    <cc:interface>
-        <cc:attribute name="product" required="true" type="coffeeshop.entity.Product" />
-    </cc:interface>
+<cc:interface>
+    <cc:attribute name="product" required="true" type="coffeeshop.entity.Product"/>
+</cc:interface>
 
-    <cc:implementation>
-        <div class="product-customize">
-            <h:form>
-                <ui:repeat var="ingredientCategory" value="#{cc.attrs.product.ingredientCategoryList}">
-                    <components:ingredientSelector category="#{ingredientCategory}" />
-                </ui:repeat>
-            </h:form>
-        </div>
-    </cc:implementation>
+<cc:implementation>
+    <div class="product-customize">
+        <h:form>
+            <ui:repeat var="ingredientCategory" value="#{cc.attrs.product.ingredientCategoryList}">
+                <components:ingredientSelector category="#{ingredientCategory}"/>
+            </ui:repeat>
+        </h:form>
+    </div>
+</cc:implementation>
 </html>
