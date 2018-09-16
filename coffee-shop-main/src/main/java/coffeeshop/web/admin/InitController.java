@@ -11,15 +11,15 @@ import coffeeshop.facade.IngredientCategoryFacade;
 import coffeeshop.facade.IngredientFacade;
 import coffeeshop.facade.NutritionFacade;
 import coffeeshop.facade.ProductFacade;
+import javax.ejb.EJB;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Named;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Named;
 
 @Named
 @RequestScoped
@@ -32,33 +32,28 @@ public class InitController {
 
     @EJB
     private UserManager userManager;
+    @EJB
+    private CategoryFacade categoryFacade;
+    @EJB
+    private ProductFacade productFacade;
+    @EJB
+    private NutritionFacade nutritionFacade;
+    @EJB
+    private IngredientCategoryFacade ingredientCategoryFacade;
+    @EJB
+    private IngredientFacade ingredientFacade;
 
     public void checkAndAddDefaultAdminUser() {
         if (!userManager.isUserExisting(DEFAULT_ADMIN_USERNAME)) {
             LOG.log(Level.INFO, "Default admin user does not exists");
             userManager.addAdmin(DEFAULT_ADMIN_USERNAME, DEFAULT_ADMIN_PASSWORD);
             LOG.log(Level.INFO, "New admin user added, username: {0}, password: {1}", new String[]{
-                DEFAULT_ADMIN_USERNAME,
-                DEFAULT_ADMIN_PASSWORD
+                    DEFAULT_ADMIN_USERNAME,
+                    DEFAULT_ADMIN_PASSWORD
             });
         }
     }
 
-    @EJB
-    private CategoryFacade categoryFacade;
-
-    @EJB
-    private ProductFacade productFacade;
-
-    @EJB
-    private NutritionFacade nutritionFacade;
-
-    @EJB
-    private IngredientCategoryFacade ingredientCategoryFacade;
-
-    @EJB
-    private IngredientFacade ingredientFacade;
-    
     public void insertDemoData() {
         Category categoryDrinks = createCategory("Drinks");
         Category categoryFood = createCategory("Food");
@@ -139,10 +134,10 @@ public class InitController {
                 ingredientCategoryEspresso, ingredientCategorySyrup, ingredientCategoryCocoaNibs);
 
         // 4
-        Product productIcedCoffeewithMilk = createProduct("Iced Coffee with Milk",
+        Product productIcedCoffeeWithMilk = createProduct("Iced Coffee with Milk",
                 "Freshly brewed Starbucks Iced Coffee Blend with milk - served chilled and lightly sweetened over ice.",
                 new BigDecimal(35), categoryDrinks, null);
-        enableProductIngredient(productIcedCoffeewithMilk,
+        enableProductIngredient(productIcedCoffeeWithMilk,
                 ingredientCategorySize, ingredientCategorySweetness, ingredientCategoryIce, ingredientCategoryMilk,
                 ingredientCategoryCream, ingredientCategoryEspresso, ingredientCategorySyrup, ingredientCategoryCocoaNibs);
 
@@ -170,10 +165,10 @@ public class InitController {
                 ingredientCategoryEspresso, ingredientCategorySyrup, ingredientCategoryCocoaNibs);
 
         // 8
-        Product productColdBrewCoffeewithMilk = createProduct("Cold Brew Coffee with Milk",
-                "Our custom blend of beans are grown to steep long and cold for a super-smooth flavor. Starbucks Cold brew is handcrafted in small batches daily, slow-steeped in cool water for 20 hours, without touching heat and finished wiht a splash of milk.",
+        Product productColdBrewCoffeeWithMilk = createProduct("Cold Brew Coffee with Milk",
+                "Our custom blend of beans are grown to steep long and cold for a super-smooth flavor. Starbucks Cold brew is handcrafted in small batches daily, slow-steeped in cool water for 20 hours, without touching heat and finished with a splash of milk.",
                 new BigDecimal(33), categoryDrinks, createNutrition(0, 0, 0, 0, 0, 10));
-        enableProductIngredient(productColdBrewCoffeewithMilk,
+        enableProductIngredient(productColdBrewCoffeeWithMilk,
                 ingredientCategorySweetness, ingredientCategoryIce, ingredientCategoryMilk, ingredientCategoryCream,
                 ingredientCategoryEspresso, ingredientCategorySyrup, ingredientCategoryCocoaNibs);
 
@@ -288,7 +283,7 @@ public class InitController {
     }
 
     private Product createProduct(String name, String description,
-            BigDecimal price, Category category, Nutrition nutrition) {
+                                  BigDecimal price, Category category, Nutrition nutrition) {
         Product product = new Product();
         product.setName(name);
         product.setDescription(description);
@@ -331,7 +326,7 @@ public class InitController {
     }
 
     private Ingredient createIngredient(String name, String description,
-            BigDecimal cost, IngredientCategory ingredientCategory) {
+                                        BigDecimal cost, IngredientCategory ingredientCategory) {
         Ingredient ingredient = new Ingredient();
         ingredient.setName(name);
         ingredient.setDescription(description);

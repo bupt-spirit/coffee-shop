@@ -7,10 +7,10 @@ import coffeeshop.entity.Product;
 import coffeeshop.facade.CategoryFacade;
 import coffeeshop.facade.IngredientCategoryFacade;
 import coffeeshop.facade.ProductFacade;
-import java.util.List;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import java.util.List;
+import java.util.logging.Logger;
 
 @Stateless
 public class ProductManagerBean implements ProductManager {
@@ -22,7 +22,7 @@ public class ProductManagerBean implements ProductManager {
 
     @EJB
     private ProductFacade productFacade;
-    
+
     @EJB
     private IngredientCategoryFacade ingredientCategoryFacade;
 
@@ -42,11 +42,11 @@ public class ProductManagerBean implements ProductManager {
 
     @Override
     public List<Ingredient> getIngredientsByCategory(String categoryName) throws ProductManagerException {
-       IngredientCategory category = ingredientCategoryFacade.findByName(categoryName);
-       if (category == null) {
-           throw new ProductManagerException("no such ingredient category [" + categoryName + "]");
-       }
-       return category.getIngredientList();
+        IngredientCategory category = ingredientCategoryFacade.findByName(categoryName);
+        if (category == null) {
+            throw new ProductManagerException("no such ingredient category [" + categoryName + "]");
+        }
+        return category.getIngredientList();
     }
 
 

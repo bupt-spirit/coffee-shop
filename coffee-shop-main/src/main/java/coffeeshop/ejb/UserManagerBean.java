@@ -7,34 +7,21 @@ import coffeeshop.entity.Store;
 import coffeeshop.entity.UserInfo;
 import coffeeshop.facade.StoreFacade;
 import coffeeshop.facade.UserInfoFacade;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.security.enterprise.identitystore.Pbkdf2PasswordHash;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.logging.Logger;
 
 @Stateless
 public class UserManagerBean implements UserManager {
 
     private static final Logger LOG = Logger.getLogger(UserManagerBean.class.getName());
-
-    @EJB
-    private UserInfoFacade userInfoFacade;
-    
-    @EJB
-    private StoreFacade storeFacade;
-
-    @Inject
-    private Pbkdf2PasswordHash passwordHash;
-
-    @Inject
-    private ApplicationConfig applicationConfig;
-
     private static final List<String> ROLES = new ArrayList<>();
 
     static {
@@ -42,6 +29,16 @@ public class UserManagerBean implements UserManager {
         ROLES.add("customer");
         ROLES.add("staff");
     }
+
+    @EJB
+    private UserInfoFacade userInfoFacade;
+    @EJB
+    private StoreFacade storeFacade;
+    @SuppressWarnings("CdiInjectionPointsInspection")
+    @Inject
+    private Pbkdf2PasswordHash passwordHash;
+    @Inject
+    private ApplicationConfig applicationConfig;
 
     @Override
     public List<String> getRoles() {

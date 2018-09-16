@@ -2,10 +2,6 @@ package coffeeshop.web.admin;
 
 import coffeeshop.ejb.UserManager;
 import coffeeshop.web.util.MessageBundle;
-import java.io.Serializable;
-import java.util.Collection;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
@@ -14,6 +10,9 @@ import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.logging.Logger;
 
 @Named
 @SessionScoped
@@ -79,7 +78,7 @@ public class AdminAddUserController implements Serializable {
     public void addUser() {
         if (userManager.isUserExisting(username)) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
-                    bundle.getFormated("Ui.Admin.Message.UserAlreadyExists", username)
+                    bundle.getFormatted("Ui.Admin.Message.UserAlreadyExists", username)
             ));
         } else {
             switch (role) {
@@ -100,7 +99,7 @@ public class AdminAddUserController implements Serializable {
                     ));
             }
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
-                    bundle.getFormated("Ui.Admin.Message.AddUserSuccess", username, role)
+                    bundle.getFormatted("Ui.Admin.Message.AddUserSuccess", username, role)
             ));
         }
     }

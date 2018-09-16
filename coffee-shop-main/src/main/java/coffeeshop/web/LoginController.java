@@ -1,9 +1,6 @@
 package coffeeshop.web;
 
 import coffeeshop.web.util.MessageBundle;
-import java.security.Principal;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
@@ -20,6 +17,9 @@ import javax.security.enterprise.credential.UsernamePasswordCredential;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.security.Principal;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Named
 @RequestScoped
@@ -27,6 +27,7 @@ public class LoginController {
 
     private static final Logger LOG = Logger.getLogger(LoginController.class.getName());
 
+    @SuppressWarnings("CdiInjectionPointsInspection")
     @Inject
     private SecurityContext securityContext;
 
@@ -34,14 +35,13 @@ public class LoginController {
     private MessageBundle bundle;
 
     private FacesContext facesContext;
+    // User name and password for login
+    private String username, password;
 
     @PostConstruct
     private void getFacesContext() {
         facesContext = FacesContext.getCurrentInstance();
     }
-
-    // User name and pasword for login
-    private String username, password;
 
     public String getUsername() {
         return username;
@@ -59,7 +59,7 @@ public class LoginController {
         this.password = password;
     }
 
-    public String login() throws ServletException {
+    public String login() {
         if (isLoggedIn()) {
             facesContext.addMessage(null, new FacesMessage(bundle.getString("Ui.Message.LogoutFirst")));
             return null;
@@ -73,7 +73,7 @@ public class LoginController {
         LOG.log(Level.INFO, "Called authentication, status: {0}", status);
         Principal principal = securityContext.getCallerPrincipal();
         if (principal != null) {
-            LOG.log(Level.INFO, "User current pricipal: {0}, name: {1}",
+            LOG.log(Level.INFO, "User current principal: {0}, name: {1}",
                     new Object[]{principal, principal.getName()});
         }
         switch (status) {
@@ -91,7 +91,7 @@ public class LoginController {
             case SEND_CONTINUE:
             case SUCCESS:
                 facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-                        bundle.getFormated("Ui.Message.AuthSuccess", username),
+                        bundle.getFormatted("Ui.Message.AuthSuccess", username),
                         null
                 ));
                 break;
@@ -128,7 +128,7 @@ public class LoginController {
                     null
             ));
         } else {
-            LOG.log(Level.WARNING, "Try to logout unlogged user");
+            LOG.log(Level.WARNING, "Try to logout from a user not logged in");
         }
         return "index";
     }

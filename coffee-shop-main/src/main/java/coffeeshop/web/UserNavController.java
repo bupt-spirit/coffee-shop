@@ -3,7 +3,6 @@ package coffeeshop.web;
 import coffeeshop.ejb.CustomerInfoManager;
 import coffeeshop.ejb.CustomerInfoManagerException;
 import coffeeshop.ejb.UserManager;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
@@ -11,6 +10,7 @@ import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.security.enterprise.SecurityContext;
+import java.util.List;
 
 @Named
 @RequestScoped
@@ -18,10 +18,11 @@ public class UserNavController {
 
     @EJB
     private UserManager userManager;
-    
+
     @EJB
     private CustomerInfoManager customerInfoManager;
 
+    @SuppressWarnings("CdiInjectionPointsInspection")
     @Inject
     private SecurityContext securityContext;
 
@@ -38,7 +39,7 @@ public class UserNavController {
     public boolean isLoggedIn() {
         return securityContext.getCallerPrincipal() != null;
     }
-    
+
     public String getNickname() throws ValidatorException {
         String username = getUsername();
         try {
@@ -47,7 +48,7 @@ public class UserNavController {
             throw new ValidatorException(new FacesMessage("Not a customer but getNickname called"));
         }
     }
-    
+
     public String getUsername() throws ValidatorException {
         if (isLoggedIn()) {
             return securityContext.getCallerPrincipal().getName();
