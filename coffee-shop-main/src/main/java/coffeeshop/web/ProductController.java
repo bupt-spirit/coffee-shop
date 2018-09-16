@@ -1,6 +1,5 @@
 package coffeeshop.web;
 
-import coffeeshop.ejb.CartManager;
 import coffeeshop.ejb.CartManagerException;
 import coffeeshop.ejb.ProductManager;
 import coffeeshop.ejb.ProductManagerException;
@@ -8,6 +7,12 @@ import coffeeshop.entity.Category;
 import coffeeshop.entity.Ingredient;
 import coffeeshop.entity.Product;
 import coffeeshop.facade.IngredientFacade;
+import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
+import javax.enterprise.context.SessionScoped;
+import javax.faces.event.ValueChangeEvent;
+import javax.inject.Inject;
+import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -15,12 +20,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
-import javax.enterprise.context.SessionScoped;
-import javax.faces.event.ValueChangeEvent;
-import javax.inject.Inject;
-import javax.inject.Named;
 
 @Named
 @SessionScoped
@@ -32,15 +31,15 @@ public class ProductController implements Serializable {
 
     @EJB
     private ProductManager productManager;
-    
+
     @Inject
     private CartController cartController;
 
-    // For find ingredinet by view returned id
+    // For find ingredient by view returned id
     @EJB
     private IngredientFacade ingredientFacade;
 
-    private String selectedCatagory;
+    private String selectedCategory;
     private Product selectedProduct;
     private Set<Ingredient> selectedIngredients;
     private short itemQuality;
@@ -50,12 +49,12 @@ public class ProductController implements Serializable {
         selectedIngredients = new HashSet<>();
     }
 
-    public String getSelectedCatagory() {
-        return selectedCatagory;
+    public String getSelectedCategory() {
+        return selectedCategory;
     }
 
-    public void setSelectedCatagory(String selectedCatagory) {
-        this.selectedCatagory = selectedCatagory;
+    public void setSelectedCategory(String selectedCategory) {
+        this.selectedCategory = selectedCategory;
     }
 
     public Product getSelectedProduct() {
@@ -70,12 +69,12 @@ public class ProductController implements Serializable {
         return productManager.getCategories();
     }
 
-    public List<Product> getCategoryProducts(String categoryName) throws ProductManagerException {
+    private List<Product> getCategoryProducts(String categoryName) throws ProductManagerException {
         return productManager.getCategoryProducts(categoryName);
     }
 
     public List<Product> getSelectedCategoryProducts() throws ProductManagerException {
-        return getCategoryProducts(selectedCatagory);
+        return getCategoryProducts(selectedCategory);
     }
 
     public short getItemQuality() {
@@ -108,12 +107,11 @@ public class ProductController implements Serializable {
             selectedIngredients.add(ingredient);
         }
     }
-    
+
     public void addToCart() throws CartManagerException {
-        List ingredientsList = new ArrayList<>();
-        ingredientsList.addAll(selectedIngredients);
+        List<Ingredient> ingredientsList = new ArrayList<>(selectedIngredients);
         cartController.getCartManager().add(selectedProduct, ingredientsList, itemQuality);
         LOG.log(Level.INFO, "Add suborder to cart: {0} {1} {2}",
-                new Object[]{ selectedProduct, ingredientsList, itemQuality });
+                new Object[]{selectedProduct, ingredientsList, itemQuality});
     }
 }

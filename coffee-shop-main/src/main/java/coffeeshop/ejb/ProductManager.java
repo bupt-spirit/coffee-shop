@@ -8,11 +8,11 @@ import java.util.List;
 
 public interface ProductManager {
 
-    public List<Category> getCategories();
+    List<Category> getCategories();
 
-    public List<Product> getCategoryProducts(String categoryName) throws ProductManagerException;
-    
-    public List<Ingredient> getIngredientsByCategory(String ingredientCategoryName) throws ProductManagerException;
-    
-    public List<IngredientCategory> getIngredientCategoryByProduct(String productName) throws ProductManagerException;
+    List<Product> getCategoryProducts(String categoryName) throws ProductManagerException;
+
+    List<Ingredient> getIngredientsByCategory(String ingredientCategoryName) throws ProductManagerException;
+
+    List<IngredientCategory> getIngredientCategoryByProduct(String productName) throws ProductManagerException;
 }

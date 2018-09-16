@@ -1,13 +1,12 @@
 package coffeeshop.util;
 
-import java.util.Iterator;
-import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ConstraintViolationTester<T> {
 
@@ -18,13 +17,11 @@ public class ConstraintViolationTester<T> {
         Validator validator = factory.getValidator();
         Set<ConstraintViolation<T>> constraintViolations = validator.validate(entity);
         if (constraintViolations.size() > 0) {
-            Iterator<ConstraintViolation<T>> iterator = constraintViolations.iterator();
-            while (iterator.hasNext()) {
-                ConstraintViolation<T> cv = iterator.next();
+            for (ConstraintViolation<T> cv : constraintViolations) {
                 LOG.log(Level.SEVERE, "{0}.{1} {2}", new Object[]{
-                    cv.getRootBeanClass().getName(),
-                    cv.getPropertyPath(),
-                    cv.getMessage()
+                        cv.getRootBeanClass().getName(),
+                        cv.getPropertyPath(),
+                        cv.getMessage()
                 });
             }
             return false;

@@ -1,9 +1,5 @@
 package coffeeshop.entity;
 
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -22,24 +18,27 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
 
 @Entity
-@Table(name = "order_info", catalog = "coffee_shop", schema = "")
+@Table(name = "order_info")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "OrderInfo.findAll", query = "SELECT o FROM OrderInfo o")
-    , @NamedQuery(name = "OrderInfo.findById", query = "SELECT o FROM OrderInfo o WHERE o.id = :id")
-    , @NamedQuery(name = "OrderInfo.findByDateCreate", query = "SELECT o FROM OrderInfo o WHERE o.dateCreate = :dateCreate")
-    , @NamedQuery(name = "OrderInfo.findByAmount", query = "SELECT o FROM OrderInfo o WHERE o.amount = :amount")
-    , @NamedQuery(name = "OrderInfo.findByConfirmation", query = "SELECT o FROM OrderInfo o WHERE o.confirmation = :confirmation")
-    , @NamedQuery(name = "OrderInfo.findByIsPrepared", query = "SELECT o FROM OrderInfo o WHERE o.isPrepared = :isPrepared")
-    , @NamedQuery(name = "OrderInfo.findByIsFinished", query = "SELECT o FROM OrderInfo o WHERE o.isFinished = :isFinished")})
+        @NamedQuery(name = "OrderInfo.findAll", query = "SELECT o FROM OrderInfo o"),
+        @NamedQuery(name = "OrderInfo.findById", query = "SELECT o FROM OrderInfo o WHERE o.id = :id"),
+        @NamedQuery(name = "OrderInfo.findByDateCreate", query = "SELECT o FROM OrderInfo o WHERE o.dateCreate = :dateCreate"),
+        @NamedQuery(name = "OrderInfo.findByAmount", query = "SELECT o FROM OrderInfo o WHERE o.amount = :amount"),
+        @NamedQuery(name = "OrderInfo.findByConfirmation", query = "SELECT o FROM OrderInfo o WHERE o.confirmation = :confirmation"),
+        @NamedQuery(name = "OrderInfo.findByIsPrepared", query = "SELECT o FROM OrderInfo o WHERE o.isPrepared = :isPrepared"),
+        @NamedQuery(name = "OrderInfo.findByIsFinished", query = "SELECT o FROM OrderInfo o WHERE o.isFinished = :isFinished")})
 public class OrderInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(nullable = false)
     private Integer id;
     @Basic(optional = false)
@@ -176,15 +175,12 @@ public class OrderInfo implements Serializable {
             return false;
         }
         OrderInfo other = (OrderInfo) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return (this.id != null || other.id == null) && (this.id == null || this.id.equals(other.id));
     }
 
     @Override
     public String toString() {
         return "coffeeshop.entity.OrderInfo[ id=" + id + " ]";
     }
-    
+
 }

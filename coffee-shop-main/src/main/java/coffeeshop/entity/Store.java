@@ -1,7 +1,5 @@
 package coffeeshop.entity;
 
-import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -12,30 +10,29 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import java.io.Serializable;
+import java.util.List;
 
 @Entity
-@Table(catalog = "coffee_shop", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Store.findAll", query = "SELECT s FROM Store s")
-    , @NamedQuery(name = "Store.findById", query = "SELECT s FROM Store s WHERE s.id = :id")
-    , @NamedQuery(name = "Store.findByCountry", query = "SELECT s FROM Store s WHERE s.country = :country")
-    , @NamedQuery(name = "Store.findByProvince", query = "SELECT s FROM Store s WHERE s.province = :province")
-    , @NamedQuery(name = "Store.findByCity", query = "SELECT s FROM Store s WHERE s.city = :city")
-    , @NamedQuery(name = "Store.findByDistrict", query = "SELECT s FROM Store s WHERE s.district = :district")
-    , @NamedQuery(name = "Store.findByDetail", query = "SELECT s FROM Store s WHERE s.detail = :detail")
-    , @NamedQuery(name = "Store.findByIsAvailable", query = "SELECT s FROM Store s WHERE s.isAvailable = :isAvailable")})
+        @NamedQuery(name = "Store.findAll", query = "SELECT s FROM Store s"),
+        @NamedQuery(name = "Store.findById", query = "SELECT s FROM Store s WHERE s.id = :id"),
+        @NamedQuery(name = "Store.findByCountry", query = "SELECT s FROM Store s WHERE s.country = :country"),
+        @NamedQuery(name = "Store.findByProvince", query = "SELECT s FROM Store s WHERE s.province = :province"),
+        @NamedQuery(name = "Store.findByCity", query = "SELECT s FROM Store s WHERE s.city = :city"),
+        @NamedQuery(name = "Store.findByDistrict", query = "SELECT s FROM Store s WHERE s.district = :district"),
+        @NamedQuery(name = "Store.findByDetail", query = "SELECT s FROM Store s WHERE s.detail = :detail"),
+        @NamedQuery(name = "Store.findByIsAvailable", query = "SELECT s FROM Store s WHERE s.isAvailable = :isAvailable")})
 public class Store implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(nullable = false)
     private Integer id;
     @Basic(optional = false)
@@ -177,15 +174,12 @@ public class Store implements Serializable {
             return false;
         }
         Store other = (Store) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return (this.id != null || other.id == null) && (this.id == null || this.id.equals(other.id));
     }
 
     @Override
     public String toString() {
         return "coffeeshop.entity.Store[ id=" + id + " ]";
     }
-    
+
 }

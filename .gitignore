@@ -8,3 +8,5 @@ coffee-shop-main/src/main/webapp/resources/compiled-css/*.map
 # IDE generated files
 nb-configuration.xml
 *.NavData
+*.iml
+.idea

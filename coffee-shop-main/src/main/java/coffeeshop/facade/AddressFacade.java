@@ -11,13 +11,13 @@ public class AddressFacade extends AbstractFacade<Address> {
     @PersistenceContext(unitName = "bupt-spirit.projects.coffeeshop")
     private EntityManager em;
 
+    public AddressFacade() {
+        super(Address.class);
+    }
+
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
 
-    public AddressFacade() {
-        super(Address.class);
-    }
-    
 }

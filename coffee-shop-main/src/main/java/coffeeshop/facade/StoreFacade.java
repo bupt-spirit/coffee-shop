@@ -11,13 +11,13 @@ public class StoreFacade extends AbstractFacade<Store> {
     @PersistenceContext(unitName = "bupt-spirit.projects.coffeeshop")
     private EntityManager em;
 
+    public StoreFacade() {
+        super(Store.class);
+    }
+
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
 
-    public StoreFacade() {
-        super(Store.class);
-    }
-    
 }

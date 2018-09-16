@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
-<ui:composition template="templates/main-only.xhtml"
-                xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                xmlns:p="http://primefaces.org/ui"
-                xmlns:components="http://xmlns.jcp.org/jsf/composite/components"
-                xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <ui:define name="main">
-        <ui:repeat var="product"
-                   value="#{productController.selectedCategoryProducts}">
-
-            <h:form>
-                <h:commandLink action="/product-detail">
-                    <components:productSummary product="#{product}" />
-                    <f:setPropertyActionListener target="#{productController.selectedProduct}" value="#{product}" />
-                </h:commandLink>
-            </h:form>
-        </ui:repeat>
-    </ui:define>
-</ui:composition>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:components="http://xmlns.jcp.org/jsf/composite/components"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:body>
+    <ui:composition template="templates/main-only.xhtml">
+        <ui:define name="main">
+            <ui:repeat var="product" value="#{productController.selectedCategoryProducts}">
+                <h:form>
+                    <h:commandLink action="/product-detail">
+                        <components:productSummary product="#{product}"/>
+                        <f:setPropertyActionListener target="#{productController.selectedProduct}" value="#{product}"/>
+                    </h:commandLink>
+                </h:form>
+            </ui:repeat>
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>

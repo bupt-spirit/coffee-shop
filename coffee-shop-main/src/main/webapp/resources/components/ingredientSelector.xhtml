@@ -6,20 +6,20 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <cc:interface>
-        <cc:attribute name="category" required="true" type="coffeeshop.entity.IngredientCategory" />
-    </cc:interface>
+<cc:interface>
+    <cc:attribute name="category" required="true" type="coffeeshop.entity.IngredientCategory"/>
+</cc:interface>
 
-    <cc:implementation>
-        <div class="ingredient-selector">
-            <h:outputLabel for="ingredient-category-selector" value="#{cc.attrs.category.name}" />
-            <p:selectOneButton id="ingredient-category-selector"
-                               valueChangeListener="#{productController.ingredientChanged}">
-                <f:selectItems value="#{cc.attrs.category.ingredientList}" var="ingredient"
-                               itemValue="#{ingredient.id}" itemLabel="#{ingredient.name}"
-                               itemDescription="#{ingredient.description}"/>
-                <p:ajax event="change"/>
-            </p:selectOneButton> 
-        </div>
-    </cc:implementation>
+<cc:implementation>
+    <div class="ingredient-selector">
+        <h:outputLabel for="ingredient-category-selector" value="#{cc.attrs.category.name}"/>
+        <p:selectOneButton id="ingredient-category-selector"
+                           valueChangeListener="#{productController.ingredientChanged}">
+            <f:selectItems value="#{cc.attrs.category.ingredientList}" var="ingredient"
+                           itemValue="#{ingredient.id}" itemLabel="#{ingredient.name}"
+                           itemDescription="#{ingredient.description}"/>
+            <p:ajax event="change"/>
+        </p:selectOneButton>
+    </div>
+</cc:implementation>
 </html>

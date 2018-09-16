@@ -1,7 +1,5 @@
 package coffeeshop.entity;
 
-import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -21,21 +19,22 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import java.io.Serializable;
+import java.util.List;
 
 @Entity
-@Table(name = "ingredient_category", catalog = "coffee_shop", schema = "", uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"name"})})
+@Table(name = "ingredient_category", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"name"})})
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "IngredientCategory.findAll", query = "SELECT i FROM IngredientCategory i")
-    , @NamedQuery(name = "IngredientCategory.findById", query = "SELECT i FROM IngredientCategory i WHERE i.id = :id")
-    , @NamedQuery(name = "IngredientCategory.findByName", query = "SELECT i FROM IngredientCategory i WHERE i.name = :name")})
+        @NamedQuery(name = "IngredientCategory.findAll", query = "SELECT i FROM IngredientCategory i"),
+        @NamedQuery(name = "IngredientCategory.findById", query = "SELECT i FROM IngredientCategory i WHERE i.id = :id"),
+        @NamedQuery(name = "IngredientCategory.findByName", query = "SELECT i FROM IngredientCategory i WHERE i.name = :name")})
 public class IngredientCategory implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(nullable = false)
     private Integer id;
     @Basic(optional = false)
@@ -44,8 +43,8 @@ public class IngredientCategory implements Serializable {
     @Column(nullable = false, length = 45)
     private String name;
     @JoinTable(name = "product_option", joinColumns = {
-        @JoinColumn(name = "ingredient_category_id", referencedColumnName = "id", nullable = false)}, inverseJoinColumns = {
-        @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)})
+            @JoinColumn(name = "ingredient_category_id", referencedColumnName = "id", nullable = false)}, inverseJoinColumns = {
+            @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)})
     @ManyToMany
     private List<Product> productList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "ingredientCategoryId")
@@ -111,15 +110,12 @@ public class IngredientCategory implements Serializable {
             return false;
         }
         IngredientCategory other = (IngredientCategory) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return (this.id != null || other.id == null) && (this.id == null || this.id.equals(other.id));
     }
 
     @Override
     public String toString() {
         return "coffeeshop.entity.IngredientCategory[ id=" + id + " ]";
     }
-    
+
 }

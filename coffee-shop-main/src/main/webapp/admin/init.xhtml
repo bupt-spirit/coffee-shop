@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
-<ui:composition template="/templates/main-only.xhtml"
-                xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:p="http://primefaces.org/ui"
-                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-    <ui:define name="main">
-        <h:form>
-            <p:commandButton action="#{initController.checkAndAddDefaultAdminUser}" type="submit"
-                             value="${bundle['Ui.Admin.Init.Button.InitAdminUser']}" ajax="off" />
-        </h:form>
-    </ui:define>
-</ui:composition>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+<h:body>
+    <ui:composition template="/templates/main-only.xhtml">
+        <ui:define name="main">
+            <h:form>
+                <p:commandButton action="#{initController.checkAndAddDefaultAdminUser}" type="submit"
+                                 value="#{bundle['Ui.Admin.Init.Button.InitAdminUser']}" ajax="off"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>

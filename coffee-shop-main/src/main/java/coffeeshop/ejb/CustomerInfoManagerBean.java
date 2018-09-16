@@ -7,7 +7,7 @@ import javax.ejb.Stateless;
 
 @Stateless
 public class CustomerInfoManagerBean implements CustomerInfoManager {
-    
+
     @EJB
     CustomerFacade customerFacade;
 

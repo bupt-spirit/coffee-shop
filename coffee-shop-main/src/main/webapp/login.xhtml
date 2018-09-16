@@ -1,26 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
-<ui:composition template="/templates/main-only.xhtml"
-                xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:p="http://primefaces.org/ui"
-                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-    <ui:define name="main">
-        <h:form>
-            <p:panelGrid columns="3" styleClass="ui-panelgrid-blank">
-                <p:outputLabel for="test-username" value="${bundle['Ui.Label.Username']}" />
-                <p:inputText type="text" id="test-username" value="#{loginController.username}"
-                             required="true" />
-                <p:messages for="test-username" />
-                <p:outputLabel for="test-password" value="${bundle['Ui.Label.Password']}" />
-                <p:inputText type="password" id="test-password" value="#{loginController.password}"
-                             required="true" />
-                <p:messages for="test-password" />
-            </p:panelGrid>
-            <p:commandButton action="#{loginController.login}" type="submit"
-                             value="${bundle['Ui.Button.Login']}" ajax="false" />
-            <p:commandButton type="reset" value="Reset" />
-        </h:form>
-        <p:messages />
-    </ui:define>
-</ui:composition>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+<h:body>
+    <ui:composition template="/templates/main-only.xhtml">
+        <ui:define name="main">
+            <h:form>
+                <p:panelGrid columns="3" styleClass="ui-panelgrid-blank">
+                    <p:outputLabel for="test-username" value="#{bundle['Ui.Label.Username']}"/>
+                    <p:inputText type="text" id="test-username" value="#{loginController.username}"
+                                 required="true"/>
+                    <p:messages for="test-username"/>
+                    <p:outputLabel for="test-password" value="#{bundle['Ui.Label.Password']}"/>
+                    <p:inputText type="password" id="test-password" value="#{loginController.password}"
+                                 required="true"/>
+                    <p:messages for="test-password"/>
+                </p:panelGrid>
+                <p:commandButton action="#{loginController.login}" type="submit"
+                                 value="#{bundle['Ui.Button.Login']}" ajax="false"/>
+                <p:commandButton type="reset" value="Reset"/>
+            </h:form>
+            <p:messages/>
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>

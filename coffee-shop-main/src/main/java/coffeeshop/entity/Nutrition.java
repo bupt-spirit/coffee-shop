@@ -1,8 +1,5 @@
 package coffeeshop.entity;
 
-import java.io.Serializable;
-import java.util.List;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,28 +8,27 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import java.io.Serializable;
+import java.util.List;
 
 @Entity
-@Table(catalog = "coffee_shop", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Nutrition.findAll", query = "SELECT n FROM Nutrition n")
-    , @NamedQuery(name = "Nutrition.findById", query = "SELECT n FROM Nutrition n WHERE n.id = :id")
-    , @NamedQuery(name = "Nutrition.findByCalories", query = "SELECT n FROM Nutrition n WHERE n.calories = :calories")
-    , @NamedQuery(name = "Nutrition.findByFat", query = "SELECT n FROM Nutrition n WHERE n.fat = :fat")
-    , @NamedQuery(name = "Nutrition.findByCarbon", query = "SELECT n FROM Nutrition n WHERE n.carbon = :carbon")
-    , @NamedQuery(name = "Nutrition.findByFiber", query = "SELECT n FROM Nutrition n WHERE n.fiber = :fiber")
-    , @NamedQuery(name = "Nutrition.findByProtein", query = "SELECT n FROM Nutrition n WHERE n.protein = :protein")
-    , @NamedQuery(name = "Nutrition.findBySodium", query = "SELECT n FROM Nutrition n WHERE n.sodium = :sodium")})
+        @NamedQuery(name = "Nutrition.findAll", query = "SELECT n FROM Nutrition n"),
+        @NamedQuery(name = "Nutrition.findById", query = "SELECT n FROM Nutrition n WHERE n.id = :id"),
+        @NamedQuery(name = "Nutrition.findByCalories", query = "SELECT n FROM Nutrition n WHERE n.calories = :calories"),
+        @NamedQuery(name = "Nutrition.findByFat", query = "SELECT n FROM Nutrition n WHERE n.fat = :fat"),
+        @NamedQuery(name = "Nutrition.findByCarbon", query = "SELECT n FROM Nutrition n WHERE n.carbon = :carbon"),
+        @NamedQuery(name = "Nutrition.findByFiber", query = "SELECT n FROM Nutrition n WHERE n.fiber = :fiber"),
+        @NamedQuery(name = "Nutrition.findByProtein", query = "SELECT n FROM Nutrition n WHERE n.protein = :protein"),
+        @NamedQuery(name = "Nutrition.findBySodium", query = "SELECT n FROM Nutrition n WHERE n.sodium = :sodium")})
 public class Nutrition implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(nullable = false)
     private Integer id;
     private Integer calories;
@@ -130,15 +126,12 @@ public class Nutrition implements Serializable {
             return false;
         }
         Nutrition other = (Nutrition) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return (this.id != null || other.id == null) && (this.id == null || this.id.equals(other.id));
     }
 
     @Override
     public String toString() {
         return "coffeeshop.entity.Nutrition[ id=" + id + " ]";
     }
-    
+
 }

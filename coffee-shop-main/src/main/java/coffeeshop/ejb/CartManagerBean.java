@@ -11,8 +11,12 @@ import coffeeshop.facade.AddressFacade;
 import coffeeshop.facade.OrderInfoFacade;
 import coffeeshop.facade.StoreFacade;
 import coffeeshop.facade.SuborderFacade;
+import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
+import javax.ejb.Stateful;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -20,9 +24,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
-import javax.ejb.Stateful;
 
 @Stateful
 public class CartManagerBean implements CartManager, Serializable {
@@ -41,10 +42,10 @@ public class CartManagerBean implements CartManager, Serializable {
 
     @EJB
     private AddressFacade addressFacade;
-    
+
     @EJB
     private SuborderFacade suborderFacade;
-    
+
     @PostConstruct
     public void init() {
         orderInfo = new OrderInfo();
@@ -65,7 +66,7 @@ public class CartManagerBean implements CartManager, Serializable {
         orderInfoFacade.create(orderInfo);
         storeFacade.edit(store);
         addressFacade.edit(address);
-        for (Suborder suborder: orderInfo.getSuborderList()) {
+        for (Suborder suborder : orderInfo.getSuborderList()) {
             suborderFacade.create(suborder);
         }
         return orderInfo;
@@ -92,13 +93,14 @@ public class CartManagerBean implements CartManager, Serializable {
     }
 
     private int newConfirmationId() {
+        // TODO: Change confirmation id to meaning full number
         return 0;
     }
 
     @Override
     public BigDecimal getOrderAmount() {
         List<Suborder> suborders = orderInfo.getSuborderList();
-        BigDecimal amount = BigDecimal.ZERO.setScale(2);
+        BigDecimal amount = BigDecimal.ZERO.setScale(2, RoundingMode.CEILING);
         for (Suborder suborder : suborders) {
             amount = amount.add(getSuborderAmount(suborder));
         }
@@ -106,7 +108,7 @@ public class CartManagerBean implements CartManager, Serializable {
     }
 
     private BigDecimal getSuborderAmount(Suborder suborder) {
-        BigDecimal amount = BigDecimal.ZERO.setScale(2);
+        BigDecimal amount = BigDecimal.ZERO.setScale(2, RoundingMode.CEILING);
         amount = amount.add(suborder.getProductId().getCost());
         for (Ingredient ingredient : suborder.getIngredientList()) {
             amount = amount.add(ingredient.getCost());

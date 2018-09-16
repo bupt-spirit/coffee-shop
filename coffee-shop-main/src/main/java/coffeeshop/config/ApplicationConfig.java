@@ -1,8 +1,5 @@
 package coffeeshop.config;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Stream;
 import javax.annotation.PostConstruct;
 import javax.annotation.security.DeclareRoles;
 import javax.enterprise.context.ApplicationScoped;
@@ -11,7 +8,11 @@ import javax.security.enterprise.authentication.mechanism.http.CustomFormAuthent
 import javax.security.enterprise.authentication.mechanism.http.LoginToContinue;
 import javax.security.enterprise.identitystore.DatabaseIdentityStoreDefinition;
 import javax.security.enterprise.identitystore.Pbkdf2PasswordHash;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Stream;
 
+@SuppressWarnings("DefaultAnnotationParam")
 @DatabaseIdentityStoreDefinition(
         dataSourceLookup = "jdbc/CoffeeShop",
         callerQuery = "SELECT password FROM user_info WHERE username = ?",
@@ -19,7 +20,7 @@ import javax.security.enterprise.identitystore.Pbkdf2PasswordHash;
         hashAlgorithm = Pbkdf2PasswordHash.class,
         priorityExpression = "${100}",
         hashAlgorithmParameters = {
-            "${applicationConfig.hashAlgorithmParametersAsPairStream}"
+                "${applicationConfig.hashAlgorithmParametersAsPairStream}"
         })
 @CustomFormAuthenticationMechanismDefinition(
         loginToContinue = @LoginToContinue(
@@ -29,9 +30,9 @@ import javax.security.enterprise.identitystore.Pbkdf2PasswordHash;
 @Named
 @ApplicationScoped
 public class ApplicationConfig {
-    
+
     private Map<String, String> hashAlgorithmParameters;
-    
+
     @PostConstruct
     void init() {
         hashAlgorithmParameters = new HashMap<>();
@@ -41,11 +42,9 @@ public class ApplicationConfig {
     }
 
     public Stream<String> getHashAlgorithmParametersAsPairStream() {
-        return hashAlgorithmParameters.entrySet().stream().map((entry) -> {
-            return entry.getKey() + "=" + entry.getValue();
-        });
+        return hashAlgorithmParameters.entrySet().stream().map((entry) -> entry.getKey() + "=" + entry.getValue());
     }
-    
+
     public Map<String, String> getHashAlgorithmParameters() {
         return hashAlgorithmParameters;
     }

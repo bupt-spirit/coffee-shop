@@ -11,13 +11,13 @@ public class SeasonSpecialFacade extends AbstractFacade<SeasonSpecial> {
     @PersistenceContext(unitName = "bupt-spirit.projects.coffeeshop")
     private EntityManager em;
 
+    public SeasonSpecialFacade() {
+        super(SeasonSpecial.class);
+    }
+
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
 
-    public SeasonSpecialFacade() {
-        super(SeasonSpecial.class);
-    }
-    
 }

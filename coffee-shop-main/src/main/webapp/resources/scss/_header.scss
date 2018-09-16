@@ -1,3 +1,5 @@
+@import "_global.scss";
+
 $header-background: #f7f7f7;
 $header-height: 4rem;
 $header-padding: .5rem;
@@ -46,11 +48,11 @@ $hover-color: darken($header-background, 3%);
     .global-nav-form {
         height: $header-height;
         .global-nav-link {
-            display: block;
             height: $header-height;
             text-align: center;
             font-size: 1.25rem;
             padding: 0 .5rem;
+
             display: table-cell;
             vertical-align: middle;
         }
