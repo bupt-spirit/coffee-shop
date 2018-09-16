@@ -7,7 +7,13 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:define name="main">
-        <h1>${bundle['Ui.Admin.AdminConsoleTitle']}</h1>
+        <h1><h:outputText value="${bundle['Ui.Admin.AdminConsoleTitle']}" /></h1>
+        <p:panel header="${bundle['Ui.Admin.InitData.Title']}">
+            <h:form id="init-demo-data-form">
+                <p:commandButton action="#{initController.insertDemoData}" type="submit"
+                                 value="${bundle['Ui.Admin.InitData.Button.InitData']}" ajax="off" />
+            </h:form>
+        </p:panel>
         <p:panel header="${bundle['Ui.Admin.AddUser.Title']}">
             <h:form id="add-user-form">
                 <p:panelGrid columns="3" styleClass="ui-panelgrid-blank">
