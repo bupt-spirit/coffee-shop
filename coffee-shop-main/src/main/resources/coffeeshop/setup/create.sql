@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS `coffee_shop`.`address` (
   `receiver` VARCHAR(45) NOT NULL,
   `receiver_phone` VARCHAR(20) NOT NULL COMMENT '收件人电话\n',
   `is_available` TINYINT NOT NULL DEFAULT 1,
-  `customer_user_id` INT UNSIGNED NOT NULL,
+  `customer_user_id` INT UNSIGNED NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_address_customer1_idx` (`customer_user_id` ASC) VISIBLE,
   CONSTRAINT `fk_address_customer1`
@@ -151,8 +151,8 @@ CREATE TABLE IF NOT EXISTS `coffee_shop`.`product` (
   CONSTRAINT `fk_product_image_storage1`
     FOREIGN KEY (`image_uuid`)
     REFERENCES `coffee_shop`.`image` (`uuid`)
-    ON DELETE RESTRICT
-    ON UPDATE RESTRICT)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 

@@ -12,7 +12,7 @@ public interface UserManager {
 
     void addStaff(String username, String password, Store store);
 
-    UserInfo getUuser(String username) throws UserManagerException;
+    UserInfo getUser(String username) throws UserManagerException;
 
     void changePassword(String username, String password) throws UserManagerException;
 

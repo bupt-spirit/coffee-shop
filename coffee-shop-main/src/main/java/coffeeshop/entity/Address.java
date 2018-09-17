@@ -78,7 +78,7 @@ public class Address implements Serializable {
     @NotNull
     @Column(name = "is_available", nullable = false)
     private short isAvailable;
-    @JoinColumn(name = "customer_user_id", referencedColumnName = "user_id", nullable = false)
+    @JoinColumn(name = "customer_user_id", referencedColumnName = "user_id")
     @ManyToOne(optional = false)
     private Customer customerUserId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "addressId")

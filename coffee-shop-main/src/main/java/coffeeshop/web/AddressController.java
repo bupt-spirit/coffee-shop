@@ -6,13 +6,12 @@
 package coffeeshop.web;
 
 import coffeeshop.ejb.CustomerInfoManager;
+import coffeeshop.ejb.CustomerInfoManagerException;
 import coffeeshop.ejb.UserManagerException;
 import coffeeshop.entity.Address;
 import coffeeshop.entity.Customer;
 import coffeeshop.web.util.MessageBundle;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -22,11 +21,12 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-import org.primefaces.PrimeFaces;
 
 @Named
 @RequestScoped
 public class AddressController {
+
+    private static final Logger LOG = Logger.getLogger(AddressController.class.getName());
 
     private String country;
     private String province;
@@ -35,10 +35,7 @@ public class AddressController {
     private String detail;
     private String receiver;
     private String receiverPhone;
-    Customer customer;
-    private List<Address> addresses;
     private Address selectedAddress;
-    private static final Logger LOG = Logger.getLogger(AddressController.class.getName());
 
     @EJB
     CustomerInfoManager customerInfoManager;
@@ -111,23 +108,14 @@ public class AddressController {
         this.receiverPhone = receiverPhone;
     }
 
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
     public void addAddress() throws UserManagerException {
-        this.customerInfoManager.addAddress(customer, country, province, city, district, detail, receiver, receiverPhone);
+        Customer customer = userInfoController.getCurrentUser().getCustomer();
+        customerInfoManager.addAddress(customer, country, province, city, district, detail, receiver, receiverPhone);
         facesContext.addMessage(null, new FacesMessage(bundle.getString("Ui.Address.AddSuccess")));
     }
 
     public List<Address> getAddresses() throws UserManagerException {
-        this.addresses = userInfoController.getCurrentUser().getCustomer().getAddressList();
-        LOG.log(Level.INFO, "get addresses successfully ");
-        return addresses;
+        return userInfoController.getCurrentUser().getCustomer().getAddressList();
     }
 
     public Address getSelectedAddress() {
@@ -138,9 +126,11 @@ public class AddressController {
         this.selectedAddress = selectedAddress;
     }
 
-    public void removeAddress() throws UserManagerException {
-        this.customer = userInfoController.getCurrentUser().getCustomer();
-        this.customerInfoManager.removeAddress(selectedAddress, customer);
+    public void removeAddress() throws UserManagerException, CustomerInfoManagerException {
+        Customer customer = userInfoController.getCurrentUser().getCustomer();
+        LOG.log(Level.INFO, "Current customer: {0}", customer);
+        LOG.log(Level.INFO, "Selected address: {0}", selectedAddress.getCustomerUserId());
+        customerInfoManager.removeAddress(selectedAddress, customer);
         LOG.log(Level.INFO, "remove address successfully ");
     }
 

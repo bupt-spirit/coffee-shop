@@ -118,7 +118,7 @@ public class UserManagerBean implements UserManager {
     }
 
     @Override
-    public UserInfo getUuser(String username) throws UserManagerException {
+    public UserInfo getUser(String username) throws UserManagerException {
         UserInfo userInfo = userInfoFacade.findByUsername(username);
         if (userInfo == null) {
             throw new UserManagerException("No such user");
