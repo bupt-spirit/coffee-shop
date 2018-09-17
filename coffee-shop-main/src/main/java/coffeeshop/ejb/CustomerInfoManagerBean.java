@@ -4,6 +4,7 @@ import coffeeshop.entity.Address;
 import coffeeshop.entity.Customer;
 import coffeeshop.facade.AddressFacade;
 import coffeeshop.facade.CustomerFacade;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -36,5 +37,18 @@ public class CustomerInfoManagerBean implements CustomerInfoManager {
         customer.getAddressList().add(address);
         customerFacade.edit(customer);
         addressFacade.create(address);
+    }
+    
+    @Override
+    public void removeAddress(Address address, Customer customer) {
+        address.setIsAvailable((short) 0);
+        addressFacade.edit(address);
+        List<Address> addresses = customer.getAddressList();
+        for (int i = 0; i < addresses.size(); i++) {
+            if (addresses.get(i) == address) {
+                addresses.remove(i);
+                customerFacade.edit(customer);
+            }
+        }
     }
 }
