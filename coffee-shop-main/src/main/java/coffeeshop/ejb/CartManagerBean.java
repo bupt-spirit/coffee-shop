@@ -32,6 +32,8 @@ public class CartManagerBean implements CartManager, Serializable {
     private static final long serialVersionUID = 1L;
 
     private OrderInfo orderInfo = null;
+    
+    
 
     @EJB
     private OrderInfoFacade orderInfoFacade;
@@ -126,6 +128,11 @@ public class CartManagerBean implements CartManager, Serializable {
         }
     }
 
+    @Override
+    public void removeAll(){
+        orderInfo.getSuborderList().clear();
+    }
+    
     @Override
     public int getItemCount() {
         int quality = 0;

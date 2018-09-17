@@ -8,6 +8,11 @@
                 xmlns:components="http://xmlns.jcp.org/jsf/composite/components">
     <ui:define name="main">
         <h1 class="page-title"><h:outputText value="${bundle['Ui.Cart.Title']}" /></h1>
+        <h:form>
+         <p:commandButton value="clean" action="#{cartController.removeAll}" ajax="false"/>
+         <p:commandButton value="checkout" action="#" ajax="false"/>
+        </h:form>
+               
         <ui:repeat var="suborder"
                    value="#{cartController.suborders}">
             <components:suborderSummary suborder="#{suborder}" />

@@ -23,4 +23,6 @@ public interface CartManager {
     List<Suborder> getSuborders();
 
     OrderInfo saveAndGetOrderInfo(Store store, Address address);
+    
+    void removeAll();
 }

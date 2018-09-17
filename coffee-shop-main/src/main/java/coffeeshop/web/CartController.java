@@ -6,6 +6,8 @@ import coffeeshop.entity.Suborder;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
@@ -14,6 +16,8 @@ import javax.inject.Named;
 @Named
 @SessionScoped
 public class CartController implements Serializable {
+
+    private static final Logger LOG = Logger.getLogger(CartController.class.getName());
     
     private static final long serialVersionUID = 1L;
     
@@ -30,6 +34,10 @@ public class CartController implements Serializable {
         return selectedSuborder;
     }
 
+    public void removeAll(){
+        cartManager.removeAll();
+    }
+    
     public void setSelectedSuborder(Suborder selectedSuborder) {
         this.selectedSuborder = selectedSuborder;
     }
