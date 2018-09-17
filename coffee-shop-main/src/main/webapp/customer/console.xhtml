@@ -19,18 +19,23 @@
                         <h:outputText value="#{bundle['Ui.CostomerAddressManagement.NoAddressToShow']}"
                                       rendered="#{addressController.addresses.size() eq 0}"/>
                     </p>
-                    <ui:repeat var="address" value="#{addressController.addresses}">
-                        <h:form styleClass="address-delete-item">
-                            <components:customerAddress address="#{address}"/>
-                            <p:commandButton styleClass="address-delete-button"
-                                             value="#{bundle['Ui.Address.Remove']}"
-                                             icon="fa fa-remove"
-                                             action="#{addressController.removeAddress}" ajax="false">
-                                <f:setPropertyActionListener value="#{address}"
-                                                             target="#{addressController.selectedAddress}"/>
-                            </p:commandButton>
-                        </h:form>
-                    </ui:repeat>
+                    <h:form styleClass="address-delete-item">
+                        <p:selectOneListbox value="#{addressController.selectedAddress}" converter="#{addressConverter}"
+                                            var="a" filter="true" filterMatchMode="contains" required="true"
+                                            class="select-one-list select-one-list-address">
+                            <f:selectItems value="#{addressController.addresses}" var="address"
+                                           itemLabel="#{address.receiver} #{address.receiverPhone} #{address.detail} #{address.district} #{address.city} #{address.province} #{address.country}"
+                                           itemValue="#{address}" />
+                            <p:column>
+                                <components:customerAddress address="#{a}" />
+                            </p:column>
+                        </p:selectOneListbox>
+                        <p:commandButton styleClass="address-delete-button"
+                                         value="#{bundle['Ui.Address.Remove']}"
+                                         icon="fa fa-remove"
+                                         action="#{addressController.removeAddress}" ajax="false">
+                        </p:commandButton>
+                    </h:form>
                     <h:form>
                         <p:commandButton value="#{bundle['Ui.Address.Add']}" icon="fa fa-plus"
                                          onclick="PF('add-address-dialog').show();" />

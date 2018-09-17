@@ -12,7 +12,6 @@ import coffeeshop.entity.Address;
 import coffeeshop.entity.Customer;
 import coffeeshop.web.util.MessageBundle;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -128,10 +127,7 @@ public class AddressController {
 
     public void removeAddress() throws UserManagerException, CustomerInfoManagerException {
         Customer customer = userInfoController.getCurrentUser().getCustomer();
-        LOG.log(Level.INFO, "Current customer: {0}", customer);
-        LOG.log(Level.INFO, "Selected address: {0}", selectedAddress.getCustomerUserId());
         customerInfoManager.removeAddress(selectedAddress, customer);
-        LOG.log(Level.INFO, "remove address successfully ");
     }
 
 }
