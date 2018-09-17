@@ -8,26 +8,21 @@
     <h:body>
         <ui:composition template="/templates/main-aside.xhtml">
             <ui:define name="aside">
-                <h1>Menu</h1>
-                <h:form>
-                    <ui:repeat var="category" value="#{productController.categories}">
-                        <div class="category-link">
-                            <h:commandLink value="#{category.name}" action="category-detail">
-                                <f:setPropertyActionListener value="#{category.name}"
-                                                             target="#{productController.selectedCategory}"/>
-                            </h:commandLink>
-                        </div>
-                    </ui:repeat>
-                </h:form>
+                <h2 class="aside-title"><h:outputText value="#{bundle['Ui.Menu.Title']}" /></h2>
+                <components:categories />
             </ui:define>
             <ui:define name="main">
                 <h1><h:outputText value="#{bundle['Ui.Index.Title']}" /></h1>
                 <div>
-                    <h:form>
-                        <ui:repeat var="special" value="#{seasonSpecialContorller.specials}">
-                            <components:productSummary product="#{special}" />                                
-                        </ui:repeat>
-                    </h:form>
+                    <ui:repeat var="product" value="#{seasonSpecialContorller.specials}">
+                        <h:form>
+                            <h:commandLink action="/product-detail">
+                                <components:productSummary product="#{product}"/>
+                                <f:setPropertyActionListener target="#{productController.selectedProduct}"
+                                                             value="#{product}"/>
+                            </h:commandLink>
+                        </h:form>
+                    </ui:repeat>
                 </div>
             </ui:define>
         </ui:composition>
