@@ -9,5 +9,7 @@ public interface CustomerInfoManager {
     
     void addAddress(Customer customer,String country,String province,String city,String district,String detail,String receiver,String receiverPhone);
 
-    void removeAddress(Address address,Customer customer);
+    void removeAddress(Address address,Customer customer) throws CustomerInfoManagerException;
+    
+    Address getAddressById(int id) throws CustomerInfoManagerException;
 }

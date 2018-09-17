@@ -2,31 +2,27 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:cc="http://xmlns.jcp.org/jsf/composite"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:components="http://xmlns.jcp.org/jsf/composite/components">
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
 
     <cc:interface>
         <cc:attribute name="address" required="true" type="coffeeshop.entity.Address"/>
     </cc:interface>
 
     <cc:implementation>
-        <div class="customer-address-summary">
-            <span class="address-part">
-
-                <h:outputText value="#{cc.attrs.address.country}"/>
-
-                <h:outputText  value="#{cc.attrs.address.province}"/>
-
-                <h:outputText  value="#{cc.attrs.address.city}"/>
-
-                <h:outputText  value="#{cc.attrs.address.district}"/>
-
-                <h:outputText  value="#{cc.attrs.address.detail}"/>
-
-                <h:outputText  value="#{cc.attrs.address.receiver}"/>
-
-                <h:outputText  value="#{cc.attrs.address.receiverPhone}"/>
-            </span>
+        <div class="customer-address">
+            <div class="receiver address-line">
+                <span class="address-part"><h:outputText  value="#{cc.attrs.address.receiver}"/></span>
+                <span class="address-part"><h:outputText  value="#{cc.attrs.address.receiverPhone}"/></span>
+            </div>
+            <div class="address-line">
+                <span class="address-part"><h:outputText  value="#{cc.attrs.address.detail}"/></span>
+            </div>
+            <div class="address-line">
+                <span class="address-part"><h:outputText  value="#{cc.attrs.address.district}"/></span>
+                <span class="address-part"><h:outputText  value="#{cc.attrs.address.city}"/></span>
+                <span class="address-part"><h:outputText  value="#{cc.attrs.address.province}"/></span>
+                <span class="address-part"><h:outputText value="#{cc.attrs.address.country}"/></span>
+            </div>
         </div>
     </cc:implementation>
 </html>

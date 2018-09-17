@@ -5,7 +5,9 @@ import java.util.List;
 
 public interface StoreManager {
     
-    public void addStore(String country, String province, String district, String city, String detail);
+    void addStore(String country, String province, String district, String city, String detail);
     
-    public List<Store> getStores();
+    List<Store> getStores();
+    
+    Store getStoreById(int id) throws StoreManagerException;
 }
