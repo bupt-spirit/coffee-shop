@@ -11,6 +11,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
+import javax.persistence.MapsId;
 
 @Entity
 @Table(name = "season_special")
@@ -22,11 +23,12 @@ public class SeasonSpecial implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @NotNull
     @Column(name = "product_id", nullable = false)
     private Integer productId;
-    @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
     @OneToOne(optional = false)
+    @NotNull
+    @MapsId
     private Product product;
 
     public SeasonSpecial() {
