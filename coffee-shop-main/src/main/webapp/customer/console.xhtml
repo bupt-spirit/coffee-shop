@@ -16,7 +16,8 @@
                         <p:panel rendered="#{address.isAvailable!=0}">
                             <h:form >
                                 <components:customerAddress address="#{address}"/>
-                                <p:commandButton  value="#{bundle['Ui.Address.Remove']}" action="#{addressController.removeAddress}" ajax="false">
+                                <p:commandButton  value="#{bundle['Ui.Address.Remove']}" action="#{addressController.removeAddress}" 
+                                                  ajax="false">
                                     <f:setPropertyActionListener value="#{address}"
                                                                  target="#{addressController.selectedAddress}"/>
                                 </p:commandButton>
