@@ -114,4 +114,5 @@ public class ProductController implements Serializable {
         LOG.log(Level.INFO, "Add suborder to cart: {0} {1} {2}",
                 new Object[]{selectedProduct, ingredientsList, itemQuality});
     }
+
 }

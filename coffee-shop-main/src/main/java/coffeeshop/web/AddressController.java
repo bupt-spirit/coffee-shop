@@ -6,8 +6,14 @@
 package coffeeshop.web;
 
 import coffeeshop.ejb.CustomerInfoManager;
+import coffeeshop.ejb.CustomerInfoManagerException;
+import coffeeshop.ejb.UserManagerException;
+import coffeeshop.entity.Address;
 import coffeeshop.entity.Customer;
 import coffeeshop.web.util.MessageBundle;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
@@ -19,6 +25,9 @@ import javax.inject.Named;
 @Named
 @RequestScoped
 public class AddressController {
+
+    private static final Logger LOG = Logger.getLogger(AddressController.class.getName());
+
     private String country;
     private String province;
     private String city;
@@ -26,16 +35,18 @@ public class AddressController {
     private String detail;
     private String receiver;
     private String receiverPhone;
-    private Customer customer;
-    
+    private Address selectedAddress;
+
     @EJB
     CustomerInfoManager customerInfoManager;
-    
+    @Inject
+    UserInfoController userInfoController;
+
     @Inject
     private MessageBundle bundle;
-    
+
     private FacesContext facesContext;
-    
+
     @PostConstruct
     private void getFacesContext() {
         facesContext = FacesContext.getCurrentInstance();
@@ -97,18 +108,30 @@ public class AddressController {
         this.receiverPhone = receiverPhone;
     }
 
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-    
-    
-    
-    public void addAddress(){
-        this.customerInfoManager.addAddress(customer,country, province, city, district, detail, receiver, receiverPhone);
+    public void addAddress() throws UserManagerException {
+        Customer customer = userInfoController.getCurrentUser().getCustomer();
+        customerInfoManager.addAddress(customer, country, province, city, district, detail, receiver, receiverPhone);
         facesContext.addMessage(null, new FacesMessage(bundle.getString("Ui.Address.AddSuccess")));
     }
+
+    public List<Address> getAddresses() throws UserManagerException {
+        return userInfoController.getCurrentUser().getCustomer().getAddressList();
+    }
+
+    public Address getSelectedAddress() {
+        return selectedAddress;
+    }
+
+    public void setSelectedAddress(Address selectedAddress) {
+        this.selectedAddress = selectedAddress;
+    }
+
+    public void removeAddress() throws UserManagerException, CustomerInfoManagerException {
+        Customer customer = userInfoController.getCurrentUser().getCustomer();
+        LOG.log(Level.INFO, "Current customer: {0}", customer);
+        LOG.log(Level.INFO, "Selected address: {0}", selectedAddress.getCustomerUserId());
+        customerInfoManager.removeAddress(selectedAddress, customer);
+        LOG.log(Level.INFO, "remove address successfully ");
+    }
+
 }
