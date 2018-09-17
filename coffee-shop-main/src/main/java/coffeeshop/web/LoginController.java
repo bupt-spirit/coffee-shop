@@ -110,6 +110,8 @@ public class LoginController {
             case SUCCESS:
                 if (securityContext.isCallerInRole("admin")) {
                     outcome = "/admin/console";
+                } else if (securityContext.isCallerInRole("staff")) {
+                    outcome = "/store/console";
                 } else {
                     outcome = "/index";
                 }
