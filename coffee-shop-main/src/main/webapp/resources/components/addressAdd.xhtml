@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:components="http://xmlns.jcp.org/jsf/composite/components"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <cc:interface>
+        <cc:attribute name="customer" required="true" type="coffeeshop.entity.Customer"/>
+    </cc:interface>
+
+    <cc:implementation>
+
+        <div class="address-add-summary">
+            <div class="address-userID">
+                <h:outputText value="#{cc.attrs.customer.userInfo.username}" />
+            </div>
+            <h:form>
+                <p:panelGrid columns="3" styleClass="ui-panelgrid-blank">
+                    <p:outputLabel for="address-country" value="#{bundle['Ui.Address.Country']}"/>
+                    <p:inputText type="text" id="address-country" value="#{addressController.country}"
+                                 required="true"/>
+                    <p:messages for="address-country"/>
+                    <p:outputLabel for="address-province" value="#{bundle['Ui.Address.Province']}"/>
+                    <p:inputText type="text" id="address-province" value="#{addressController.province}"
+                                 required="true"/>
+                    <p:messages for="address-province"/>
+                    <p:outputLabel for="address-city" value="#{bundle['Ui.Address.City']}"/>
+                    <p:inputText type="text" id="address-city" value="#{addressController.city}"
+                                 required="true"/>
+                    <p:messages for="address-city"/>
+                    <p:outputLabel for="address-district" value="#{bundle['Ui.Address.District']}"/>
+                    <p:inputText type="text" id="address-district" value="#{addressController.district}"
+                                 required="true"/>
+                    <p:messages for="address-district"/>
+                    <p:outputLabel for="address-detail" value="#{bundle['Ui.Address.Detail']}"/>
+                    <p:inputText type="text" id="address-detail" value="#{addressController.detail}"
+                                 required="true"/>
+                    <p:messages for="address-detail"/>
+                    <p:outputLabel for="address-receiver" value="#{bundle['Ui.Address.Receiver']}"/>
+                    <p:inputText type="text" id="address-receiver" value="#{addressController.receiver}"
+                                 required="true"/>
+                    <p:messages for="address-receiver"/>
+                    <p:outputLabel for="address-receiver-phone" value="#{bundle['Ui.Address.ReceiverPhone']}"/>
+                    <p:inputText type="text" id="address-receiver-phone" value="#{addressController.receiverPhone}"
+                                 required="true"/>
+                    <p:messages for="address-receiver-phone"/>
+                    <p:commandButton action="#{addressController.addAddress}" type="submit"
+                                     value="#{bundle['Ui.Address.Add']}" ajax="false">
+                        <f:setPropertyActionListener target="#{addressController.customer}"
+                                                     value="#{cc.attrs.customer}"/>
+                    </p:commandButton>
+                </p:panelGrid>
+            </h:form>
+        </div>
+
+    </cc:implementation>
+</html>
+
