@@ -3,12 +3,36 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:components="http://xmlns.jcp.org/jsf/composite/components">
+      xmlns:components="http://xmlns.jcp.org/jsf/composite/components"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
     <h:body>
         <ui:composition template="/templates/main-only.xhtml">
             <ui:define name="main">
                 <h1>Customer Console</h1>
-                <components:addressAdd customer="#{userInfoController.currentUser.customer}" />
+                <h:outputText value="#{userInfoController.currentUser.username}" />
+                <ui:repeat var="address" value="#{addressController.addresses}">
+                    <div class="address-link">
+                        <p:panel rendered="#{address.isAvailable!=0}">
+                            <h:form >
+                                <components:customerAddress address="#{address}"/>
+                                <p:commandButton  value="#{bundle['Ui.Address.Remove']}" action="#{addressController.removeAddress}" ajax="false">
+                                    <f:setPropertyActionListener value="#{address}"
+                                                                 target="#{addressController.selectedAddress}"/>
+                                </p:commandButton>
+                            </h:form>
+                        </p:panel>
+                    </div>
+                </ui:repeat>
+                <h:panelGrid columns="1" cellpadding="5">
+                    <h:form>
+                    <p:commandButton value="#{bundle['Ui.Address.Add']}" 
+                                     icon="ui-icon-extlink" type="button" onclick="PF('dlg1').show();" />
+                    </h:form>
+                </h:panelGrid>
+                <p:dialog header="#{bundle['Ui.Address.Add']}" widgetVar="dlg1" minHeight="40">
+                     <components:addressAdd customer="#{userInfoController.currentUser.customer}" />
+                </p:dialog>
                 <h:form>
                     <components:logoutButton />
                 </h:form>
