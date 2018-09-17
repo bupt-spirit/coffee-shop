@@ -1,5 +1,6 @@
 package coffeeshop.web;
 
+import coffeeshop.ejb.InitManager;
 import coffeeshop.web.util.MessageBundle;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.security.Principal;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.EJB;
 
 @Named
 @RequestScoped
@@ -33,6 +35,9 @@ public class LoginController {
 
     @Inject
     private MessageBundle bundle;
+    
+    @EJB
+    private InitManager initManager;
 
     private FacesContext facesContext;
     // User name and password for login
@@ -60,6 +65,7 @@ public class LoginController {
     }
 
     public String login() {
+        initManager.checkAndAddDefaultAdminUser();
         if (isLoggedIn()) {
             facesContext.addMessage(null, new FacesMessage(bundle.getString("Ui.Message.LogoutFirst")));
             return null;

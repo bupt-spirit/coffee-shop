@@ -106,6 +106,19 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
+-- Table `coffee_shop`.`image`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `coffee_shop`.`image` ;
+
+CREATE TABLE IF NOT EXISTS `coffee_shop`.`image` (
+  `uuid` CHAR(36) NOT NULL,
+  `media_type` VARCHAR(45) NOT NULL,
+  `content` MEDIUMBLOB NOT NULL,
+  PRIMARY KEY (`uuid`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `coffee_shop`.`product`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `coffee_shop`.`product` ;
@@ -118,10 +131,13 @@ CREATE TABLE IF NOT EXISTS `coffee_shop`.`product` (
   `cost` DECIMAL(12,2) UNSIGNED NOT NULL,
   `category_id` INT UNSIGNED NOT NULL,
   `nutrition_id` INT UNSIGNED NULL,
+  `image_uuid` CHAR(36) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_product_category1_idx` (`category_id` ASC) VISIBLE,
   INDEX `fk_product_nutrition1_idx` (`nutrition_id` ASC) VISIBLE,
   UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE,
+  INDEX `fk_product_image_storage1_idx` (`image_uuid` ASC) VISIBLE,
+  UNIQUE INDEX `image_uuid_UNIQUE` (`image_uuid` ASC) VISIBLE,
   CONSTRAINT `fk_product_category1`
     FOREIGN KEY (`category_id`)
     REFERENCES `coffee_shop`.`category` (`id`)
@@ -131,7 +147,12 @@ CREATE TABLE IF NOT EXISTS `coffee_shop`.`product` (
     FOREIGN KEY (`nutrition_id`)
     REFERENCES `coffee_shop`.`nutrition` (`id`)
     ON DELETE SET NULL
-    ON UPDATE CASCADE)
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_product_image_storage1`
+    FOREIGN KEY (`image_uuid`)
+    REFERENCES `coffee_shop`.`image` (`uuid`)
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT)
 ENGINE = InnoDB;
 
 

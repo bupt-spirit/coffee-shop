@@ -28,15 +28,16 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"name"})})
+@Table(uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"name"})})
 @XmlRootElement
 @NamedQueries({
-        @NamedQuery(name = "Product.findAll", query = "SELECT p FROM Product p"),
-        @NamedQuery(name = "Product.findById", query = "SELECT p FROM Product p WHERE p.id = :id"),
-        @NamedQuery(name = "Product.findByName", query = "SELECT p FROM Product p WHERE p.name = :name"),
-        @NamedQuery(name = "Product.findByDescription", query = "SELECT p FROM Product p WHERE p.description = :description"),
-        @NamedQuery(name = "Product.findByLastUpdate", query = "SELECT p FROM Product p WHERE p.lastUpdate = :lastUpdate"),
-        @NamedQuery(name = "Product.findByCost", query = "SELECT p FROM Product p WHERE p.cost = :cost")})
+    @NamedQuery(name = "Product.findAll", query = "SELECT p FROM Product p"),
+    @NamedQuery(name = "Product.findById", query = "SELECT p FROM Product p WHERE p.id = :id"),
+    @NamedQuery(name = "Product.findByName", query = "SELECT p FROM Product p WHERE p.name = :name"),
+    @NamedQuery(name = "Product.findByDescription", query = "SELECT p FROM Product p WHERE p.description = :description"),
+    @NamedQuery(name = "Product.findByLastUpdate", query = "SELECT p FROM Product p WHERE p.lastUpdate = :lastUpdate"),
+    @NamedQuery(name = "Product.findByCost", query = "SELECT p FROM Product p WHERE p.cost = :cost")})
 public class Product implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -74,6 +75,9 @@ public class Product implements Serializable {
     private List<Suborder> suborderList;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "product")
     private SeasonSpecial seasonSpecial;
+    @JoinColumn(name = "image_uuid", referencedColumnName = "uuid", nullable = false)
+    @OneToOne(optional = false)
+    private Image imageUuid;
 
     public Product() {
     }
@@ -144,6 +148,14 @@ public class Product implements Serializable {
 
     public void setCategoryId(Category categoryId) {
         this.categoryId = categoryId;
+    }
+
+    public Image getImageUuid() {
+        return imageUuid;
+    }
+
+    public void setImageUuid(Image imageUuid) {
+        this.imageUuid = imageUuid;
     }
 
     public Nutrition getNutritionId() {

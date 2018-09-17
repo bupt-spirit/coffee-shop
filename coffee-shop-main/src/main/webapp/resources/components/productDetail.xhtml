@@ -11,6 +11,7 @@
 
 <cc:implementation>
     <div class="product-summary">
+        <components:productImage product="#{product}" />
         <div class="product-sseason-special-indicator">
             <h:outputText rendered="#{cc.attrs.product.seasonSpecial != null}"/>
         </div>

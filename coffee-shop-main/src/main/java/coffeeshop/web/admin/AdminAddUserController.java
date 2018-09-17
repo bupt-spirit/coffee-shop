@@ -1,7 +1,9 @@
 package coffeeshop.web.admin;
 
+import coffeeshop.ejb.InitManager;
 import coffeeshop.ejb.UserManager;
 import coffeeshop.web.util.MessageBundle;
+import java.io.IOException;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
@@ -11,6 +13,7 @@ import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.net.URISyntaxException;
 import java.util.Collection;
 import java.util.logging.Logger;
 
@@ -27,6 +30,9 @@ public class AdminAddUserController implements Serializable {
 
     @Inject
     private MessageBundle bundle;
+    
+    @EJB
+    private InitManager initManager;
 
     private String username;
     private String password;
@@ -102,5 +108,9 @@ public class AdminAddUserController implements Serializable {
                     bundle.getFormatted("Ui.Admin.Message.AddUserSuccess", username, role)
             ));
         }
+    }
+    
+    public void insertDemoData() throws IOException, URISyntaxException {
+        initManager.insertDemoData();
     }
 }
