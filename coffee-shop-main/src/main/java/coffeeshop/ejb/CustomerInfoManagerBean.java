@@ -17,16 +17,6 @@ public class CustomerInfoManagerBean implements CustomerInfoManager {
     AddressFacade addressFacade;
     
     @Override
-    public String getNickname(String username) throws CustomerInfoManagerException {
-        Customer customer = customerFacade.findByUsername(username);
-        if (customer == null) {
-            throw new CustomerInfoManagerException("No such customer");
-        } else {
-            return customer.getNickname();
-        }
-    }
-    
-    @Override
     public boolean isCustomer(String username) {
         return customerFacade.findByUsername(username) != null;
     }
