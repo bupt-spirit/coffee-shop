@@ -67,16 +67,6 @@ public class UserManagerBean implements UserManager {
     }
 
     @Override
-    public String getUserRole(String username) throws UserManagerException {
-        UserInfo userInfo = userInfoFacade.findByUsername(username);
-        if (userInfo == null) {
-            throw new UserManagerException("No such user");
-        } else {
-            return userInfo.getRole();
-        }
-    }
-
-    @Override
     public boolean verifyPassword(String username, String password) throws UserManagerException {
         UserInfo userInfo = userInfoFacade.findByUsername(username);
         if (userInfo == null) {
@@ -124,6 +114,16 @@ public class UserManagerBean implements UserManager {
             store.getStaffList().add(staff);
             userInfoFacade.create(newUser);
             storeFacade.edit(store);
+        }
+    }
+
+    @Override
+    public UserInfo getUuser(String username) throws UserManagerException {
+        UserInfo userInfo = userInfoFacade.findByUsername(username);
+        if (userInfo == null) {
+            throw new UserManagerException("No such user");
+        } else {
+            return userInfo;
         }
     }
 }

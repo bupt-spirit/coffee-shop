@@ -6,13 +6,14 @@ import coffeeshop.entity.Ingredient;
 import coffeeshop.entity.IngredientCategory;
 import coffeeshop.entity.Nutrition;
 import coffeeshop.entity.Product;
+import coffeeshop.entity.SeasonSpecial;
 import coffeeshop.facade.CategoryFacade;
 import coffeeshop.facade.ImageFacade;
 import coffeeshop.facade.IngredientCategoryFacade;
 import coffeeshop.facade.IngredientFacade;
 import coffeeshop.facade.NutritionFacade;
 import coffeeshop.facade.ProductFacade;
-import coffeeshop.util.ConstraintViolationTester;
+import coffeeshop.facade.SeasonSpecialFacade;
 import java.io.IOException;
 import javax.ejb.EJB;
 import java.math.BigDecimal;
@@ -49,6 +50,8 @@ public class InitManager {
     private IngredientFacade ingredientFacade;
     @EJB
     private ImageFacade imageFacade;
+    @EJB
+    private SeasonSpecialFacade seasonSpecialFacade;
 
     public void checkAndAddDefaultAdminUser() {
         if (!userManager.isUserExisting(DEFAULT_ADMIN_USERNAME)) {
@@ -123,6 +126,7 @@ public class InitManager {
         enableProductIngredient(productColdFoamCascaraColdBrew,
                 ingredientCategorySize, ingredientCategorySweetness, ingredientCategoryIce, ingredientCategoryMilk,
                 ingredientCategoryEspresso, ingredientCategoryCocoaNibs);
+        addToSeasonSpecial(productColdFoamCascaraColdBrew);
 
         // 2
         Product productColdFoamCascaraNitro = createProduct("Cold Foam Cascara Nitro",
@@ -131,6 +135,7 @@ public class InitManager {
         enableProductIngredient(productColdFoamCascaraNitro,
                 ingredientCategorySize, ingredientCategorySweetness, ingredientCategoryIce, ingredientCategoryMilk,
                 ingredientCategoryCream, ingredientCategoryEspresso, ingredientCategoryCocoaNibs);
+        addToSeasonSpecial(productColdFoamCascaraNitro);
 
         // 3
         Product productIcedCoffee = createProduct("Iced Coffee",
@@ -139,6 +144,7 @@ public class InitManager {
         enableProductIngredient(productIcedCoffee,
                 ingredientCategorySize, ingredientCategorySweetness, ingredientCategoryIce, ingredientCategoryCream,
                 ingredientCategoryEspresso, ingredientCategorySyrup, ingredientCategoryCocoaNibs);
+        addToSeasonSpecial(productIcedCoffee);
 
         // 4
         Product productIcedCoffeeWithMilk = createProduct("Iced Coffee with Milk",
@@ -315,6 +321,7 @@ public class InitManager {
         nutrition.setCalories(calories);
         nutrition.setFat(fat);
         nutrition.setCarbon(carton);
+        nutrition.setProtein(protein);
         nutrition.setFiber(fiber);
         nutrition.setSodium(sodium);
         nutritionFacade.create(nutrition);
@@ -379,5 +386,13 @@ public class InitManager {
         image.setUuid(uuid);
         imageFacade.create(image);
         return image;
+    }
+
+    private void addToSeasonSpecial(Product product) {
+        SeasonSpecial special = new SeasonSpecial();
+        special.setProduct(product);
+        product.setSeasonSpecial(special);
+        seasonSpecialFacade.create(special);
+        productFacade.edit(product);
     }
 }

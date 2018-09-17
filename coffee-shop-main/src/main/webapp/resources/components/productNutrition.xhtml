@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <cc:interface>
+        <cc:attribute name="product" required="true" type="coffeeshop.entity.Product"/>
+    </cc:interface>
+
+    <cc:implementation>
+        <p:panelGrid columns="2" styleClass="product-nutrition">
+            <f:facet name="header">
+                <h:outputText value="#{bundle['Ui.Nutrition.Title']}" />
+            </f:facet>
+            <h:outputText value="#{bundle['Ui.Nutrition.Calories']}" />
+            <h:outputText value="#{cc.attrs.product.nutritionId.calories}" />
+            <h:outputText value="#{bundle['Ui.Nutrition.Fat']}" />
+            <h:outputText value="#{cc.attrs.product.nutritionId.fat}" />
+            <h:outputText value="#{bundle['Ui.Nutrition.Carbohydrate']}" />
+            <h:outputText value="#{cc.attrs.product.nutritionId.carbon}" />
+            <h:outputText value="#{bundle['Ui.Nutrition.Fiber']}" />
+            <h:outputText value="#{cc.attrs.product.nutritionId.fiber}" />
+            <h:outputText value="#{bundle['Ui.Nutrition.Protein']}" />
+            <h:outputText value="#{cc.attrs.product.nutritionId.protein}" />
+            <h:outputText value="#{bundle['Ui.Nutrition.Sodium']}" />
+            <h:outputText value="#{cc.attrs.product.nutritionId.sodium}" />
+        </p:panelGrid>
+    </cc:implementation>
+</html>

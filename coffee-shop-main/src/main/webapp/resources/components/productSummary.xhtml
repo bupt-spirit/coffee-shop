@@ -5,19 +5,17 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:components="http://xmlns.jcp.org/jsf/composite/components">
 
-<cc:interface>
-    <cc:attribute name="product" required="true" type="coffeeshop.entity.Product"/>
-</cc:interface>
+    <cc:interface>
+        <cc:attribute name="product" required="true" type="coffeeshop.entity.Product"/>
+    </cc:interface>
 
-<cc:implementation>
-    <div class="product-summary">
-        <components:productImage product="#{product}" />
-        <div class="product-sseason-special-indicator">
-            <h:outputText rendered="#{cc.attrs.product.seasonSpecial != null}"/>
+    <cc:implementation>
+        <h:outputStylesheet name="compiled-css/product.css"/>
+        <div class="product-summary">
+            <components:productImage product="#{product}" />
+            <h1 class="product-title"><h:outputText value="#{cc.attrs.product.name}"/></h1>
+            <p class="product-description"><h:outputText value="#{cc.attrs.product.description}"/></p>
+            <div class="product-price"><components:price price="#{cc.attrs.product.cost}"/></div>
         </div>
-        <h1 class="product-title"><h:outputText value="#{cc.attrs.product.name}"/></h1>
-        <p class="product-description"><h:outputText value="#{cc.attrs.product.description}"/></p>
-        <div class="product-price"><components:price price="#{cc.attrs.product.cost}"/></div>
-    </div>
-</cc:implementation>
+    </cc:implementation>
 </html>
