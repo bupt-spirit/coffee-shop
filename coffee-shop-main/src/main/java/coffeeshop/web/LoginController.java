@@ -126,7 +126,7 @@ public class LoginController {
         return securityContext.getCallerPrincipal() != null;
     }
 
-    private String logout() throws ServletException {
+    public String logout() throws ServletException {
         if (isLoggedIn()) {
             getRequest().logout();
             facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
@@ -136,7 +136,7 @@ public class LoginController {
         } else {
             LOG.log(Level.WARNING, "Try to logout from a user not logged in");
         }
-        return "index";
+        return "/index";
     }
 
     private HttpServletRequest getRequest() {
