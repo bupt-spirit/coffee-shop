@@ -58,4 +58,13 @@ public class CustomerInfoManagerBean implements CustomerInfoManager {
         address.setCustomerUserId(null);
         addressFacade.edit(address);
     }
+    
+    @Override
+    public Address getAddressById(int id) throws CustomerInfoManagerException {
+        Address address = addressFacade.find(id);
+        if (address == null) {
+            throw new CustomerInfoManagerException();
+        }
+        return address;
+    }
 }
