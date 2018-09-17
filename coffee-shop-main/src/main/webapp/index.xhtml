@@ -21,14 +21,11 @@
                 </h:form>
             </ui:define>
             <ui:define name="main">
-                <h1> title test</h1>
-                <h:outputText value="SeasonSpecial test" />
+                <h1><h:outputText value="#{bundle['Ui.Index.Title']}" /></h1>
                 <div>
                     <h:form>
                         <ui:repeat var="special" value="#{seasonSpecialContorller.specials}">
-                            <div>
-                                <components:productSummary product="#{special}"/>                                
-                            </div>
+                            <components:productSummary product="#{special}" />                                
                         </ui:repeat>
                     </h:form>
                 </div>

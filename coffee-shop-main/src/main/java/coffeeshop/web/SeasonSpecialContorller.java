@@ -21,15 +21,8 @@ public class SeasonSpecialContorller implements Serializable {
     @EJB
     private SeasonSpecialManager seasonSpecialManager;
 
-    private List<Product> specials;
-
     public List<Product> getSpecials() {
-        this.specials = seasonSpecialManager.getAllSeasonSpecial();
-        return seasonSpecialManager.getAllSeasonSpecial();
-    }
-
-    public void setSpecials(List<Product> specials) {
-        this.specials = specials;
+        return  seasonSpecialManager.getAllSeasonSpecial();
     }
 
 }
