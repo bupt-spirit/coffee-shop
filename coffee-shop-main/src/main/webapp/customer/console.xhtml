@@ -7,7 +7,8 @@
     <h:body>
         <ui:composition template="/templates/main-only.xhtml">
             <ui:define name="main">
-                <h2>Customer Console</h2>
+                <h1>Customer Console</h1>
+                <components:addressAdd customer="#{userInfoController.currentUser.customer}" />
                 <h:form>
                     <components:logoutButton />
                 </h:form>
