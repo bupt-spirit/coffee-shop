@@ -9,18 +9,18 @@ import javax.ejb.Stateless;
 
 @Stateless
 public class CustomerInfoManagerBean implements CustomerInfoManager {
-    
+
     @EJB
     CustomerFacade customerFacade;
     
     @EJB
     AddressFacade addressFacade;
-    
+
     @Override
     public boolean isCustomer(String username) {
         return customerFacade.findByUsername(username) != null;
     }
-    
+
     @Override
     public void addAddress(Customer customer, String country, String province, String city, String district, String detail, String receiver, String receiverPhone) {
         Address address = new Address();

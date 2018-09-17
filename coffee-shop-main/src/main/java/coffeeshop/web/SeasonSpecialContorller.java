@@ -2,7 +2,6 @@ package coffeeshop.web;
 
 import coffeeshop.ejb.SeasonSpecialManager;
 import coffeeshop.entity.Product;
-import coffeeshop.facade.SeasonSpecialFacade;
 import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Logger;
@@ -20,9 +19,9 @@ public class SeasonSpecialContorller implements Serializable {
 
     @EJB
     private SeasonSpecialManager seasonSpecialManager;
-
+   
     public List<Product> getSpecials() {
-        return  seasonSpecialManager.getAllSeasonSpecial();
+        return seasonSpecialManager.getAllSeasonSpecial();
     }
 
 }
