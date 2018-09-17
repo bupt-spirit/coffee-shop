@@ -109,8 +109,4 @@ public class AdminAddUserController implements Serializable {
             ));
         }
     }
-    
-    public void insertDemoData() throws IOException, URISyntaxException {
-        initManager.insertDemoData();
-    }
 }
