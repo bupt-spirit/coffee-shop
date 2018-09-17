@@ -3,15 +3,21 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:components="http://xmlns.jcp.org/jsf/composite/components">
-<h:body>
-    <ui:composition template="templates/main-only.xhtml">
-        <ui:define name="main">
-            <h1 class="page-title"><h:outputText value="#{bundle['Ui.Cart.Title']}"/></h1>
-            <ui:repeat var="suborder" value="#{cartController.suborders}">
-                <components:suborderSummary suborder="#{suborder}"/>
-            </ui:repeat>
-        </ui:define>
-    </ui:composition>
-</h:body>
+      xmlns:components="http://xmlns.jcp.org/jsf/composite/components"
+      xmlns:p="http://primefaces.org/ui">
+    <h:body>
+        <ui:composition template="templates/main-only.xhtml">
+            <ui:define name="main">
+                <h1 class="page-title"><h:outputText value="#{bundle['Ui.Cart.Title']}"/></h1>
+                <h:form>
+                    <p:commandButton value="#{bundle['Ui.Cart.Clean']}" action="#{cartController.removeAll}" ajax="false"/>
+                    <p:commandButton value="#{bundle['Ui.Cart.Checkout']}" action="#" ajax="false"/>
+                </h:form>
+
+                <ui:repeat var="suborder" value="#{cartController.suborders}">
+                    <components:suborderSummary suborder="#{suborder}"/>
+                </ui:repeat>
+            </ui:define>
+        </ui:composition>
+    </h:body>
 </html>
