@@ -10,7 +10,7 @@ $table-margin: 1rem;
         margin-top: 0;
     }
     .product-nutrition {
-        margin: $table-margin;
+        margin: $table-margin 0;
     }
 }
 
@@ -18,12 +18,12 @@ $table-margin: 1rem;
     .product-detail {
         .product-image {
             float: none;
-            margin: $image-space;
+            margin: $image-space 0;
             margin-top: 0;
         }
     }
 }
 
 .product-order {
-    margin: $table-margin;
+    margin: $table-margin 0;
 }
