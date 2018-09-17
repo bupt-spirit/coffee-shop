@@ -6,31 +6,33 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:components="http://xmlns.jcp.org/jsf/composite/components">
-<h:body>
-    <ui:composition template="/templates/main-aside.xhtml">
-        <ui:define name="aside">
-        </ui:define>
-        <ui:define name="main">
-            <c:set var="product" value="#{productController.selectedProduct}"/>
-            <components:productDetail product="#{product}"/>
-            <components:productCustomize product="#{product}"/>
-            <h:form>
-                <p:outputLabel for="quality" value="#{bundle['Ui.Label.ItemQuality']}"/>
-                <p:inputNumber id="quality" value="#{productController.itemQuality}" minValue="1"
-                               decimalPlaces="0" emptyValue="1">
-                    <p:ajax event="change"/>
-                </p:inputNumber>
-                <p:commandButton update="quality"
-                                 actionListener="#{productController.increaseItemQuality}"
-                                 value="#{bundle['Ui.Button.increaseItemQuality']}"/>
-                <p:commandButton update="quality"
-                                 actionListener="#{productController.decreaseItemQuality}"
-                                 value="#{bundle['Ui.Button.decreaseItemQuality']}"/>
+    <h:body>
+        <ui:composition template="/templates/main-only.xhtml">
+            <ui:define name="aside">
+            </ui:define>
+            <ui:define name="main">
+                <c:set var="product" value="#{productController.selectedProduct}"/>
+                <components:productDetail product="#{product}"/>
+                <p:panel header="#{bundle['Ui.Product.Customize.Title']}" styleClass="product-order">
+                    <components:productCustomize product="#{product}"/>
+                    <h:form>
+                        <p:outputLabel for="quality" value="#{bundle['Ui.Label.ItemQuality']}"/>
+                        <p:inputNumber id="quality" value="#{productController.itemQuality}" minValue="1"
+                                       decimalPlaces="0" emptyValue="1">
+                            <p:ajax event="change"/>
+                        </p:inputNumber>
+                        <p:commandButton update="quality"
+                                         actionListener="#{productController.increaseItemQuality}"
+                                         value="#{bundle['Ui.Button.increaseItemQuality']}"/>
+                        <p:commandButton update="quality"
+                                         actionListener="#{productController.decreaseItemQuality}"
+                                         value="#{bundle['Ui.Button.decreaseItemQuality']}"/>
 
-                <p:commandButton update="@(.global-cart-indicator)" value="#{bundle['Ui.Product.AddToCart']}"
-                                 action="#{productController.addToCart}"/>
-            </h:form>
-        </ui:define>
-    </ui:composition>
-</h:body>
+                        <p:commandButton update="@(.global-cart-indicator)" value="#{bundle['Ui.Product.AddToCart']}"
+                                         action="#{productController.addToCart}"/>
+                    </h:form>
+                </p:panel>
+            </ui:define>
+        </ui:composition>
+    </h:body>
 </html>

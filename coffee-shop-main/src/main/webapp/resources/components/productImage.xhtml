@@ -6,11 +6,12 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-<cc:interface>
-    <cc:attribute name="product" required="true" type="coffeeshop.entity.Product"/>
-</cc:interface>
+    <cc:interface>
+        <cc:attribute name="product" required="true" type="coffeeshop.entity.Product"/>
+    </cc:interface>
 
-<cc:implementation>
-    <p:graphicImage url="#{bundle['Ui.Config.ImageResourcePath']}/#{cc.attrs.product.imageUuid.uuid}" />
-</cc:implementation>
+    <cc:implementation>
+        <p:graphicImage styleClass="product-image"
+                        url="#{bundle['Ui.Config.ImageResourcePath']}/#{cc.attrs.product.imageUuid.uuid}" />
+    </cc:implementation>
 </html>

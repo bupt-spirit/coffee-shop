@@ -4,19 +4,32 @@
       xmlns:cc="http://xmlns.jcp.org/jsf/composite"
       xmlns:components="http://xmlns.jcp.org/jsf/composite/components"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-<cc:interface>
-    <cc:attribute name="product" required="true" type="coffeeshop.entity.Product"/>
-</cc:interface>
+    <cc:interface>
+        <cc:attribute name="product" required="true" type="coffeeshop.entity.Product"/>
+    </cc:interface>
 
-<cc:implementation>
-    <div class="product-customize">
-        <h:form>
-            <ui:repeat var="ingredientCategory" value="#{cc.attrs.product.ingredientCategoryList}">
-                <components:ingredientSelector category="#{ingredientCategory}"/>
-            </ui:repeat>
-        </h:form>
-    </div>
-</cc:implementation>
+    <cc:implementation>
+        <div class="product-customize">
+            <h:form>
+                <h:dataTable var="category" value="#{cc.attrs.product.ingredientCategoryList}">
+                    <h:column>
+                        <h:outputLabel for="ingredient-category-selector" value="#{category.name}"/>
+                    </h:column>
+                    <h:column>
+                        <p:selectOneButton id="ingredient-category-selector"
+                                           valueChangeListener="#{productController.ingredientChanged}">
+                            <f:selectItems value="#{category.ingredientList}" var="ingredient"
+                                           itemValue="#{ingredient.id}" itemLabel="#{ingredient.name}"
+                                           itemDescription="#{ingredient.description}"/>
+                            <p:ajax event="change"/>
+                        </p:selectOneButton>
+                    </h:column>
+                </h:dataTable>
+            </h:form>
+        </div>
+    </cc:implementation>
 </html>

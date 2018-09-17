@@ -1,0 +1,29 @@
+$image-space: 1rem;
+$product-order-background: #f7f7f7;
+$image-max-size: 20rem;
+$table-margin: 1rem;
+
+.product-detail {
+    .product-image {
+        float: right;
+        margin: $image-space;
+        margin-top: 0;
+    }
+    .product-nutrition {
+        margin: $table-margin;
+    }
+}
+
+@media (max-width: 40rem) {
+    .product-detail {
+        .product-image {
+            float: none;
+            margin: $image-space;
+            margin-top: 0;
+        }
+    }
+}
+
+.product-order {
+    margin: $table-margin;
+}
