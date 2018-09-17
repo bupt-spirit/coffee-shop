@@ -14,7 +14,6 @@ import coffeeshop.facade.IngredientFacade;
 import coffeeshop.facade.NutritionFacade;
 import coffeeshop.facade.ProductFacade;
 import coffeeshop.facade.SeasonSpecialFacade;
-import coffeeshop.util.ConstraintViolationTester;
 import java.io.IOException;
 import javax.ejb.EJB;
 import java.math.BigDecimal;
@@ -322,6 +321,7 @@ public class InitManager {
         nutrition.setCalories(calories);
         nutrition.setFat(fat);
         nutrition.setCarbon(carton);
+        nutrition.setProtein(protein);
         nutrition.setFiber(fiber);
         nutrition.setSodium(sodium);
         nutritionFacade.create(nutrition);
