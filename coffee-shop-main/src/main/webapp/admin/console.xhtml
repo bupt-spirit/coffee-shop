@@ -44,11 +44,12 @@
 
                             <p:outputLabel for="admin-add-user-store" value="${bundle['Ui.Label.Store']}"/>
                             <p:selectOneMenu id="admin-add-user-store"
-                                             value="#{adminAddUserController.storeId}"
-                                             disabled="#{adminAddUserController.role != 'staff'}">
+                                             value="#{adminAddUserController.store}"
+                                             disabled="#{adminAddUserController.role != 'staff'}"
+                                             converter="#{storeConverter}">
                                 <f:selectItems value="#{storeContoller.stores}" var="store"
                                                itemLabel="#{store.country} #{store.province} #{store.city} #{store.district} #{store.detail}"
-                                               itemValue="#{store.id}" />
+                                               itemValue="#{store}" />
                             </p:selectOneMenu>
                             <p:message for="admin-add-user-store"/>
 
