@@ -48,6 +48,36 @@
                     </h:form>
                     <p:messages for="add-user-form"/>
                 </p:panel>
+
+                <p:panel header="Remove SeasonSpecial">
+                    <h:form>
+                        <p:dataTable var="special" value="#{seasonSpecialContorller.specials}" 
+                                     selection="#{seasonSpecialContorller.selectedSeasonSpecial}"
+                                     rowKey="#{special.id}" selectionMode="single">
+                            <p:column headerText="Name">
+                                <h:outputText value="#{special.name}" />
+                            </p:column>                        
+                        </p:dataTable>
+
+                        <p:commandButton actionListener="#{seasonSpecialContorller.removeSeasonSpecial}" value="Remove SeasonSpecial" ajax="false"/>
+                    </h:form>
+                </p:panel>
+
+
+                <p:panel header="Add SeasonSpecial">
+                    <h:form>
+                        <p:dataTable var="product" value="#{productController.allProductExceptSeasonSpecial}" 
+                                     selectionMode="single" selection="#{seasonSpecialContorller.selectedProduct}"
+                                     rowKey="#{product.id}">
+                            <p:column headerText="Name">
+                                <h:outputText value="#{product.name}" />
+                            </p:column>                        
+                        </p:dataTable>
+                        <p:commandButton action="#{seasonSpecialContorller.addSeasonSpecial}" value="Add SeasonSpecial" ajax="false"/>
+                    </h:form>
+                </p:panel>
+
+
                 <h:form>
                     <components:logoutButton />
                 </h:form>

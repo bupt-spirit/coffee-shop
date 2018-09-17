@@ -3,6 +3,7 @@ package coffeeshop.web;
 import coffeeshop.ejb.CartManagerException;
 import coffeeshop.ejb.ProductManager;
 import coffeeshop.ejb.ProductManagerException;
+import coffeeshop.ejb.SeasonSpecialManager;
 import coffeeshop.entity.Category;
 import coffeeshop.entity.Ingredient;
 import coffeeshop.entity.Product;
@@ -31,6 +32,9 @@ public class ProductController implements Serializable {
 
     @EJB
     private ProductManager productManager;
+    
+    @EJB
+    private SeasonSpecialManager seasonSpecialManager;
 
     @Inject
     private CartController cartController;
@@ -72,11 +76,19 @@ public class ProductController implements Serializable {
     private List<Product> getCategoryProducts(String categoryName) throws ProductManagerException {
         return productManager.getCategoryProducts(categoryName);
     }
-
+            
     public List<Product> getSelectedCategoryProducts() throws ProductManagerException {
         return getCategoryProducts(selectedCategory);
     }
 
+    public List<Product> getAllProductExceptSeasonSpecial()
+    {
+        List<Product> all = productManager.getAllProduct();
+        List<Product> seasonSpecial = seasonSpecialManager.getAllSeasonSpecial();
+        all.removeAll(seasonSpecial);
+        return all;
+    }
+    
     public short getItemQuality() {
         return itemQuality;
     }

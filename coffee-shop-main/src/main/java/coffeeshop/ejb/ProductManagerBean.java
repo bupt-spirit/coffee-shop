@@ -58,4 +58,11 @@ public class ProductManagerBean implements ProductManager {
         }
         return product.getIngredientCategoryList();
     }
+
+    @Override
+    public List<Product> getAllProduct() {
+        
+        return productFacade.findAll();
+        
+    }
 }
