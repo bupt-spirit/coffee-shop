@@ -23,11 +23,15 @@
             <ui:define name="main">
                 <h1><h:outputText value="#{bundle['Ui.Index.Title']}" /></h1>
                 <div>
-                    <h:form>
-                        <ui:repeat var="special" value="#{seasonSpecialContorller.specials}">
-                            <components:productSummary product="#{special}" />                                
-                        </ui:repeat>
-                    </h:form>
+                    <ui:repeat var="product" value="#{seasonSpecialContorller.specials}">
+                        <h:form>
+                            <h:commandLink action="/product-detail">
+                                <components:productSummary product="#{product}"/>
+                                <f:setPropertyActionListener target="#{productController.selectedProduct}"
+                                                             value="#{product}"/>
+                            </h:commandLink>
+                        </h:form>
+                    </ui:repeat>
                 </div>
             </ui:define>
         </ui:composition>
