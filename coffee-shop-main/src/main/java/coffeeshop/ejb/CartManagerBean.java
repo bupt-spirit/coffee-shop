@@ -32,8 +32,6 @@ public class CartManagerBean implements CartManager, Serializable {
     private static final long serialVersionUID = 1L;
 
     private OrderInfo orderInfo = null;
-    
-    
 
     @EJB
     private OrderInfoFacade orderInfoFacade;
@@ -43,10 +41,10 @@ public class CartManagerBean implements CartManager, Serializable {
 
     @EJB
     private AddressFacade addressFacade;
-    
+
     @EJB
     private SuborderFacade suborderFacade;
-    
+
     @PostConstruct
     public void init() {
         orderInfo = new OrderInfo();
@@ -67,7 +65,7 @@ public class CartManagerBean implements CartManager, Serializable {
         orderInfoFacade.create(orderInfo);
         storeFacade.edit(store);
         addressFacade.edit(address);
-        for (Suborder suborder: orderInfo.getSuborderList()) {
+        for (Suborder suborder : orderInfo.getSuborderList()) {
             suborderFacade.create(suborder);
         }
         return orderInfo;
@@ -123,16 +121,21 @@ public class CartManagerBean implements CartManager, Serializable {
 
     @Override
     public void remove(Suborder suborder) throws CartManagerException {
-        if (!orderInfo.getSuborderList().remove(suborder)) {
-            throw new CartManagerException("Suborder not contained in cart");
+        List<Suborder> suborders = orderInfo.getSuborderList();
+        for (int i = 0; i < suborders.size(); ++i) {
+            if (suborders.get(i) == suborder) {
+                suborders.remove(i);
+                return;
+            }
         }
+        throw new CartManagerException("Suborder not contained in cart");
     }
 
     @Override
-    public void removeAll(){
+    public void removeAll() {
         orderInfo.getSuborderList().clear();
     }
-    
+
     @Override
     public int getItemCount() {
         int quality = 0;
