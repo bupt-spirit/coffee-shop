@@ -5,6 +5,8 @@ import coffeeshop.entity.Customer;
 import coffeeshop.entity.Staff;
 import coffeeshop.entity.Store;
 import coffeeshop.entity.UserInfo;
+import coffeeshop.facade.CustomerFacade;
+import coffeeshop.facade.StaffFacade;
 import coffeeshop.facade.StoreFacade;
 import coffeeshop.facade.UserInfoFacade;
 import javax.annotation.PostConstruct;
@@ -32,6 +34,10 @@ public class UserManagerBean implements UserManager {
 
     @EJB
     private UserInfoFacade userInfoFacade;
+    @EJB
+    private StaffFacade staffFacade;
+    @EJB
+    private CustomerFacade customerFacade;
     @EJB
     private StoreFacade storeFacade;
     @SuppressWarnings("CdiInjectionPointsInspection")
@@ -87,6 +93,7 @@ public class UserManagerBean implements UserManager {
             customer.setUserInfo(newUser);
             newUser.setCustomer(customer);
             userInfoFacade.create(newUser);
+            customerFacade.create(customer);
         }
     }
 
@@ -107,12 +114,14 @@ public class UserManagerBean implements UserManager {
             throw new EJBException("User already exists");
         } else {
             UserInfo newUser = new UserInfo(null, username, new Date(),
-                    passwordHash.generate(password.toCharArray()), "customer");
+                    passwordHash.generate(password.toCharArray()), "staff");
             Staff staff = new Staff();
             staff.setUserInfo(newUser);
+            staff.setStoreId(store);
             newUser.setStaff(staff);
             store.getStaffList().add(staff);
             userInfoFacade.create(newUser);
+            staffFacade.create(staff);
             storeFacade.edit(store);
         }
     }
