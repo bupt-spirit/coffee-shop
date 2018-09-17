@@ -7,21 +7,24 @@
     <h:body>
         <ui:composition template="/templates/main-only.xhtml">
             <ui:define name="main">
-                <h1 class="main-title"><h:outputText value="#{bundle['Ui.Login.Title']}" /></h1>
+                <h1 class="main-title"><h:outputText value="#{bundle['Ui.Register.Title']}" /></h1>
                 <h:form>
                     <p:panelGrid columns="3" styleClass="ui-panelgrid-blank">
                         <p:outputLabel for="username" value="#{bundle['Ui.Label.Username']}"/>
-                        <p:inputText type="text" id="username" value="#{loginController.username}"
+                        <p:inputText type="text" id="username" value="#{registerController.username}"
                                      required="true"/>
                         <p:messages for="username"/>
                         <p:outputLabel for="password" value="#{bundle['Ui.Label.Password']}"/>
-                        <p:inputText type="password" id="password" value="#{loginController.password}"
+                        <p:inputText type="password" id="password" value="#{registerController.password}"
                                      required="true"/>
                         <p:messages for="password"/>
+                        <p:outputLabel for="nickname" value="#{bundle['Ui.Label.Nickname']}"/>
+                        <p:inputText type="text" id="nickname" value="#{registerController.nickname}"
+                                     required="true"/>
+                        <p:messages for="nickname"/>
                     </p:panelGrid>
-                    <p:commandButton action="#{loginController.login}" type="submit"
-                                     value="#{bundle['Ui.Button.Login']}" ajax="false"/>
-                    <p:button outcome="/register" value="#{bundle['Ui.Button.Register']}"/>
+                    <p:commandButton action="#{registerController.register}" type="submit"
+                                     value="#{bundle['Ui.Button.Register']}" ajax="false"/>
                 </h:form>
             </ui:define>
         </ui:composition>

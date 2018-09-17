@@ -2,13 +2,18 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
-<h:body>
-    <ui:composition template="/templates/main-only.xhtml">
-        <ui:define name="main">
-            <h2>Customer Console</h2>
-        </ui:define>
-    </ui:composition>
-</h:body>
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:components="http://xmlns.jcp.org/jsf/composite/components">
+    <h:body>
+        <ui:composition template="/templates/main-only.xhtml">
+            <ui:define name="main">
+                <h1>Customer Console</h1>
+                <components:addressAdd customer="#{userInfoController.currentUser.customer}" />
+                <h:form>
+                    <components:logoutButton />
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
 </html>
 

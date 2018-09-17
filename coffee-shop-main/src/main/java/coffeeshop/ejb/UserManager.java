@@ -1,6 +1,7 @@
 package coffeeshop.ejb;
 
 import coffeeshop.entity.Store;
+import coffeeshop.entity.UserInfo;
 import java.util.List;
 
 public interface UserManager {
@@ -11,7 +12,7 @@ public interface UserManager {
 
     void addStaff(String username, String password, Store store);
 
-    String getUserRole(String username) throws UserManagerException;
+    UserInfo getUuser(String username) throws UserManagerException;
 
     void changePassword(String username, String password) throws UserManagerException;
 
