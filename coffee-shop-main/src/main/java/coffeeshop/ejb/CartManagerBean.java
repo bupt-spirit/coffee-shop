@@ -123,9 +123,19 @@ public class CartManagerBean implements CartManager, Serializable {
 
     @Override
     public void remove(Suborder suborder) throws CartManagerException {
-        if (!orderInfo.getSuborderList().remove(suborder)) {
-            throw new CartManagerException("Suborder not contained in cart");
+        List<Suborder> suborders = orderInfo.getSuborderList();
+        for (int i = 0; i < suborders.size(); ++i) {
+            if (suborders.get(i) == suborder) {
+                suborders.remove(i);
+                return;
+            }
         }
+        throw new CartManagerException("Suborder not contained in cart");
+    }
+
+    @Override
+    public void removeAll() {
+        orderInfo.getSuborderList().clear();
     }
 
     @Override
@@ -137,3 +147,4 @@ public class CartManagerBean implements CartManager, Serializable {
         return quality;
     }
 }
+

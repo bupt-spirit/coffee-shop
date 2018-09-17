@@ -23,8 +23,9 @@
                 <h:outputText value="#{cc.attrs.suborder.quantity}"/>
             </div>
 
-            <p:commandButton action="#{cartController.removeSuborder}">
-                <f:setPropertyActionListener target="#{cartController.setSelectedSuborder}"
+            <p:commandButton value="#{bundle['Ui.Suborder.Remove']}"
+                             action="#{cartController.removeSuborder}" ajax="false">
+                <f:setPropertyActionListener target="#{cartController.selectedSuborder}"
                                              value="#{cc.attrs.suborder}"/>
             </p:commandButton>
         </h:form>

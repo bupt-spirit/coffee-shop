@@ -37,6 +37,10 @@ public class CartController implements Serializable {
         return cartManager.getSuborders();
     }
 
+    public void removeAll() {
+        cartManager.removeAll();
+    }
+
     public void removeSuborder() throws CartManagerException {
         cartManager.remove(selectedSuborder);
     }
