@@ -5,18 +5,22 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:components="http://xmlns.jcp.org/jsf/composite/components"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-<h:body>
-    <ui:composition template="templates/main-only.xhtml">
-        <ui:define name="main">
-            <ui:repeat var="product" value="#{productController.selectedCategoryProducts}">
-                <h:form>
-                    <h:commandLink action="/product-detail">
-                        <components:productSummary product="#{product}"/>
-                        <f:setPropertyActionListener target="#{productController.selectedProduct}" value="#{product}"/>
-                    </h:commandLink>
-                </h:form>
-            </ui:repeat>
-        </ui:define>
-    </ui:composition>
-</h:body>
+    <h:body>
+        <ui:composition template="templates/main-aside.xhtml">
+            <ui:define name="aside">
+                <h2 class="aside-title"><h:outputText value="#{bundle['Ui.Menu.Title']}" /></h2>
+                <components:categories />
+            </ui:define>
+            <ui:define name="main">
+                <ui:repeat var="product" value="#{productController.selectedCategoryProducts}">
+                    <h:form>
+                        <h:commandLink action="/product-detail">
+                            <components:productSummary product="#{product}"/>
+                            <f:setPropertyActionListener target="#{productController.selectedProduct}" value="#{product}"/>
+                        </h:commandLink>
+                    </h:form>
+                </ui:repeat>
+            </ui:define>
+        </ui:composition>
+    </h:body>
 </html>
