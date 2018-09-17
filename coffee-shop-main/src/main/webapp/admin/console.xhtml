@@ -33,13 +33,24 @@
                             <p:selectOneButton id="admin-add-user-role" value="#{adminAddUserController.role}"
                                                required="true">
                                 <f:selectItems value="#{adminAddUserController.roles}"/>
+                                <p:ajax event="change" update="admin-add-user-nickname admin-add-user-store" />
                             </p:selectOneButton>
                             <p:message for="admin-add-user-role"/>
 
                             <p:outputLabel for="admin-add-user-nickname" value="${bundle['Ui.Label.Nickname']}"/>
                             <p:inputText id="admin-add-user-nickname" value="#{adminAddUserController.nickname}"
-                                         type="text"/>
+                                         type="text" disabled="#{adminAddUserController.role != 'customer'}"/>
                             <p:message for="admin-add-user-nickname"/>
+
+                            <p:outputLabel for="admin-add-user-store" value="${bundle['Ui.Label.Store']}"/>
+                            <p:selectOneMenu id="admin-add-user-store"
+                                             value="#{adminAddUserController.storeId}"
+                                             disabled="#{adminAddUserController.role != 'staff'}">
+                                <f:selectItems value="#{storeContoller.stores}" var="store"
+                                               itemLabel="#{store.country} #{store.province} #{store.city} #{store.district} #{store.detail}"
+                                               itemValue="#{store.id}" />
+                            </p:selectOneMenu>
+                            <p:message for="admin-add-user-store"/>
 
                         </p:panelGrid>
                         <p:commandButton action="#{adminAddUserController.addUser}" type="submit" ajax="false"
@@ -47,44 +58,44 @@
                         <p:commandButton type="reset" value="Reset"/>
                     </h:form>
                 </p:panel>
-                    <p:panel header="${bundle['Ui.Admin.AddStore.Title']}">
-                        <h:form id="add-store-form">
-                            <p:panelGrid columns="3" styleClass="ui-panelgrid-blank">
-                                <p:outputLabel for="admin-add-store-countryname" value="${bundle['Ui.Store.Country']}"/>
-                                <p:inputText id="admin-add-store-countryname" value="#{adminAddStoreController.country}"
-                                             type="text" required="true"/>
-                                <p:message for="admin-add-store-countryname"/>
+                <p:panel header="${bundle['Ui.Admin.AddStore.Title']}">
+                    <h:form id="add-store-form">
+                        <p:panelGrid columns="3" styleClass="ui-panelgrid-blank">
+                            <p:outputLabel for="admin-add-store-countryname" value="${bundle['Ui.Store.Country']}"/>
+                            <p:inputText id="admin-add-store-countryname" value="#{adminAddStoreController.country}"
+                                         type="text" required="true"/>
+                            <p:message for="admin-add-store-countryname"/>
 
-                                <p:outputLabel for="admin-add-store-province" value="${bundle['Ui.Store.Province']}"/>
-                                <p:inputText id="admin-add-store-province" value="#{adminAddStoreController.province}"
-                                             type="text" required="true"/>
-                                <p:message for="admin-add-store-province"/>
+                            <p:outputLabel for="admin-add-store-province" value="${bundle['Ui.Store.Province']}"/>
+                            <p:inputText id="admin-add-store-province" value="#{adminAddStoreController.province}"
+                                         type="text" required="true"/>
+                            <p:message for="admin-add-store-province"/>
 
-                                <p:outputLabel for="admin-add-store-city" value="${bundle['Ui.Store.City']}"/>
-                                <p:inputText id="admin-add-store-city" value="#{adminAddStoreController.city}"
-                                             type="text" required="true"/>
-                                <p:message for="admin-add-store-city"/>
+                            <p:outputLabel for="admin-add-store-city" value="${bundle['Ui.Store.City']}"/>
+                            <p:inputText id="admin-add-store-city" value="#{adminAddStoreController.city}"
+                                         type="text" required="true"/>
+                            <p:message for="admin-add-store-city"/>
 
-                                <p:outputLabel for="admin-add-store-district" value="${bundle['Ui.Store.District']}"/>
-                                <p:inputText id="admin-add-store-district" value="#{adminAddStoreController.district}"
-                                             type="text" required="true"/>
-                                <p:message for="admin-add-store-district"/>
+                            <p:outputLabel for="admin-add-store-district" value="${bundle['Ui.Store.District']}"/>
+                            <p:inputText id="admin-add-store-district" value="#{adminAddStoreController.district}"
+                                         type="text" required="true"/>
+                            <p:message for="admin-add-store-district"/>
 
-                                <p:outputLabel for="admin-add-store-detail" value="${bundle['Ui.Store.Detail']}"/>
-                                <p:inputText id="admin-add-store-detail" value="#{adminAddStoreController.detail}"
-                                             type="text" required="true"/>
-                                <p:message for="admin-add-store-detail"/>
+                            <p:outputLabel for="admin-add-store-detail" value="${bundle['Ui.Store.Detail']}"/>
+                            <p:inputText id="admin-add-store-detail" value="#{adminAddStoreController.detail}"
+                                         type="text" required="true"/>
+                            <p:message for="admin-add-store-detail"/>
 
-                            </p:panelGrid>
-                            <p:commandButton action="#{adminAddStoreController.addStore}" type="submit" ajax="false"
-                                             value="${bundle['Ui.Admin.AddStore.Button.AddStore']}"/>
-                            <p:commandButton type="reset" value="Reset"/>
-                        </h:form>
-                        <p:messages for="add-store-form"/>
-                    </p:panel>
-                    <h:form>
-                        <components:logoutButton />
+                        </p:panelGrid>
+                        <p:commandButton action="#{adminAddStoreController.addStore}" type="submit" ajax="false"
+                                         value="${bundle['Ui.Admin.AddStore.Button.AddStore']}"/>
+                        <p:commandButton type="reset" value="Reset"/>
                     </h:form>
+                    <p:messages for="add-store-form"/>
+                </p:panel>
+                <h:form>
+                    <components:logoutButton />
+                </h:form>
             </ui:define>
         </ui:composition>
     </h:body>

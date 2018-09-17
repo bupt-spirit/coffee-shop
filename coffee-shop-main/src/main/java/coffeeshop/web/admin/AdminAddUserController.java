@@ -1,7 +1,10 @@
 package coffeeshop.web.admin;
 
 import coffeeshop.ejb.InitManager;
+import coffeeshop.ejb.StoreManager;
+import coffeeshop.ejb.StoreManagerException;
 import coffeeshop.ejb.UserManager;
+import coffeeshop.entity.Store;
 import coffeeshop.web.util.MessageBundle;
 import java.io.IOException;
 import javax.annotation.PostConstruct;
@@ -30,15 +33,19 @@ public class AdminAddUserController implements Serializable {
 
     @Inject
     private MessageBundle bundle;
-    
+
     @EJB
     private InitManager initManager;
+
+    @EJB
+    private StoreManager storeManager;
 
     private String username;
     private String password;
     private String role;
     private String nickname;
     private Collection<String> roles;
+    private int storeId;
 
     @PostConstruct
     void init() {
@@ -81,7 +88,15 @@ public class AdminAddUserController implements Serializable {
         this.nickname = nickname;
     }
 
-    public void addUser() {
+    public int getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(int storeId) {
+        this.storeId = storeId;
+    }
+
+    public void addUser() throws StoreManagerException {
         if (userManager.isUserExisting(username)) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
                     bundle.getFormatted("Ui.Admin.Message.UserAlreadyExists", username)
@@ -98,7 +113,9 @@ public class AdminAddUserController implements Serializable {
                     userManager.addAdmin(username, password);
                     break;
                 case "staff":
-                    throw new UnsupportedOperationException("Not supported yet.");
+                    Store store = storeManager.getStoreById(storeId);
+                    userManager.addStaff(username, password, store);
+                    break;
                 default:
                     throw new ValidatorException(new FacesMessage(
                             bundle.getString("Ui.Admin.Message.InvalidRole")

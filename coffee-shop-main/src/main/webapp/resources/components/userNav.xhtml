@@ -20,7 +20,7 @@
                     value="#{bundle['Ui.Nav.Admin']}"
                     rendered="#{userInfoController.loggedIn and userInfoController.currentUser.role eq 'admin'}"/>
             <h:link outcome="/store/console" styleClass="global-nav-link"
-                    value="#{bundle['Ui.Nav.Admin']}"
+                    value="#{bundle['Ui.Nav.Store']}"
                     rendered="#{userInfoController.loggedIn and userInfoController.currentUser.role eq 'staff'}"/>
             <h:link outcome="/login" styleClass="global-nav-link"
                     value="#{bundle['Ui.Nav.Login']}"
