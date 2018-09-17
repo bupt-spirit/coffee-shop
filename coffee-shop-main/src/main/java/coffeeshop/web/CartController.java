@@ -8,6 +8,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 @Named
@@ -20,6 +21,8 @@ public class CartController implements Serializable {
     private CartManager cartManager;
 
     private Suborder selectedSuborder;
+    
+    private Date currentTime;
 
     public CartManager getCartManager() {
         return cartManager;
@@ -52,4 +55,10 @@ public class CartController implements Serializable {
     public int getItemCount() {
         return cartManager.getItemCount();
     }
+
+    public Date getCurrentTime() {
+        this.currentTime=new Date();
+        return currentTime;
+    }
+    
 }

@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:components="http://xmlns.jcp.org/jsf/composite/components">
+    <ui:composition template="templates/main-only.xhtml">
+        <ui:define name="main">
+
+            <h:outputLabel value="#{bundle['Ui.Label.OrderTime']}"/> 
+            <h:outputText value="#{cartController.currentTime} UTC-0">  
+                <f:convertDateTime type="both" pattern="HH:mm:ss dd.MM.yyyy" />
+            </h:outputText>
+            <h:outputLabel value="#{bundle['Ui.Label.Username']}"/>
+            <h:outputText value="#{userInfoController.currentUser.customer.nickname}"/>
+
+            <h:form>
+                <div>
+                    <h:outputLabel value="#{bundle['Ui.Address.Address']}"/>
+                    <p:selectOneMenu value="#{addressController.selectedAddress}" converter="#{addressConverter}"
+                                     var="a" filter="true" filterMatchMode="contains" required="true"
+                                     class="select-one-list select-one-list-address">
+                        <f:selectItems value="#{addressController.addresses}" var="address"
+                                       itemLabel="#{address.receiver} #{address.receiverPhone} #{address.detail} #{address.district} #{address.city} #{address.province} #{address.country}"
+                                       itemValue="#{address}" />
+                        <p:column>
+                            <components:customerAddress address="#{a}" />
+                        </p:column>
+                    </p:selectOneMenu>
+                </div>
+                <div>
+                    <h:outputLabel value="#{bundle['Ui.Label.Store']}"/>
+                    <p:selectOneMenu value="#{storeController.selectedStore}" converter="#{storeConverter}"
+                                     var="s" filter="true" filterMatchMode="contains" required="true"
+                                     class="select-one-list select-one-list-store">
+                        <f:selectItems value="#{storeController.stores}" var="store"
+                                       itemLabel="#{store.detail} #{store.district} #{store.city} #{store.province} #{store.country}"
+                                       itemValue="#{store}" />
+                        <p:column>
+                            <components:store store="#{s}" />
+                        </p:column>
+                    </p:selectOneMenu>    
+                </div>
+
+                <p:dataTable var="suborder" value="#{cartController.suborders}">
+                    <p:column headerText="#{bundle['Ui.Label.ProductName']}">
+                        <h:outputText value="#{suborder.productId.name}" />
+                    </p:column>
+                    <p:column headerText="#{bundle['Ui.Suborder.Quantity']}">
+                        <h:outputText value="#{suborder.quantity}" />
+                    </p:column>
+                    <p:column headerText="#{bundle['Ui.Label.Ingredient']}">                  
+                        <ui:repeat var="ingredient" value="#{suborder.ingredientList}">
+                            <h:outputText value="#{ingredient.id}"/>
+                        </ui:repeat>
+                    </p:column>
+                </p:dataTable>
+
+                <p:commandButton value="#{bundle['Ui.Label.Back']}" action="/cart" ajax="false"/>
+                <p:commandButton value="#{bundle['Ui.Cart.Confirm']}" action="#" ajax="false"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
+
