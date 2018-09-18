@@ -30,7 +30,7 @@ public class AdminAddStoreController implements Serializable {
     private String detail;
 
     public void addStore() {
-        storeManager.addStore(country, province, district, city, detail);
+        storeManager.addStore(country, province, city, district, detail);
 
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
                 bundle.getFormatted("Ui.Admin.Message.AddStoreSuccess")

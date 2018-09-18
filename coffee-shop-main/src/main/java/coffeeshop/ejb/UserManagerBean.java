@@ -83,7 +83,7 @@ public class UserManagerBean implements UserManager {
     }
 
     @Override
-    public void addCustomer(String username, String password, String nickname) {
+    public UserInfo addCustomer(String username, String password, String nickname) {
         if (isUserExisting(username)) {
             throw new EJBException("User already exists");
         } else {
@@ -94,22 +94,24 @@ public class UserManagerBean implements UserManager {
             newUser.setCustomer(customer);
             userInfoFacade.create(newUser);
             customerFacade.create(customer);
+            return newUser;
         }
     }
 
     @Override
-    public void addAdmin(String username, String password) {
+    public UserInfo addAdmin(String username, String password) {
         if (isUserExisting(username)) {
             throw new EJBException("User already exists");
         } else {
             UserInfo newUser = new UserInfo(null, username, new Date(),
                     passwordHash.generate(password.toCharArray()), "admin");
             userInfoFacade.create(newUser);
+            return newUser;
         }
     }
 
     @Override
-    public void addStaff(String username, String password, Store store) {
+    public UserInfo addStaff(String username, String password, Store store) {
         if (isUserExisting(username)) {
             throw new EJBException("User already exists");
         } else {
@@ -123,6 +125,7 @@ public class UserManagerBean implements UserManager {
             userInfoFacade.create(newUser);
             staffFacade.create(staff);
             storeFacade.edit(store);
+            return newUser;
         }
     }
 

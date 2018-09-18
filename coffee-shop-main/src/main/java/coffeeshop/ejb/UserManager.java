@@ -6,11 +6,11 @@ import java.util.List;
 
 public interface UserManager {
 
-    void addCustomer(String username, String password, String nickname);
+    UserInfo addCustomer(String username, String password, String nickname);
 
-    void addAdmin(String username, String password);
+    UserInfo addAdmin(String username, String password);
 
-    void addStaff(String username, String password, Store store);
+    UserInfo addStaff(String username, String password, Store store);
 
     UserInfo getUser(String username) throws UserManagerException;
 
