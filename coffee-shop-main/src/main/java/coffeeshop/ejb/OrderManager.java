@@ -24,4 +24,6 @@ public interface OrderManager {
    List<OrderInfo> getStoreUnpreparedOrder(Store store);
    
    OrderInfo getOrderById(int id);
+   
+   void changeOrderStateToPrepared(OrderInfo orderInfo);
 }

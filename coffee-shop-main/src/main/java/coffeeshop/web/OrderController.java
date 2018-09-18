@@ -19,6 +19,7 @@ public class OrderController {
     
     @EJB
     OrderManager orderManager;
+    
     @Inject
     UserInfoController userInfoController;
     
@@ -31,6 +32,11 @@ public class OrderController {
 
     public void setSelectedOrder(OrderInfo selectedOrder) {
         this.selectedOrder = selectedOrder;
+    }
+    
+    public void changeOrderStateToPrepared()
+    {
+        orderManager.changeOrderStateToPrepared(selectedOrder);
     }
    
     public void handleToggle(ToggleEvent event) {
