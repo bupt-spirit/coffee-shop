@@ -5,6 +5,9 @@ import java.util.List;
 
 public interface SeasonSpecialManager {
 
-    public List<Product> getAllSeasonSpecial();
-
+    List<Product> getAllSeasonSpecial();
+    
+    void addSeasonSpecial(Product product);
+    
+    void removeSeasonSpecial(Product product) throws SeasonSpecialManagerException;
 }

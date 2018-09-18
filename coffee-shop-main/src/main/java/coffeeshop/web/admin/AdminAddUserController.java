@@ -6,7 +6,6 @@ import coffeeshop.ejb.StoreManagerException;
 import coffeeshop.ejb.UserManager;
 import coffeeshop.entity.Store;
 import coffeeshop.web.util.MessageBundle;
-import java.io.IOException;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
@@ -16,7 +15,6 @@ import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
-import java.net.URISyntaxException;
 import java.util.Collection;
 import java.util.logging.Logger;
 
@@ -45,7 +43,7 @@ public class AdminAddUserController implements Serializable {
     private String role;
     private String nickname;
     private Collection<String> roles;
-    private int storeId;
+    private Store store;
 
     @PostConstruct
     void init() {
@@ -88,12 +86,12 @@ public class AdminAddUserController implements Serializable {
         this.nickname = nickname;
     }
 
-    public int getStoreId() {
-        return storeId;
+    public Store getStore() {
+        return store;
     }
 
-    public void setStoreId(int storeId) {
-        this.storeId = storeId;
+    public void setStore(Store store) {
+        this.store = store;
     }
 
     public void addUser() throws StoreManagerException {
@@ -113,7 +111,6 @@ public class AdminAddUserController implements Serializable {
                     userManager.addAdmin(username, password);
                     break;
                 case "staff":
-                    Store store = storeManager.getStoreById(storeId);
                     userManager.addStaff(username, password, store);
                     break;
                 default:

@@ -16,6 +16,7 @@
                                          value="${bundle['Ui.Admin.InitData.Button.InitData']}" ajax="false"/>
                     </h:form>
                 </p:panel>
+
                 <p:panel header="${bundle['Ui.Admin.AddUser.Title']}">
                     <h:form id="add-user-form">
                         <p:panelGrid columns="3" styleClass="ui-panelgrid-blank">
@@ -44,11 +45,12 @@
 
                             <p:outputLabel for="admin-add-user-store" value="${bundle['Ui.Label.Store']}"/>
                             <p:selectOneMenu id="admin-add-user-store"
-                                             value="#{adminAddUserController.storeId}"
-                                             disabled="#{adminAddUserController.role != 'staff'}">
+                                             value="#{adminAddUserController.store}"
+                                             disabled="#{adminAddUserController.role != 'staff'}"
+                                             converter="#{storeConverter}">
                                 <f:selectItems value="#{storeContoller.stores}" var="store"
                                                itemLabel="#{store.country} #{store.province} #{store.city} #{store.district} #{store.detail}"
-                                               itemValue="#{store.id}" />
+                                               itemValue="#{store}" />
                             </p:selectOneMenu>
                             <p:message for="admin-add-user-store"/>
 
@@ -58,6 +60,7 @@
                         <p:commandButton type="reset" value="Reset"/>
                     </h:form>
                 </p:panel>
+
                 <p:panel header="${bundle['Ui.Admin.AddStore.Title']}">
                     <h:form id="add-store-form">
                         <p:panelGrid columns="3" styleClass="ui-panelgrid-blank">
@@ -87,15 +90,53 @@
                             <p:message for="admin-add-store-detail"/>
 
                         </p:panelGrid>
-                        <p:commandButton action="#{adminAddStoreController.addStore}" type="submit" ajax="false"
-                                         value="${bundle['Ui.Admin.AddStore.Button.AddStore']}"/>
+                        <p:commandButton  icon="fa fa-plus" action="#{adminAddStoreController.addStore}"
+                                          type="submit" ajax="false"
+                                          value="${bundle['Ui.Admin.AddStore.Button.AddStore']}"/>
                         <p:commandButton type="reset" value="Reset"/>
                     </h:form>
                     <p:messages for="add-store-form"/>
                 </p:panel>
+
+                <p:panel header="${bundle['Ui.Admin.SeasonSpecial.Title']}">
+                    <h:form>
+                        <p:selectOneListbox value="#{seasonSpecialContorller.selectedSeasonSpecial}" converter="#{seasonSpecialConverter}" var="p" 
+                                            filter="true" filterMatchMode="contains"
+                                            class="select-one-list-season-special">
+                            <f:selectItems value="#{seasonSpecialContorller.specials}" var="special"
+                                           itemLabel="#{special.name}"
+                                           itemValue="#{product}" />
+                            <p:column >
+                                <h:outputText  value="#{p.name}" />
+                            </p:column>
+
+                        </p:selectOneListbox>
+                        <p:commandButton icon="fa fa-remove" ajax="false"
+                                         action="#{seasonSpecialContorller.removeSeasonSpecial}"
+                                         value="#{bundle['Ui.Admin.SeasonSpecial.Button.Remove']}"/>
+                    </h:form>
+
+                    <h:form>
+                        <p:selectOneListbox value="#{seasonSpecialContorller.selectedProduct}" converter="#{seasonSpecialConverter}" var="p" 
+                                            filter="true" filterMatchMode="contains"
+                                            class="select-one-list-season-special">
+                            <f:selectItems value="#{seasonSpecialContorller.allProductExceptSeasonSpecial}" var="product"
+                                           itemLabel="#{product.name}"
+                                           itemValue="#{product}" />
+                            <p:column >
+                                <h:outputText  value="#{p.name}" />
+                            </p:column>
+
+                        </p:selectOneListbox>
+                        <p:commandButton icon="fa fa-plus" ajax="false"
+                                         action="#{seasonSpecialContorller.addSeasonSpecial}" type="submit"
+                                         value="#{bundle['Ui.Admin.SeasonSpecial.Button.Add']}" />
+                    </h:form>
+                </p:panel>    
+
                 <h:form>
                     <components:logoutButton />
-                </h:form>
+                </h:form>              
             </ui:define>
         </ui:composition>
     </h:body>

@@ -42,7 +42,7 @@ public class ProductController implements Serializable {
     private String selectedCategory;
     private Product selectedProduct;
     private Set<Ingredient> selectedIngredients;
-    private short itemQuality;
+    private short itemQuantity;
 
     @PostConstruct
     private void init() {
@@ -78,20 +78,20 @@ public class ProductController implements Serializable {
         return getCategoryProducts(selectedCategory);
     }
 
-    public short getItemQuality() {
-        return itemQuality;
+    public short getItemQuantity() {
+        return itemQuantity;
     }
 
-    public void setItemQuality(short itemQuality) {
-        this.itemQuality = itemQuality;
+    public void setItemQuantity(short itemQuantity) {
+        this.itemQuantity = itemQuantity;
     }
 
-    public void increaseItemQuality() {
-        this.itemQuality += 1;
+    public void increaseItemQuantity() {
+        this.itemQuantity += 1;
     }
 
-    public void decreaseItemQuality() {
-        this.itemQuality -= 1;
+    public void decreaseItemQuantity() {
+        this.itemQuantity -= 1;
     }
 
     public void ingredientChanged(ValueChangeEvent event) {
@@ -111,9 +111,9 @@ public class ProductController implements Serializable {
 
     public void addToCart() throws CartManagerException {
         List<Ingredient> ingredientsList = new ArrayList<>(selectedIngredients);
-        cartController.getCartManager().add(selectedProduct, ingredientsList, itemQuality);
+        cartController.getCartManager().add(selectedProduct, ingredientsList, itemQuantity);
         LOG.log(Level.INFO, "Add suborder to cart: {0} {1} {2}",
-                new Object[]{selectedProduct, ingredientsList, itemQuality});
+                new Object[]{selectedProduct, ingredientsList, itemQuantity});
     }
 
 }

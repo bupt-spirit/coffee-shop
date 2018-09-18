@@ -5,13 +5,15 @@ $table-margin: 1rem;
 
 .product-detail {
     .product-image {
+        max-width: 20rem;
         float: right;
         margin: $image-space;
         margin-top: 0;
     }
-    .product-nutrition {
-        margin: $table-margin 0;
-    }
+}
+
+.product-nutrition, .product-customize, .product-quantity {
+    margin: $table-margin 0;
 }
 
 @media (max-width: 40rem) {
@@ -24,6 +26,4 @@ $table-margin: 1rem;
     }
 }
 
-.product-order {
-    margin: $table-margin 0;
-}
+

@@ -13,25 +13,25 @@
             <ui:define name="main">
                 <c:set var="product" value="#{productController.selectedProduct}"/>
                 <components:productDetail product="#{product}"/>
-                <p:panel header="#{bundle['Ui.Product.Customize.Title']}" styleClass="product-order">
-                    <components:productCustomize product="#{product}"/>
-                    <h:form>
-                        <p:outputLabel for="quality" value="#{bundle['Ui.Label.ItemQuality']}"/>
-                        <p:inputNumber id="quality" value="#{productController.itemQuality}" minValue="1"
-                                       decimalPlaces="0" emptyValue="1">
-                            <p:ajax event="change"/>
-                        </p:inputNumber>
-                        <p:commandButton update="quality"
-                                         actionListener="#{productController.increaseItemQuality}"
-                                         value="#{bundle['Ui.Button.increaseItemQuality']}"/>
-                        <p:commandButton update="quality"
-                                         actionListener="#{productController.decreaseItemQuality}"
-                                         value="#{bundle['Ui.Button.decreaseItemQuality']}"/>
+                <components:productCustomize product="#{product}"
+                                             rendered="#{product.ingredientCategoryList != null and
+                                                         product.ingredientCategoryList.size() != 0}"/>
+                <h:form class="product-quantity">
+                    <p:outputLabel for="quantity" value="#{bundle['Ui.Label.ItemQuantity']}"/>
+                    <p:inputNumber id="quantity" value="#{productController.itemQuantity}" minValue="1"
+                                   decimalPlaces="0" emptyValue="1">
+                        <p:ajax event="change"/>
+                    </p:inputNumber>
+                    <p:commandButton update="quantity"
+                                     actionListener="#{productController.increaseItemQuantity}"
+                                     value="#{bundle['Ui.Button.increaseItemQuantity']}"/>
+                    <p:commandButton update="quantity"
+                                     actionListener="#{productController.decreaseItemQuantity}"
+                                     value="#{bundle['Ui.Button.decreaseItemQuantity']}"/>
 
-                        <p:commandButton update="@(.global-cart-indicator)" value="#{bundle['Ui.Product.AddToCart']}"
-                                         action="#{productController.addToCart}"/>
-                    </h:form>
-                </p:panel>
+                    <p:commandButton update="@(.global-cart-indicator)" value="#{bundle['Ui.Product.AddToCart']}"
+                                     action="#{productController.addToCart}"/>
+                </h:form>
             </ui:define>
         </ui:composition>
     </h:body>

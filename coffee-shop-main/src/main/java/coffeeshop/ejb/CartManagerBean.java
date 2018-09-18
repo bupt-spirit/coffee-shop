@@ -24,8 +24,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.Resource;
-import javax.ejb.SessionContext;
 
 @Stateful
 public class CartManagerBean implements CartManager, Serializable {
@@ -34,10 +32,7 @@ public class CartManagerBean implements CartManager, Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private OrderInfo orderInfo;
-
-    @Resource
-    private SessionContext context;
+    private OrderInfo orderInfo = null;
 
     @EJB
     private OrderInfoFacade orderInfoFacade;
@@ -78,7 +73,7 @@ public class CartManagerBean implements CartManager, Serializable {
     }
 
     @Override
-    public void add(Product product, List<Ingredient> ingredients, short quality) throws CartManagerException {
+    public void add(Product product, List<Ingredient> ingredients, short quantity) throws CartManagerException {
         Set<IngredientCategory> categories = new HashSet<>();
         for (Ingredient ingredient : ingredients) {
             IngredientCategory category = ingredient.getIngredientCategoryId();
@@ -92,7 +87,7 @@ public class CartManagerBean implements CartManager, Serializable {
         suborder.setIngredientList(ingredients);
         suborder.setOrderId(orderInfo);
         suborder.setProductId(product);
-        suborder.setQuantity(quality);
+        suborder.setQuantity(quantity);
         orderInfo.getSuborderList().add(suborder);
         LOG.log(Level.INFO, "Added, current: {0}", orderInfo);
     }
@@ -145,10 +140,11 @@ public class CartManagerBean implements CartManager, Serializable {
 
     @Override
     public int getItemCount() {
-        int quality = 0;
+        int quantity = 0;
         for (Suborder suborder : orderInfo.getSuborderList()) {
-            quality += suborder.getQuantity();
+            quantity += suborder.getQuantity();
         }
-        return quality;
+        return quantity;
     }
 }
+

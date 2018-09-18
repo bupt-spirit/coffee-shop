@@ -58,4 +58,20 @@ public class ProductManagerBean implements ProductManager {
         }
         return product.getIngredientCategoryList();
     }
+
+    @Override
+    public List<Product> getAllProduct() {
+        return productFacade.findAll();
+    }
+
+    @Override
+    public Product getProductById(int id) throws ProductManagerException {
+        Product product = productFacade.find(id);
+        if (product == null)
+        {
+            throw new ProductManagerException("no such product id=" + id);
+        }
+        return product;
+        
+    }
 }
