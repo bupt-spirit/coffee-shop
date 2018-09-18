@@ -83,9 +83,9 @@ public class UserManagerBean implements UserManager {
     }
 
     @Override
-    public UserInfo addCustomer(String username, String password, String nickname) {
+    public UserInfo addCustomer(String username, String password, String nickname) throws UserManagerException {
         if (isUserExisting(username)) {
-            throw new EJBException("User already exists");
+            throw new UserManagerException("User already exists");
         } else {
             UserInfo newUser = new UserInfo(null, username, new Date(),
                     passwordHash.generate(password.toCharArray()), "customer");
@@ -99,9 +99,9 @@ public class UserManagerBean implements UserManager {
     }
 
     @Override
-    public UserInfo addAdmin(String username, String password) {
+    public UserInfo addAdmin(String username, String password) throws UserManagerException {
         if (isUserExisting(username)) {
-            throw new EJBException("User already exists");
+            throw new UserManagerException("User already exists");
         } else {
             UserInfo newUser = new UserInfo(null, username, new Date(),
                     passwordHash.generate(password.toCharArray()), "admin");
@@ -111,9 +111,11 @@ public class UserManagerBean implements UserManager {
     }
 
     @Override
-    public UserInfo addStaff(String username, String password, Store store) {
+    public UserInfo addStaff(String username, String password, Store store) throws UserManagerException {
         if (isUserExisting(username)) {
-            throw new EJBException("User already exists");
+            throw new UserManagerException("User already exists");
+        } else if (store == null) {
+            throw new UserManagerException("Store is null");
         } else {
             UserInfo newUser = new UserInfo(null, username, new Date(),
                     passwordHash.generate(password.toCharArray()), "staff");
@@ -137,5 +139,27 @@ public class UserManagerBean implements UserManager {
         } else {
             return userInfo;
         }
+    }
+
+    @Override
+    public List<Staff> getStaffs() {
+        return staffFacade.findAll();
+    }
+
+    @Override
+    public void removeStaff(Staff staff) {
+        UserInfo userInfo = staff.getUserInfo();
+        userInfo.setStaff(null);
+        staffFacade.remove(staff);
+        userInfoFacade.remove(userInfo);
+    }
+
+    @Override
+    public UserInfo getUserById(int id) throws UserManagerException {
+        UserInfo user = userInfoFacade.find(id);
+        if (user == null) {
+            throw new UserManagerException("User id not exists");
+        }
+        return user;
     }
 }

@@ -21,6 +21,7 @@ import java.util.logging.Logger;
 public class CartController implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     private static final Logger LOG = Logger.getLogger(CartController.class.getName());
 
     @EJB
@@ -90,8 +91,9 @@ public class CartController implements Serializable {
         return new Date();
     }
 
-    public void saveOrder() {
+    public String saveOrder() {
         OrderInfo orderInfo = cartManager.saveAndGetOrderInfo(selectedStore, selectedAddress);
         LOG.log(Level.INFO, "create order successfully {0}", orderInfo.getId());
+        return "/customer/console";
     }
 }

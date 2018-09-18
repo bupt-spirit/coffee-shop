@@ -4,27 +4,29 @@ import coffeeshop.ejb.InitManager;
 import coffeeshop.ejb.StoreManager;
 import coffeeshop.ejb.StoreManagerException;
 import coffeeshop.ejb.UserManager;
+import coffeeshop.ejb.UserManagerException;
 import coffeeshop.entity.Store;
 import coffeeshop.web.util.MessageBundle;
+import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.Serializable;
 import java.util.Collection;
+import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.faces.view.ViewScoped;
 
 @Named
-@SessionScoped
+@ViewScoped
 public class AdminAddUserController implements Serializable {
 
-    private static final Logger LOG = Logger.getLogger(AdminAddUserController.class.getName());
-
     private static final long serialVersionUID = 1L;
+
+    private static final Logger LOG = Logger.getLogger(AdminAddUserController.class.getName());
 
     @EJB
     private UserManager userManager;
@@ -91,10 +93,11 @@ public class AdminAddUserController implements Serializable {
     }
 
     public void setStore(Store store) {
+        LOG.log(Level.INFO, "Set store to {0}", store);
         this.store = store;
     }
 
-    public void addUser() throws StoreManagerException {
+    public void addUser() throws StoreManagerException, UserManagerException {
         if (userManager.isUserExisting(username)) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
                     bundle.getFormatted("Ui.Admin.Message.UserAlreadyExists", username)
@@ -121,6 +124,11 @@ public class AdminAddUserController implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
                     bundle.getFormatted("Ui.Admin.Message.AddUserSuccess", username, role)
             ));
+            this.username = null;
+            this.password = null;
+            this.role = null;
+            this.nickname = null;
+            this.store = null;
         }
     }
 }

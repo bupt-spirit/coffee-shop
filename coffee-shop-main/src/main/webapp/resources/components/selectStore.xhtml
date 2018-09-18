@@ -7,13 +7,15 @@
       xmlns:components="http://xmlns.jcp.org/jsf/composite/components">
 
     <cc:interface>
-        <cc:attribute name="value" required="true"/>
+        <cc:attribute name="value" required="true" />
+        <cc:attribute name="disabled" type="java.lang.String" default="false" />
     </cc:interface>
 
     <cc:implementation>
         <div class="address-add-summary">
-            <p:selectOneListbox value="#{cc.attrs.value}" converter="#{storeConverter}"
-                                var="s" filter="true" filterMatchMode="contains" required="true"
+            <p:selectOneListbox id="inner-box" value="#{cc.attrs.value}" converter="#{storeConverter}"
+                                var="s" filter="true" filterMatchMode="contains"
+                                disabled="#{cc.attrs.disabled}"
                                 class="select-one-list select-one-list-store">
                 <f:selectItems value="#{storeController.stores}" var="store"
                                itemLabel="#{store.detail} #{store.district} #{store.city} #{store.province} #{store.country}"
