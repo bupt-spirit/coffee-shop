@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:components="http://xmlns.jcp.org/jsf/composite/components">
+    <h:body>
+        <ui:composition template="/templates/main-aside.xhtml">
+            <ui:define name="aside">
+                <h2><h:link value="#{bundle['Ui.Admin.AsideTitle']}" outcome="/admin/console" /></h2>
+                <components:asideNavOfAdmin current="manage-user" />
+            </ui:define>
+            <ui:define name="main">
+                <h1><h:outputText value="${bundle['Ui.Admin.ManageUser.Title']}"/></h1>
+                <p:panel header="${bundle['Ui.Admin.AddUser.Title']}">
+                    <h:form id="add-user-form">
+                        <p:panelGrid columns="3" styleClass="ui-panelgrid-blank">
+                            <p:outputLabel for="admin-add-user-username" value="${bundle['Ui.Label.Username']}"/>
+                            <p:inputText id="admin-add-user-username" value="#{adminAddUserController.username}"
+                                         type="text" required="true"/>
+                            <p:message for="admin-add-user-username"/>
+
+                            <p:outputLabel for="admin-add-user-password" value="${bundle['Ui.Label.Password']}"/>
+                            <p:inputText id="admin-add-user-password" value="#{adminAddUserController.password}"
+                                         type="password" required="true"/>
+                            <p:message for="admin-add-user-password"/>
+
+                            <p:outputLabel for="admin-add-user-role" value="${bundle['Ui.Admin.AddUser.Label.Role']}"/>
+                            <p:selectOneButton id="admin-add-user-role" value="#{adminAddUserController.role}"
+                                               required="true">
+                                <f:selectItems value="#{adminAddUserController.roles}"/>
+                                <p:ajax event="change"
+                                        update="admin-add-user-nickname-container admin-add-user-store-container" />
+                            </p:selectOneButton>
+                            <p:message for="admin-add-user-role"/>
+                        </p:panelGrid>
+                        <p:outputPanel id="admin-add-user-nickname-container">
+                            <p:panelGrid columns="3" styleClass="ui-panelgrid-blank"
+                                         rendered="#{adminAddUserController.role == 'customer'}">
+                                <p:outputLabel for="admin-add-user-nickname" value="${bundle['Ui.Label.Nickname']}"/>
+                                <p:inputText id="admin-add-user-nickname" type="text" required="true"
+                                             value="#{adminAddUserController.nickname}"/>
+                                <p:message for="admin-add-user-nickname"/>
+                            </p:panelGrid>
+                        </p:outputPanel>
+                        <p:outputPanel id="admin-add-user-store-container">
+                            <p:panelGrid columns="3" styleClass="ui-panelgrid-blank"
+                                         rendered="#{adminAddUserController.role == 'staff'}">
+                                <p:outputLabel for="admin-add-user-store" value="${bundle['Ui.Label.Store']}"/>
+                                <components:selectStore id="admin-add-user-store" required="true"
+                                                        value="#{adminAddUserController.store}"/>
+                                <p:message for="admin-add-user-store"/>
+                            </p:panelGrid>
+                        </p:outputPanel>
+                        <p:commandButton action="#{adminAddUserController.addUser}" type="submit" ajax="false"
+                                         value="${bundle['Ui.Admin.AddUser.Button.AddUser']}"/>
+                        <p:commandButton type="reset" value="Reset"/>
+                    </h:form>
+                </p:panel>
+                <p:panel header="${bundle['Ui.Admin.RemoveStaff.Title']}">
+                    <h:form id="remove-staff">
+                        <components:selectStaff id="all-staff"
+                                                value="#{adminRemoveStaffController.selectedStaff}"
+                                                staffList="#{adminRemoveStaffController.staffs}" />
+                        <p:commandButton icon="fa fa-remove" type="submit" update="all-staff:inner-box"
+                                         value="#{bundle['Ui.Admin.RemoveStaff.Remove']}"
+                                         action="#{adminRemoveStaffController.removeStaff}" />
+                    </h:form>
+                </p:panel>
+                <h:form>
+                    <components:logoutButton />
+                </h:form>    
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

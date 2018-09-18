@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:components="http://xmlns.jcp.org/jsf/composite/components">
+    <h:body>
+        <ui:composition template="/templates/main-aside.xhtml">
+            <ui:define name="aside">
+                <h2><h:link value="#{bundle['Ui.Admin.AsideTitle']}" outcome="/admin/console" /></h2>
+                <components:asideNavOfAdmin current="manage-product" />
+            </ui:define>
+            <ui:define name="main">
+                <h1><h:outputText value="${bundle['Ui.Admin.ManageProduct.Title']}"/></h1>
+                <p:panel header="#{bundle['Ui.Product.Add']}">
+                    <components:addProduct />
+                </p:panel>
+                <p:panel header="${bundle['Ui.Admin.SeasonSpecial.Title']}">
+                    <h:form>
+                        <p:selectOneListbox  id="current"
+                                             value="#{seasonSpecialContorller.selectedSeasonSpecial}" converter="#{seasonSpecialConverter}" var="p" 
+                                             filter="true" filterMatchMode="contains"
+                                             styleClass="select-one-list select-one-list-season-special">
+                            <f:selectItems value="#{seasonSpecialContorller.specials}" var="special"
+                                           itemLabel="#{special.name}"
+                                           itemValue="#{product}" />
+                            <p:column>
+                                <h:outputText  value="#{p.name}" />
+                            </p:column>
+
+                        </p:selectOneListbox>
+                        <p:commandButton icon="fa fa-remove" update="current all-other"
+                                         action="#{seasonSpecialContorller.removeSeasonSpecial}"
+                                         value="#{bundle['Ui.Admin.SeasonSpecial.Button.Remove']}"/>
+
+                        <p:selectOneListbox id="all-other"
+                                            value="#{seasonSpecialContorller.selectedProduct}"
+                                            converter="#{seasonSpecialConverter}" var="p" 
+                                            filter="true" filterMatchMode="contains"
+                                            styleClass="select-one-list select-one-list-season-special">
+                            <f:selectItems value="#{seasonSpecialContorller.allProductExceptSeasonSpecial}" var="product"
+                                           itemLabel="#{product.name}"
+                                           itemValue="#{product}" />
+                            <p:column>
+                                <h:outputText value="#{p.name}" />
+                            </p:column>
+                        </p:selectOneListbox>
+                        <p:commandButton icon="fa fa-plus" update="current all-other"
+                                         action="#{seasonSpecialContorller.addSeasonSpecial}" type="submit"
+                                         value="#{bundle['Ui.Admin.SeasonSpecial.Button.Add']}" />
+                    </h:form>
+                </p:panel>
+                <h:form>
+                    <components:logoutButton />
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
