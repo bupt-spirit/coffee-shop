@@ -16,6 +16,7 @@
                                          value="${bundle['Ui.Admin.InitData.Button.InitData']}" ajax="false"/>
                     </h:form>
                 </p:panel>
+
                 <p:panel header="${bundle['Ui.Admin.AddUser.Title']}">
                     <h:form id="add-user-form">
                         <p:panelGrid columns="3" styleClass="ui-panelgrid-blank">
@@ -59,6 +60,7 @@
                         <p:commandButton type="reset" value="Reset"/>
                     </h:form>
                 </p:panel>
+
                 <p:panel header="${bundle['Ui.Admin.AddStore.Title']}">
                     <h:form id="add-store-form">
                         <p:panelGrid columns="3" styleClass="ui-panelgrid-blank">
@@ -88,12 +90,42 @@
                             <p:message for="admin-add-store-detail"/>
 
                         </p:panelGrid>
-                        <p:commandButton action="#{adminAddStoreController.addStore}" type="submit" ajax="false"
-                                         value="${bundle['Ui.Admin.AddStore.Button.AddStore']}"/>
+                        <p:commandButton  icon="fa fa-plus" action="#{adminAddStoreController.addStore}"
+                                          type="submit" ajax="false"
+                                          value="${bundle['Ui.Admin.AddStore.Button.AddStore']}"/>
                         <p:commandButton type="reset" value="Reset"/>
                     </h:form>
                     <p:messages for="add-store-form"/>
                 </p:panel>
+
+                <p:panel header="#{bundle['Ui.Admin.SeasonSpecial.Title']}">
+                    <h:form>
+                        <p:dataTable id="current" var="special" value="#{seasonSpecialContorller.specials}" 
+                                     selection="#{seasonSpecialContorller.selectedSeasonSpecial}"
+                                     rowKey="#{special.id}" selectionMode="single" scrollable="true"
+                                     rows="5" paginator="true" resizableColumns="true">
+                            <p:column headerText="#{bundle['Ui.Admin.SeasonSpecial.Current.Title']}">
+                                <h:outputText value="#{special.name}" />
+                            </p:column>
+                        </p:dataTable>
+                        <p:commandButton icon="fa fa-remove" update="current all-other"
+                                         action="#{seasonSpecialContorller.removeSeasonSpecial}"
+                                         value="#{bundle['Ui.Admin.SeasonSpecial.Button.Remove']}"/>
+                        <p:dataTable id="all-other" var="product"
+                                     value="#{seasonSpecialContorller.allProductExceptSeasonSpecial}" 
+                                     selectionMode="single" selection="#{seasonSpecialContorller.selectedProduct}"
+                                     rowKey="#{product.id}" scrollable="true" rows="5" paginator="true"
+                                     resizableColumns="true">
+                            <p:column headerText="#{bundle['Ui.Admin.SeasonSpecial.NotIn.Title']}">
+                                <h:outputText value="#{product.name}" />
+                            </p:column>
+                        </p:dataTable>
+                        <p:commandButton icon="fa fa-plus" update="current all-other"
+                                         action="#{seasonSpecialContorller.addSeasonSpecial}" type="submit"
+                                         value="#{bundle['Ui.Admin.SeasonSpecial.Button.Add']}" />
+                    </h:form>
+                </p:panel>
+
                 <h:form>
                     <components:logoutButton />
                 </h:form>
