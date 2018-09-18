@@ -275,7 +275,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `coffee_shop`.`suborder` ;
 
 CREATE TABLE IF NOT EXISTS `coffee_shop`.`suborder` (
-  `id` INT UNSIGNED NOT NULL,
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `order_id` INT UNSIGNED NOT NULL,
   `product_id` INT UNSIGNED NOT NULL,
   `quantity` SMALLINT UNSIGNED NOT NULL,
