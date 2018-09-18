@@ -40,8 +40,8 @@ public class Ingredient implements Serializable {
     @Size(min = 1, max = 45)
     @Column(nullable = false, length = 45)
     private String name;
-    @Size(max = 45)
-    @Column(length = 45)
+    @Size(max = 512)
+    @Column(length = 512)
     private String description;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Basic(optional = false)

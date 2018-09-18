@@ -14,11 +14,12 @@ public class StoreManagerBean implements StoreManager {
     private StoreFacade storeFacade;
 
     @Override
-    public void addStore(String country, String province, String district, String city, String detail) {
+    public Store addStore(String country, String province, String city, String district, String detail) {
         Store newStore = new Store(null, country, province, city, district, detail, (short) 1);
         newStore.setOrderInfoList(new ArrayList<>());
         newStore.setStaffList(new ArrayList<>());
         storeFacade.create(newStore);
+        return newStore;
     }
 
     @Override
