@@ -63,6 +63,7 @@ public class ProductController implements Serializable {
 
     public void setSelectedProduct(Product selectedProduct) {
         this.selectedProduct = selectedProduct;
+        this.selectedIngredients.clear();
     }
 
     public List<Category> getCategories() {

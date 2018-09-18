@@ -13,19 +13,7 @@ public class StoreController {
     
     @EJB
     private StoreManager storeManager;
-    
-    private Store selectedStore;
-
-    public Store getSelectedStore() {
-        return selectedStore;
-    }
-
-    public void setSelectedStore(Store selectedStore) {
-        this.selectedStore = selectedStore;
-    }
-    
-    
-    
+     
     public List<Store> getStores() {
         return storeManager.getStores();
     }

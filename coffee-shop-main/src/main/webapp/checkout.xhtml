@@ -19,7 +19,7 @@
             <h:form>
                 <div>
                     <h:outputLabel value="#{bundle['Ui.Address.Address']}"/>
-                    <p:selectOneMenu value="#{addressController.selectedAddress}" converter="#{addressConverter}"
+                    <p:selectOneMenu value="#{cartController.selectedAddress}" converter="#{addressConverter}"
                                      var="a" filter="true" filterMatchMode="contains" required="true"
                                      class="select-one-list select-one-list-address">
                         <f:selectItems value="#{addressController.addresses}" var="address"
@@ -32,19 +32,19 @@
                 </div>
                 <div>
                     <h:outputLabel value="#{bundle['Ui.Label.Store']}"/>
-                    <p:selectOneMenu value="#{storeController.selectedStore}" converter="#{storeConverter}"
+                    <p:selectOneMenu value="#{cartController.selectedStore}" converter="#{storeConverter}"
                                      var="s" filter="true" filterMatchMode="contains" required="true"
                                      class="select-one-list select-one-list-store">
                         <f:selectItems value="#{storeController.stores}" var="store"
                                        itemLabel="#{store.detail} #{store.district} #{store.city} #{store.province} #{store.country}"
                                        itemValue="#{store}" />
                         <p:column>
-                            <components:store store="#{s}" />
+                            <components:storeAddress store="#{s}" />
                         </p:column>
                     </p:selectOneMenu>    
                 </div>
 
-                <p:dataTable var="suborder" value="#{cartController.suborders}">
+                <p:dataTable var="suborder" value="#{cartController.suborders}" resizeMode="fit">
                     <p:column headerText="#{bundle['Ui.Label.ProductName']}">
                         <h:outputText value="#{suborder.productId.name}" />
                     </p:column>
@@ -52,14 +52,15 @@
                         <h:outputText value="#{suborder.quantity}" />
                     </p:column>
                     <p:column headerText="#{bundle['Ui.Label.Ingredient']}">                  
-                        <ui:repeat var="ingredient" value="#{suborder.ingredientList}">
-                            <h:outputText value="#{ingredient.id}"/>
+                        <ui:repeat var="ingredient" value="#{suborder.ingredientList}" rendered="#{suborder.ingredientList!=null}">
+                            <h:outputText styleClass="check-out-ingredient" value="#{ingredient.name}"/>
                         </ui:repeat>
+                        <h:outputText value="#{bundle['Ui.Button.decreaseItemQuality']}" rendered="#{suborder.ingredientList.size() eq 0}"/>
                     </p:column>
                 </p:dataTable>
 
                 <p:commandButton value="#{bundle['Ui.Label.Back']}" action="/cart" ajax="false"/>
-                <p:commandButton value="#{bundle['Ui.Cart.Confirm']}" action="#" ajax="false"/>
+                <p:commandButton value="#{bundle['Ui.Cart.Confirm']}" action="#{cartController.saveOrder}" ajax="false"/>
             </h:form>
         </ui:define>
     </ui:composition>

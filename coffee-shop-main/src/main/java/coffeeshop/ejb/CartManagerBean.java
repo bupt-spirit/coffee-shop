@@ -24,6 +24,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.Resource;
+import javax.ejb.SessionContext;
 
 @Stateful
 public class CartManagerBean implements CartManager, Serializable {
@@ -32,7 +34,10 @@ public class CartManagerBean implements CartManager, Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private OrderInfo orderInfo = null;
+    private OrderInfo orderInfo;
+
+    @Resource
+    private SessionContext context;
 
     @EJB
     private OrderInfoFacade orderInfoFacade;
@@ -63,12 +68,12 @@ public class CartManagerBean implements CartManager, Serializable {
         orderInfo.setAddressId(address);
         store.getOrderInfoList().add(orderInfo);
         address.getOrderInfoList().add(orderInfo);
-        orderInfoFacade.create(orderInfo);
-        storeFacade.edit(store);
-        addressFacade.edit(address);
         for (Suborder suborder : orderInfo.getSuborderList()) {
             suborderFacade.create(suborder);
         }
+        orderInfoFacade.create(orderInfo);
+        storeFacade.edit(store);
+        addressFacade.edit(address);
         return orderInfo;
     }
 
@@ -147,4 +152,3 @@ public class CartManagerBean implements CartManager, Serializable {
         return quality;
     }
 }
-
