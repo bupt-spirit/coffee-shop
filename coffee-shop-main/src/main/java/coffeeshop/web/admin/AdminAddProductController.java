@@ -1,8 +1,5 @@
-
 package coffeeshop.web.admin;
 
-    
-    
 import coffeeshop.ejb.InitManager;
 import coffeeshop.ejb.ProductManager;
 import coffeeshop.entity.Category;
@@ -27,10 +24,10 @@ import org.apache.commons.io.IOUtils;
 public class AdminAddProductController {
 
     private static final Logger LOG = Logger.getLogger(AdminAddProductController.class.getName());
-    
+
     @EJB
     InitManager initManager;
-    
+
     private String name;
     private String description;
     private Category category;
@@ -44,14 +41,25 @@ public class AdminAddProductController {
     private BigDecimal fiber;
     private BigDecimal protein;
     private BigDecimal sodium;
-    
+
     @EJB
     ImageFacade imageFacade;
     @EJB
     ProductFacade productFacade;
     @EJB
     NutritionFacade nutritionFacade;
-    
+
+    private static String getExtension(String fileName) {
+        if (fileName == null) {
+            return null;
+        }
+        int index = fileName.indexOf('.');
+        if (index == fileName.length() || index == fileName.length() - 1) {
+            return null;
+        }
+        return fileName.substring(index + 1);
+    }
+
     public UploadedFile getImage() {
         return image;
     }
@@ -59,7 +67,7 @@ public class AdminAddProductController {
     public void setImage(UploadedFile image) {
         this.image = image;
     }
-    
+
     public void uploadHandler() throws IOException {
         if (image != null) {
             FacesMessage message = new FacesMessage("Succesful", image.getFileName() + " is uploaded.");
@@ -76,9 +84,9 @@ public class AdminAddProductController {
 
     public void setAddNutrition(boolean addNutrition) {
         this.addNutrition = addNutrition;
-        LOG.log(Level.INFO,"current isAddNutrition {0}",addNutrition);
+        LOG.log(Level.INFO, "current isAddNutrition {0}", addNutrition);
     }
-    
+
     public String getName() {
         return name;
     }
@@ -158,11 +166,9 @@ public class AdminAddProductController {
     public void setSodium(BigDecimal sodium) {
         this.sodium = sodium;
     }
-    
-    
-    
-    public void createProduct(){
-        
+
+    public void createProduct() {
+
     }
-    
+
 }
