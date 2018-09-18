@@ -2,7 +2,6 @@ package coffeeshop.web;
 
 import coffeeshop.ejb.CartManager;
 import coffeeshop.ejb.CartManagerException;
-import coffeeshop.ejb.OrderManager;
 import coffeeshop.entity.Address;
 import coffeeshop.entity.OrderInfo;
 import coffeeshop.entity.Store;
