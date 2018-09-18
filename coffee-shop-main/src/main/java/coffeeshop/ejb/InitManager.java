@@ -1,8 +1,6 @@
 package coffeeshop.ejb;
 
-import coffeeshop.entity.Address;
 import coffeeshop.entity.Category;
-import coffeeshop.entity.Customer;
 import coffeeshop.entity.Image;
 import coffeeshop.entity.Ingredient;
 import coffeeshop.entity.IngredientCategory;
