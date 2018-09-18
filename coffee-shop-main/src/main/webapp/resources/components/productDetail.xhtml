@@ -16,7 +16,7 @@
             <h1 class="product-title"><h:outputText value="#{cc.attrs.product.name}"/></h1>
             <p class="product-description"><h:outputText value="#{cc.attrs.product.description}"/></p>
             <div class="product-price"><components:price price="#{cc.attrs.product.cost}"/></div>
-            <components:productNutrition product="#{product}" />
+            <components:productNutrition product="#{product}" rendered="#{product.nutritionId != null}" />
         </div>
     </cc:implementation>
 </html>
