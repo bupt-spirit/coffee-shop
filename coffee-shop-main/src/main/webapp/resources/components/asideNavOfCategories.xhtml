@@ -13,7 +13,7 @@
         <h:form>
             <ui:repeat var="category" value="#{productController.categories}">
                 <h:commandLink value="#{category.name}" action="category-detail"
-                               styleClass="aside-nav-link aside-nav-link-admin #{productController.selectedCategory == category ? 'aside-nav-link-current' : ''}">
+                               styleClass="aside-nav-link aside-nav-link-admin #{productController.selectedCategory == category.name ? 'aside-nav-link-current' : ''}">
                     <f:setPropertyActionListener value="#{category.name}"
                                                  target="#{productController.selectedCategory}"/>
                 </h:commandLink>
