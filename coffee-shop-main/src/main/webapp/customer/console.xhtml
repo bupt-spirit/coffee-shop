@@ -43,14 +43,14 @@
                         <p:accordionPanel >
 
                             <p:tab title="#{bundle['Ui.Order.Unfinished']}">
-                                <ui:repeat value="#{orderController.customerUnfinishedOrder}" var="order">
+                                <ui:repeat value="#{orderController.customerUnfinishedOrder}" var="order">                                   
                                         <components:customerOrder order="#{order}">
                                             <f:facet name="footer">
-                                                <h:commandButton value="#{bundle['Ui.Order.Finish']}" action="#{orderController.finishOrder}"
+                                                <p:commandButton value="#{bundle['Ui.Order.Finish']}" action="#{orderController.finishOrder}"
                                                                  disabled="#{order.isPrepared eq 0}">
                                                     <f:setPropertyActionListener target="#{orderController.selectedOrder}"
                                                                                  value="#{order}"/>
-                                                </h:commandButton>
+                                                </p:commandButton>
                                             </f:facet>
                                         </components:customerOrder>
                                 </ui:repeat>
