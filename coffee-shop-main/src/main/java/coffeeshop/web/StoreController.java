@@ -9,11 +9,11 @@ import javax.inject.Named;
 
 @Named
 @RequestScoped
-public class StoreContoller {
+public class StoreController {
     
     @EJB
     private StoreManager storeManager;
-    
+     
     public List<Store> getStores() {
         return storeManager.getStores();
     }

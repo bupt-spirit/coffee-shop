@@ -8,27 +8,27 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-<cc:interface>
-    <cc:attribute name="suborder" required="true" type="coffeeshop.entity.Suborder"/>
-</cc:interface>
+    <cc:interface>
+        <cc:attribute name="suborder" required="true" type="coffeeshop.entity.Suborder"/>
+    </cc:interface>
 
-<cc:implementation>
-    <c:set var="product" value="#{cc.attrs.suborder.productId}"/>
-    <div class="suborder-summary">
-        <h:form>
-            <components:productSummary product="#{product}"/>
+    <cc:implementation>
+        <c:set var="product" value="#{cc.attrs.suborder.productId}"/>
+        <div class="suborder-summary">
+            <h:form>
+                <components:productSummary product="#{product}"/>
 
-            <div class="suborder-quantity">
-                <h:outputLabel value="${bundle['Ui.Suborder.Quantity']}"/>
-                <h:outputText value="#{cc.attrs.suborder.quantity}"/>
-            </div>
+                <div class="suborder-quantity">
+                    <h:outputLabel value="${bundle['Ui.Suborder.Quantity']}"/>
+                    <h:outputText value="#{cc.attrs.suborder.quantity}"/>
+                </div>
 
-            <p:commandButton value="#{bundle['Ui.Suborder.Remove']}"
-                             action="#{cartController.removeSuborder}" ajax="false">
-                <f:setPropertyActionListener target="#{cartController.selectedSuborder}"
-                                             value="#{cc.attrs.suborder}"/>
-            </p:commandButton>
-        </h:form>
-    </div>
-</cc:implementation>
+                <p:commandButton value="#{bundle['Ui.Suborder.Remove']}"
+                                 action="#{cartController.removeSuborder}" ajax="false">
+                    <f:setPropertyActionListener target="#{cartController.selectedSuborder}"
+                                                 value="#{cc.attrs.suborder}"/>
+                </p:commandButton>
+            </h:form>
+        </div>
+    </cc:implementation>
 </html>
