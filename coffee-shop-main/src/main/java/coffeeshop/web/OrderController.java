@@ -24,13 +24,6 @@ public class OrderController {
     
     private OrderInfo selectedOrder;
     
-    private List<OrderInfo> customerAllOrder;
-    private List<OrderInfo> customerUnfinishedOrder;
-    private List<OrderInfo> customerFinishedOrder;
-    
-    private List<OrderInfo> storeAllOrder;
-    private List<OrderInfo> storeUnfinishedOrder;
-    private List<OrderInfo> stroeFinishedOrder;
 
     public OrderInfo getSelectedOrder() {
         return selectedOrder;
@@ -53,10 +46,27 @@ public class OrderController {
         return orderManager.getCustomerUnfinishedOrder(userInfoController.getCurrentUser().getCustomer());
     }
     
-    public void hasPrepared(){
+    public List<OrderInfo> getCustomerFinishedOrder() throws UserManagerException{
+        return orderManager.getCustomerFinishedOrder(userInfoController.getCurrentUser().getCustomer());
     }
     
-    public void hasFinished(){
+    public List<OrderInfo> getStoreAllOrder() throws UserManagerException{
+        return orderManager.getStoreAllOrder(userInfoController.getCurrentUser().getStaff().getStoreId());
     }
     
+    public List<OrderInfo> getStoreFinishedOrder() throws UserManagerException{
+        return orderManager.getStoreFinishedOrder(userInfoController.getCurrentUser().getStaff().getStoreId());
+    }
+    
+    public List<OrderInfo> getStoreUninishedOrder() throws UserManagerException{
+        return orderManager.getStoreUnfinishedOrder(userInfoController.getCurrentUser().getStaff().getStoreId());
+    }
+    
+    public List<OrderInfo> getStoreUnpreparedOrder() throws UserManagerException{
+        return orderManager.getStoreUnpreparedOrder(userInfoController.getCurrentUser().getStaff().getStoreId());
+    }
+    
+    public List<OrderInfo> getStorePreparedButUnfinishedOrder() throws UserManagerException{
+        return orderManager.getStorePreparedButUnfinishedOrder(userInfoController.getCurrentUser().getStaff().getStoreId());
+    }
 }

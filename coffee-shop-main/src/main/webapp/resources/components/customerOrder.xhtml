@@ -12,21 +12,12 @@
     </cc:interface>
 
     <cc:implementation>
-        <div class="customer-order">
-            <div class="order-basic">
-                <span class="order-part">
-                    <h:outputText  value="#{cc.attrs.order.dateCreate}"/>
-                </span>
-                <span class="order-part">
-                    <h:outputLabel value="#{bundle['Ui.CurrencySymbol']}"/>
-                    <h:outputText  value="#{cc.attrs.order.amount}"/>
-                </span>
-            </div>
+        <p:fieldset legend="#{cc.attrs.order.dateCreate} #{bundle['Ui.CurrencySymbol']} #{cc.attrs.order.amount}" >
             <div class="order-detail">
                 <components:subordersTable order="#{cc.attrs.order}" />
             </div>
             <components:customerAddress address="#{cc.attrs.order.addressId}"/>           
-        </div>
+        </p:fieldset>
     </cc:implementation>
 </html>
 
