@@ -6,11 +6,11 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
-import javax.enterprise.context.SessionScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
 @Named
-@SessionScoped
+@RequestScoped
 public class SeasonSpecialContorller implements Serializable {
 
     private static final long serialVersionUID = 1L;
