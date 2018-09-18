@@ -26,4 +26,7 @@ public interface OrderManager {
    OrderInfo getOrderById(int id);
    
    void changeOrderStateToPrepared(OrderInfo orderInfo);
+   OrderInfo getOrderById(int id) throws OrderManagerException;
+   
+   void finishOrder(OrderInfo orderInfo) throws OrderManagerException;
 }

@@ -55,7 +55,7 @@ public class OrderManagerBean implements OrderManager {
     }
 
     @Override
-    public OrderInfo getOrderById(int id) {
+    public OrderInfo getOrderById(int id) throws OrderManagerException {
         return orderInfoFacade.find(id);
     }
 
@@ -65,5 +65,12 @@ public class OrderManagerBean implements OrderManager {
         orderInfo.setIsPrepared((short) (1));
         orderInfoFacade.edit(orderInfo);
 
+    public void finishOrder(OrderInfo orderInfo) throws OrderManagerException{
+        if (orderInfo.getIsPrepared() == (short) 1) {
+            orderInfo.setIsFinished((short) 1);
+            orderInfoFacade.edit(orderInfo);
+        } else {
+            throw new OrderManagerException("can not finish this order");
+        }
     }
 }
