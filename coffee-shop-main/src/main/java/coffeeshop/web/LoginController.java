@@ -1,6 +1,7 @@
 package coffeeshop.web;
 
 import coffeeshop.ejb.InitManager;
+import coffeeshop.ejb.UserManagerException;
 import coffeeshop.web.util.MessageBundle;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
@@ -64,7 +65,7 @@ public class LoginController {
         this.password = password;
     }
 
-    public String login() {
+    public String login() throws UserManagerException {
         initManager.checkAndAddDefaultAdminUser();
         if (isLoggedIn()) {
             facesContext.addMessage(null, new FacesMessage(bundle.getString("Ui.Message.LogoutFirst")));
