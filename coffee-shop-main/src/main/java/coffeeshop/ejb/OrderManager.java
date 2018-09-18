@@ -22,4 +22,6 @@ public interface OrderManager {
    List<OrderInfo> getStorePreparedButUnfinishedOrder(Store store);
    
    List<OrderInfo> getStoreUnpreparedOrder(Store store);
+   
+   OrderInfo getOrderById(int id);
 }

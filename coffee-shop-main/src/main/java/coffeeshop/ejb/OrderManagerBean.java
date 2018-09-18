@@ -55,4 +55,9 @@ public class OrderManagerBean implements OrderManager{
         return orderInfoFacade.findUnpreparedByStore(store);
     }
     
+    @Override
+    public OrderInfo getOrderById(int id){
+        return orderInfoFacade.find(id);
+    }
+    
 }
