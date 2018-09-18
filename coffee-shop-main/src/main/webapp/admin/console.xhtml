@@ -126,10 +126,14 @@
                                          value="#{bundle['Ui.Admin.SeasonSpecial.Button.Add']}" />
                     </h:form>
                 </p:panel>    
-
-                <h:form>
-                    <components:logoutButton />
-                </h:form>              
+                <p:panel header="#{bundle['Ui.Product.Add']}">
+                    <h:form>
+                        <components:addProduct/>
+                    </h:form>                
+                    <h:form>
+                        <components:logoutButton />
+                    </h:form>    
+                </p:panel>
             </ui:define>
         </ui:composition>
     </h:body>

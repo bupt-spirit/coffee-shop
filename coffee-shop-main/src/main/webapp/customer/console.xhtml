@@ -34,7 +34,7 @@
                                          onclick="PF('add-address-dialog').show();" />
                     </h:form>
                     <p:dialog header="#{bundle['Ui.Address.Add']}" widgetVar="add-address-dialog">
-                        <components:addressAdd customer="#{userInfoController.currentUser.customer}" />
+                        <components:addAddress customer="#{userInfoController.currentUser.customer}" />
                     </p:dialog>
                 </p:panel>
                 <p:panel header="#{bundle['Ui.Order.Header']}">
