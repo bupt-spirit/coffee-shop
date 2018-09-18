@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:components="http://xmlns.jcp.org/jsf/composite/components">
+
+    <cc:interface>
+        <cc:attribute name="value" required="true"/>
+    </cc:interface>
+
+    <cc:implementation>
+        <div class="address-add-summary">
+            <p:selectOneListbox value="#{cc.attrs.value}" converter="#{addressConverter}"
+                                var="a" filter="true" filterMatchMode="contains" required="true"
+                                class="select-one-list select-one-list-address">
+                <f:selectItems value="#{addressController.addresses}" var="address"
+                               itemLabel="#{address.receiver} #{address.receiverPhone} #{address.detail} #{address.district} #{address.city} #{address.province} #{address.country}"
+                               itemValue="#{address}" />
+                <p:column>
+                    <components:customerAddress address="#{a}" />
+                </p:column>
+            </p:selectOneListbox>
+        </div>
+
+    </cc:implementation>
+</html>
+

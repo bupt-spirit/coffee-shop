@@ -9,40 +9,24 @@
     <ui:composition template="templates/main-only.xhtml">
         <ui:define name="main">
 
-            <h:outputLabel value="#{bundle['Ui.Label.OrderTime']}"/> 
-            <h:outputText value="#{cartController.currentTime} UTC-0">  
-                <f:convertDateTime type="both" pattern="HH:mm:ss dd.MM.yyyy" />
-            </h:outputText>
-            <h:outputLabel value="#{bundle['Ui.Label.Username']}"/>
-            <h:outputText value="#{userInfoController.currentUser.customer.nickname}"/>
+            <p:panel header="#{bundle['Ui.Order.BasicInfo']}">
+                <p:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle['Ui.Label.OrderTime']}"/> 
+                    <h:outputText value="#{cartController.currentTime} UTC-0">  
+                        <f:convertDateTime type="both" pattern="HH:mm:ss dd.MM.yyyy" />
+                    </h:outputText>
+                    <h:outputLabel value="#{bundle['Ui.Label.Username']}"/>
+                    <h:outputText value="#{userInfoController.currentUser.customer.nickname}"/>
+                </p:panelGrid>
 
+            </p:panel>
             <h:form>
-                <div>
-                    <h:outputLabel value="#{bundle['Ui.Address.Address']}"/>
-                    <p:selectOneMenu value="#{cartController.selectedAddress}" converter="#{addressConverter}"
-                                     var="a" filter="true" filterMatchMode="contains" required="true"
-                                     class="select-one-list select-one-list-address">
-                        <f:selectItems value="#{addressController.addresses}" var="address"
-                                       itemLabel="#{address.receiver} #{address.receiverPhone} #{address.detail} #{address.district} #{address.city} #{address.province} #{address.country}"
-                                       itemValue="#{address}" />
-                        <p:column>
-                            <components:customerAddress address="#{a}" />
-                        </p:column>
-                    </p:selectOneMenu>
-                </div>
-                <div>
-                    <h:outputLabel value="#{bundle['Ui.Label.Store']}"/>
-                    <p:selectOneMenu value="#{cartController.selectedStore}" converter="#{storeConverter}"
-                                     var="s" filter="true" filterMatchMode="contains" required="true"
-                                     class="select-one-list select-one-list-store">
-                        <f:selectItems value="#{storeController.stores}" var="store"
-                                       itemLabel="#{store.detail} #{store.district} #{store.city} #{store.province} #{store.country}"
-                                       itemValue="#{store}" />
-                        <p:column>
-                            <components:storeAddress store="#{s}" />
-                        </p:column>
-                    </p:selectOneMenu>    
-                </div>
+                <p:panel header="#{bundle['Ui.Address.Address']}">
+                    <components:selectCustomerAddress value="#{cartController.selectedAddress}" />
+                </p:panel>
+                <p:panel header="#{bundle['Ui.Label.Store']}">
+                    <components:selectStore value="#{cartController.selectedStore}" />
+                </p:panel>
 
                 <p:dataTable var="suborder" value="#{cartController.suborders}" resizeMode="fit">
                     <p:column headerText="#{bundle['Ui.Label.ProductName']}">

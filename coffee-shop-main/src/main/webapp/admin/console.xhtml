@@ -44,20 +44,7 @@
                             <p:message for="admin-add-user-nickname"/>
 
                             <p:outputLabel for="admin-add-user-store" value="${bundle['Ui.Label.Store']}"/>
-                            <p:selectOneListbox id="admin-add-user-store"
-                                                value="#{adminAddUserController.store}"
-                                                disabled="#{adminAddUserController.role != 'staff'}"
-                                                converter="#{storeConverter}"
-                                                filter="true" filterMatchMode="contains"
-                                                styleClass="select-one-list select-one-list-store"
-                                                var="t">
-                                <f:selectItems value="#{storeController.stores}" var="store"
-                                               itemLabel="#{store.detail}"
-                                               itemValue="#{store}" />
-                                <p:column>
-                                    <components:storeAddress store="#{t}" />
-                                </p:column>
-                            </p:selectOneListbox>
+                            <components:selectStore id="admin-add-user-store" value="#{adminAddUserController.store}" />
                             <p:message for="admin-add-user-store"/>
 
                         </p:panelGrid>
@@ -106,9 +93,10 @@
 
                 <p:panel header="${bundle['Ui.Admin.SeasonSpecial.Title']}">
                     <h:form>
-                        <p:selectOneListbox value="#{seasonSpecialContorller.selectedSeasonSpecial}" converter="#{seasonSpecialConverter}" var="p" 
-                                            filter="true" filterMatchMode="contains"
-                                            styleClass="select-one-list select-one-list-season-special">
+                        <p:selectOneListbox  id="current"
+                                             value="#{seasonSpecialContorller.selectedSeasonSpecial}" converter="#{seasonSpecialConverter}" var="p" 
+                                             filter="true" filterMatchMode="contains"
+                                             styleClass="select-one-list select-one-list-season-special">
                             <f:selectItems value="#{seasonSpecialContorller.specials}" var="special"
                                            itemLabel="#{special.name}"
                                            itemValue="#{product}" />
@@ -117,24 +105,23 @@
                             </p:column>
 
                         </p:selectOneListbox>
-                        <p:commandButton icon="fa fa-remove" ajax="false"
+                        <p:commandButton icon="fa fa-remove" update="current all-other"
                                          action="#{seasonSpecialContorller.removeSeasonSpecial}"
                                          value="#{bundle['Ui.Admin.SeasonSpecial.Button.Remove']}"/>
-                    </h:form>
 
-                    <h:form>
-                        <p:selectOneListbox value="#{seasonSpecialContorller.selectedProduct}" converter="#{seasonSpecialConverter}" var="p" 
+                        <p:selectOneListbox id="all-other"
+                                            value="#{seasonSpecialContorller.selectedProduct}"
+                                            converter="#{seasonSpecialConverter}" var="p" 
                                             filter="true" filterMatchMode="contains"
                                             styleClass="select-one-list select-one-list-season-special">
                             <f:selectItems value="#{seasonSpecialContorller.allProductExceptSeasonSpecial}" var="product"
                                            itemLabel="#{product.name}"
                                            itemValue="#{product}" />
                             <p:column >
-                                <h:outputText  value="#{p.name}" />
+                                <h:outputText value="#{p.name}" />
                             </p:column>
-
                         </p:selectOneListbox>
-                        <p:commandButton icon="fa fa-plus" ajax="false"
+                        <p:commandButton icon="fa fa-plus" update="current all-other"
                                          action="#{seasonSpecialContorller.addSeasonSpecial}" type="submit"
                                          value="#{bundle['Ui.Admin.SeasonSpecial.Button.Add']}" />
                     </h:form>

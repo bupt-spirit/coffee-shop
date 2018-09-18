@@ -20,16 +20,7 @@
                                       rendered="#{addressController.addresses.size() eq 0}"/>
                     </p>
                     <h:form styleClass="address-delete-item">
-                        <p:selectOneListbox value="#{addressController.selectedAddress}" converter="#{addressConverter}"
-                                            var="a" filter="true" filterMatchMode="contains" required="true"
-                                            class="select-one-list select-one-list-address">
-                            <f:selectItems value="#{addressController.addresses}" var="address"
-                                           itemLabel="#{address.receiver} #{address.receiverPhone} #{address.detail} #{address.district} #{address.city} #{address.province} #{address.country}"
-                                           itemValue="#{address}" />
-                            <p:column>
-                                <components:customerAddress address="#{a}" />
-                            </p:column>
-                        </p:selectOneListbox>
+                        <components:selectCustomerAddress value="#{addressController.selectedAddress}" />
                         <p:commandButton styleClass="address-delete-button"
                                          value="#{bundle['Ui.Address.Remove']}"
                                          icon="fa fa-remove"
