@@ -25,5 +25,5 @@ public interface OrderManager {
    
    OrderInfo getOrderById(int id) throws OrderManagerException;
    
-   int finishOrder(OrderInfo orderInfo);
+   void finishOrder(OrderInfo orderInfo) throws OrderManagerException;
 }

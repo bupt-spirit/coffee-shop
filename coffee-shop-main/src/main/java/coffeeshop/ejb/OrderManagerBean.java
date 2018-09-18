@@ -60,13 +60,12 @@ public class OrderManagerBean implements OrderManager {
     }
 
     @Override
-    public int finishOrder(OrderInfo orderInfo) {
+    public void finishOrder(OrderInfo orderInfo) throws OrderManagerException{
         if (orderInfo.getIsPrepared() == (short) 1) {
             orderInfo.setIsFinished((short) 1);
             orderInfoFacade.edit(orderInfo);
-            return 1;
         } else {
-            return 0;
+            throw new OrderManagerException("can not finish this order");
         }
     }
 }

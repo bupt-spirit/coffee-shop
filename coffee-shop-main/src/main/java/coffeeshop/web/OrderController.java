@@ -1,4 +1,3 @@
-
 package coffeeshop.web;
 
 import coffeeshop.ejb.OrderManager;
@@ -18,12 +17,12 @@ import org.primefaces.event.ToggleEvent;
 @Named
 @RequestScoped
 public class OrderController {
-    
+
     @EJB
     OrderManager orderManager;
     @Inject
     UserInfoController userInfoController;
-    
+
     @Inject
     private MessageBundle bundle;
 
@@ -33,9 +32,8 @@ public class OrderController {
     private void getFacesContext() {
         facesContext = FacesContext.getCurrentInstance();
     }
-    
+
     private OrderInfo selectedOrder;
-    
 
     public OrderInfo getSelectedOrder() {
         return selectedOrder;
@@ -44,50 +42,46 @@ public class OrderController {
     public void setSelectedOrder(OrderInfo selectedOrder) {
         this.selectedOrder = selectedOrder;
     }
-    
-    public void finishOrder(){
-        int result=orderManager.finishOrder(selectedOrder);
-        if(result==1){
+
+    public void finishOrder() {
+        orderManager.finishOrder(selectedOrder);
         facesContext.addMessage(null, new FacesMessage(bundle.getString("Ui.Order.FinishSuccess")));
-        }else{
-            facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, bundle.getString("Ui.Order.FinishFail"), null));
-        }
     }
-    
+
     public void handleToggle(ToggleEvent event) {
         FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Toggled", "Visibility:" + event.getVisibility());
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
-    
-    public List<OrderInfo> getCustomerAllOrder() throws UserManagerException{        
+
+    public List<OrderInfo> getCustomerAllOrder() throws UserManagerException {
         return orderManager.getCustomerAllOrder(userInfoController.getCurrentUser().getCustomer());
     }
-    
-    public List<OrderInfo> getCustomerUnfinishedOrder() throws UserManagerException{
+
+    public List<OrderInfo> getCustomerUnfinishedOrder() throws UserManagerException {
         return orderManager.getCustomerUnfinishedOrder(userInfoController.getCurrentUser().getCustomer());
     }
-    
-    public List<OrderInfo> getCustomerFinishedOrder() throws UserManagerException{
+
+    public List<OrderInfo> getCustomerFinishedOrder() throws UserManagerException {
         return orderManager.getCustomerFinishedOrder(userInfoController.getCurrentUser().getCustomer());
     }
-    
-    public List<OrderInfo> getStoreAllOrder() throws UserManagerException{
+
+    public List<OrderInfo> getStoreAllOrder() throws UserManagerException {
         return orderManager.getStoreAllOrder(userInfoController.getCurrentUser().getStaff().getStoreId());
     }
-    
-    public List<OrderInfo> getStoreFinishedOrder() throws UserManagerException{
+
+    public List<OrderInfo> getStoreFinishedOrder() throws UserManagerException {
         return orderManager.getStoreFinishedOrder(userInfoController.getCurrentUser().getStaff().getStoreId());
     }
-    
-    public List<OrderInfo> getStoreUninishedOrder() throws UserManagerException{
+
+    public List<OrderInfo> getStoreUninishedOrder() throws UserManagerException {
         return orderManager.getStoreUnfinishedOrder(userInfoController.getCurrentUser().getStaff().getStoreId());
     }
-    
-    public List<OrderInfo> getStoreUnpreparedOrder() throws UserManagerException{
+
+    public List<OrderInfo> getStoreUnpreparedOrder() throws UserManagerException {
         return orderManager.getStoreUnpreparedOrder(userInfoController.getCurrentUser().getStaff().getStoreId());
     }
-    
-    public List<OrderInfo> getStorePreparedButUnfinishedOrder() throws UserManagerException{
+
+    public List<OrderInfo> getStorePreparedButUnfinishedOrder() throws UserManagerException {
         return orderManager.getStorePreparedButUnfinishedOrder(userInfoController.getCurrentUser().getStaff().getStoreId());
     }
 }
