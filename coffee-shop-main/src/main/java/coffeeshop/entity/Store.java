@@ -57,8 +57,8 @@ public class Store implements Serializable {
     private String district;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
-    @Column(nullable = false, length = 45)
+    @Size(min = 1, max = 512)
+    @Column(nullable = false, length = 512)
     private String detail;
     @Basic(optional = false)
     @NotNull

@@ -44,14 +44,20 @@
                             <p:message for="admin-add-user-nickname"/>
 
                             <p:outputLabel for="admin-add-user-store" value="${bundle['Ui.Label.Store']}"/>
-                            <p:selectOneMenu id="admin-add-user-store"
-                                             value="#{adminAddUserController.store}"
-                                             disabled="#{adminAddUserController.role != 'staff'}"
-                                             converter="#{storeConverter}">
-                                <f:selectItems value="#{storeContoller.stores}" var="store"
-                                               itemLabel="#{store.country} #{store.province} #{store.city} #{store.district} #{store.detail}"
+                            <p:selectOneListbox id="admin-add-user-store"
+                                                value="#{adminAddUserController.store}"
+                                                disabled="#{adminAddUserController.role != 'staff'}"
+                                                converter="#{storeConverter}"
+                                                filter="true" filterMatchMode="contains"
+                                                styleClass="select-one-list select-one-list-store"
+                                                var="t">
+                                <f:selectItems value="#{storeController.stores}" var="store"
+                                               itemLabel="#{store.detail}"
                                                itemValue="#{store}" />
-                            </p:selectOneMenu>
+                                <p:column>
+                                    <components:storeAddress store="#{t}" />
+                                </p:column>
+                            </p:selectOneListbox>
                             <p:message for="admin-add-user-store"/>
 
                         </p:panelGrid>
@@ -102,7 +108,7 @@
                     <h:form>
                         <p:selectOneListbox value="#{seasonSpecialContorller.selectedSeasonSpecial}" converter="#{seasonSpecialConverter}" var="p" 
                                             filter="true" filterMatchMode="contains"
-                                            class="select-one-list-season-special">
+                                            styleClass="select-one-list select-one-list-season-special">
                             <f:selectItems value="#{seasonSpecialContorller.specials}" var="special"
                                            itemLabel="#{special.name}"
                                            itemValue="#{product}" />
@@ -119,7 +125,7 @@
                     <h:form>
                         <p:selectOneListbox value="#{seasonSpecialContorller.selectedProduct}" converter="#{seasonSpecialConverter}" var="p" 
                                             filter="true" filterMatchMode="contains"
-                                            class="select-one-list-season-special">
+                                            styleClass="select-one-list select-one-list-season-special">
                             <f:selectItems value="#{seasonSpecialContorller.allProductExceptSeasonSpecial}" var="product"
                                            itemLabel="#{product.name}"
                                            itemValue="#{product}" />

@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface StoreManager {
     
-    void addStore(String country, String province, String district, String city, String detail);
+    Store addStore(String country, String province, String city, String district, String detail);
     
     List<Store> getStores();
     
