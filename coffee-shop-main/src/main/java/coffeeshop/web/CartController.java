@@ -2,7 +2,6 @@ package coffeeshop.web;
 
 import coffeeshop.ejb.CartManager;
 import coffeeshop.ejb.CartManagerException;
-import coffeeshop.ejb.OrderManager;
 import coffeeshop.entity.Address;
 import coffeeshop.entity.OrderInfo;
 import coffeeshop.entity.Store;
@@ -66,6 +65,10 @@ public class CartController implements Serializable {
     public List<Suborder> getSuborders() {
         return cartManager.getSuborders();
     }
+    
+    public OrderInfo getOrder() {
+        return cartManager.getOrder();
+    }
 
     public void removeAll() {
         cartManager.removeAll();
@@ -84,8 +87,7 @@ public class CartController implements Serializable {
     }
 
     public Date getCurrentTime() {
-        this.currentTime = new Date();
-        return currentTime;
+        return new Date();
     }
 
     public void saveOrder() {

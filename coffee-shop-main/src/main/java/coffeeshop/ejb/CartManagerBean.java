@@ -69,7 +69,10 @@ public class CartManagerBean implements CartManager, Serializable {
         orderInfoFacade.create(orderInfo);
         storeFacade.edit(store);
         addressFacade.edit(address);
-        return orderInfo;
+        
+        OrderInfo order = this.orderInfo;
+        init();
+        return order;
     }
 
     @Override
@@ -119,6 +122,11 @@ public class CartManagerBean implements CartManager, Serializable {
     @Override
     public List<Suborder> getSuborders() {
         return orderInfo.getSuborderList();
+    }
+    
+    @Override
+    public OrderInfo getOrder() {
+        return orderInfo;
     }
 
     @Override

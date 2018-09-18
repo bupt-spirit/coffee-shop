@@ -27,21 +27,8 @@
                 <p:panel header="#{bundle['Ui.Label.Store']}">
                     <components:selectStore value="#{cartController.selectedStore}" />
                 </p:panel>
-
-                <p:dataTable var="suborder" value="#{cartController.suborders}" resizeMode="fit">
-                    <p:column headerText="#{bundle['Ui.Label.ProductName']}">
-                        <h:outputText value="#{suborder.productId.name}" />
-                    </p:column>
-                    <p:column headerText="#{bundle['Ui.Suborder.Quantity']}">
-                        <h:outputText value="#{suborder.quantity}" />
-                    </p:column>
-                    <p:column headerText="#{bundle['Ui.Label.Ingredient']}">                  
-                        <ui:repeat var="ingredient" value="#{suborder.ingredientList}" rendered="#{suborder.ingredientList!=null}">
-                            <h:outputText styleClass="check-out-ingredient" value="#{ingredient.name}"/>
-                        </ui:repeat>
-                        <h:outputText value="#{bundle['Ui.Button.decreaseItemQuality']}" rendered="#{suborder.ingredientList.size() eq 0}"/>
-                    </p:column>
-                </p:dataTable>
+                
+                <components:subordersTable order="#{cartController.order}" />
 
                 <p:commandButton value="#{bundle['Ui.Label.Back']}" action="/cart" ajax="false"/>
                 <p:commandButton value="#{bundle['Ui.Cart.Confirm']}" action="#{cartController.saveOrder}" ajax="false"/>

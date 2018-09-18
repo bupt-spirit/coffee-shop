@@ -21,6 +21,8 @@ public interface CartManager {
     int getItemCount();
 
     List<Suborder> getSuborders();
+    
+    OrderInfo getOrder();
 
     OrderInfo saveAndGetOrderInfo(Store store, Address address);
     
