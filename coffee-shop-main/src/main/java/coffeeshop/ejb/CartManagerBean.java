@@ -63,12 +63,12 @@ public class CartManagerBean implements CartManager, Serializable {
         orderInfo.setAddressId(address);
         store.getOrderInfoList().add(orderInfo);
         address.getOrderInfoList().add(orderInfo);
-        orderInfoFacade.create(orderInfo);
-        storeFacade.edit(store);
-        addressFacade.edit(address);
         for (Suborder suborder : orderInfo.getSuborderList()) {
             suborderFacade.create(suborder);
         }
+        orderInfoFacade.create(orderInfo);
+        storeFacade.edit(store);
+        addressFacade.edit(address);
         return orderInfo;
     }
 

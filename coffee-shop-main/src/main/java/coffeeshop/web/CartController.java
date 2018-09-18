@@ -2,24 +2,54 @@ package coffeeshop.web;
 
 import coffeeshop.ejb.CartManager;
 import coffeeshop.ejb.CartManagerException;
+import coffeeshop.ejb.OrderManager;
+import coffeeshop.entity.Address;
+import coffeeshop.entity.OrderInfo;
+import coffeeshop.entity.Store;
 import coffeeshop.entity.Suborder;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Named
 @SessionScoped
 public class CartController implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    private static final Logger LOG = Logger.getLogger(CartController.class.getName());
 
     @EJB
     private CartManager cartManager;
 
     private Suborder selectedSuborder;
+
+    private Date currentTime;
+
+    private Store selectedStore;
+
+    private Address selectedAddress;
+
+    public Address getSelectedAddress() {
+        return selectedAddress;
+    }
+
+    public void setSelectedAddress(Address selectedAddress) {
+        this.selectedAddress = selectedAddress;
+    }
+
+    public Store getSelectedStore() {
+        return selectedStore;
+    }
+
+    public void setSelectedStore(Store selectedStore) {
+        this.selectedStore = selectedStore;
+    }
 
     public CartManager getCartManager() {
         return cartManager;
@@ -51,5 +81,15 @@ public class CartController implements Serializable {
 
     public int getItemCount() {
         return cartManager.getItemCount();
+    }
+
+    public Date getCurrentTime() {
+        this.currentTime = new Date();
+        return currentTime;
+    }
+
+    public void saveOrder() {
+        OrderInfo orderInfo = cartManager.saveAndGetOrderInfo(selectedStore, selectedAddress);
+        LOG.log(Level.INFO, "create order successfully {0}", orderInfo.getId());
     }
 }

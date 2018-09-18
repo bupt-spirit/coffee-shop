@@ -10,3 +10,7 @@ nb-configuration.xml
 *.NavData
 *.iml
 .idea
+.settings
+.project
+.classpath
+.projec
