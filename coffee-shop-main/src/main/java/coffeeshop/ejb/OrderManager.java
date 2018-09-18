@@ -23,5 +23,7 @@ public interface OrderManager {
    
    List<OrderInfo> getStoreUnpreparedOrder(Store store);
    
-   OrderInfo getOrderById(int id);
+   OrderInfo getOrderById(int id) throws OrderManagerException;
+   
+   int finishOrder(OrderInfo orderInfo);
 }

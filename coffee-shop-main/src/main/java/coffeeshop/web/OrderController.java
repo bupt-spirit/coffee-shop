@@ -4,7 +4,9 @@ package coffeeshop.web;
 import coffeeshop.ejb.OrderManager;
 import coffeeshop.ejb.UserManagerException;
 import coffeeshop.entity.OrderInfo;
+import coffeeshop.web.util.MessageBundle;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
@@ -22,6 +24,16 @@ public class OrderController {
     @Inject
     UserInfoController userInfoController;
     
+    @Inject
+    private MessageBundle bundle;
+
+    private FacesContext facesContext;
+
+    @PostConstruct
+    private void getFacesContext() {
+        facesContext = FacesContext.getCurrentInstance();
+    }
+    
     private OrderInfo selectedOrder;
     
 
@@ -32,7 +44,16 @@ public class OrderController {
     public void setSelectedOrder(OrderInfo selectedOrder) {
         this.selectedOrder = selectedOrder;
     }
-   
+    
+    public void finishOrder(){
+        int result=orderManager.finishOrder(selectedOrder);
+        if(result==1){
+        facesContext.addMessage(null, new FacesMessage(bundle.getString("Ui.Order.FinishSuccess")));
+        }else{
+            facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, bundle.getString("Ui.Order.FinishFail"), null));
+        }
+    }
+    
     public void handleToggle(ToggleEvent event) {
         FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Toggled", "Visibility:" + event.getVisibility());
         FacesContext.getCurrentInstance().addMessage(null, msg);
