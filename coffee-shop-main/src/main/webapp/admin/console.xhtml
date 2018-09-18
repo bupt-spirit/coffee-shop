@@ -44,14 +44,7 @@
                             <p:message for="admin-add-user-nickname"/>
 
                             <p:outputLabel for="admin-add-user-store" value="${bundle['Ui.Label.Store']}"/>
-                            <p:selectOneMenu id="admin-add-user-store"
-                                             value="#{adminAddUserController.store}"
-                                             disabled="#{adminAddUserController.role != 'staff'}"
-                                             converter="#{storeConverter}">
-                                <f:selectItems value="#{storeContoller.stores}" var="store"
-                                               itemLabel="#{store.country} #{store.province} #{store.city} #{store.district} #{store.detail}"
-                                               itemValue="#{store}" />
-                            </p:selectOneMenu>
+                            <components:selectStore id="admin-add-user-store" value="#{adminAddUserController.store}" />
                             <p:message for="admin-add-user-store"/>
 
                         </p:panelGrid>
@@ -100,9 +93,10 @@
 
                 <p:panel header="${bundle['Ui.Admin.SeasonSpecial.Title']}">
                     <h:form>
-                        <p:selectOneListbox value="#{seasonSpecialContorller.selectedSeasonSpecial}" converter="#{seasonSpecialConverter}" var="p" 
-                                            filter="true" filterMatchMode="contains"
-                                            class="select-one-list-season-special">
+                        <p:selectOneListbox  id="current"
+                                             value="#{seasonSpecialContorller.selectedSeasonSpecial}" converter="#{seasonSpecialConverter}" var="p" 
+                                             filter="true" filterMatchMode="contains"
+                                             styleClass="select-one-list select-one-list-season-special">
                             <f:selectItems value="#{seasonSpecialContorller.specials}" var="special"
                                            itemLabel="#{special.name}"
                                            itemValue="#{product}" />
@@ -111,24 +105,23 @@
                             </p:column>
 
                         </p:selectOneListbox>
-                        <p:commandButton icon="fa fa-remove" ajax="false"
+                        <p:commandButton icon="fa fa-remove" update="current all-other"
                                          action="#{seasonSpecialContorller.removeSeasonSpecial}"
                                          value="#{bundle['Ui.Admin.SeasonSpecial.Button.Remove']}"/>
-                    </h:form>
 
-                    <h:form>
-                        <p:selectOneListbox value="#{seasonSpecialContorller.selectedProduct}" converter="#{seasonSpecialConverter}" var="p" 
+                        <p:selectOneListbox id="all-other"
+                                            value="#{seasonSpecialContorller.selectedProduct}"
+                                            converter="#{seasonSpecialConverter}" var="p" 
                                             filter="true" filterMatchMode="contains"
-                                            class="select-one-list-season-special">
+                                            styleClass="select-one-list select-one-list-season-special">
                             <f:selectItems value="#{seasonSpecialContorller.allProductExceptSeasonSpecial}" var="product"
                                            itemLabel="#{product.name}"
                                            itemValue="#{product}" />
                             <p:column >
-                                <h:outputText  value="#{p.name}" />
+                                <h:outputText value="#{p.name}" />
                             </p:column>
-
                         </p:selectOneListbox>
-                        <p:commandButton icon="fa fa-plus" ajax="false"
+                        <p:commandButton icon="fa fa-plus" update="current all-other"
                                          action="#{seasonSpecialContorller.addSeasonSpecial}" type="submit"
                                          value="#{bundle['Ui.Admin.SeasonSpecial.Button.Add']}" />
                     </h:form>

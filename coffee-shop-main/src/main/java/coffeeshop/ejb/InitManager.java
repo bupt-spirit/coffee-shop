@@ -1,12 +1,16 @@
 package coffeeshop.ejb;
 
+import coffeeshop.entity.Address;
 import coffeeshop.entity.Category;
+import coffeeshop.entity.Customer;
 import coffeeshop.entity.Image;
 import coffeeshop.entity.Ingredient;
 import coffeeshop.entity.IngredientCategory;
 import coffeeshop.entity.Nutrition;
 import coffeeshop.entity.Product;
 import coffeeshop.entity.SeasonSpecial;
+import coffeeshop.entity.Store;
+import coffeeshop.entity.UserInfo;
 import coffeeshop.facade.CategoryFacade;
 import coffeeshop.facade.ImageFacade;
 import coffeeshop.facade.IngredientCategoryFacade;
@@ -38,6 +42,10 @@ public class InitManager {
 
     @EJB
     private UserManager userManager;
+    @EJB
+    private CustomerInfoManager customerInfoManager;
+    @EJB
+    private StoreManager storeManager;
     @EJB
     private CategoryFacade categoryFacade;
     @EJB
@@ -293,6 +301,26 @@ public class InitManager {
                 "Copper Stainless Steel Cold Cup",
                 new BigDecimal(98), categoryCup, null);
 
+        UserInfo userLuShijun = userManager.addCustomer("lushijun", "test", "Lu Shijun");
+        customerInfoManager.addAddress(userLuShijun.getCustomer(),
+                "China", "Beijing", "Beijing", "Haidian",
+                "Xue 5 Beijing University of Posts and Telecommunications 10 Xitucheng Rd.",
+                "Lu Shijun", "+86 111 1111 1111");
+        customerInfoManager.addAddress(userLuShijun.getCustomer(),
+                "China", "Guangxi", "Nanning", "Qingxiu",
+                "10 Yun Jing Lu",
+                "Lu Shijun", "+86 111 1111 1111");
+        UserInfo userWangNianyi = userManager.addCustomer("wangnianyi", "test", "Wang Nianyi");
+        customerInfoManager.addAddress(userWangNianyi.getCustomer(),
+                "China", "Beijing", "Beijing", "Haidian",
+                "Xue 5 Beijing University of Posts and Telecommunications 10 Xitucheng Rd.",
+                "Wang Nianyi", "+86 222 2222 2222");
+        Store storeBupt = storeManager.addStore("China", "Beijing", "Beijing", "Haidian",
+                "BUPT Flagship Beijing University of Posts and Telecommunications 10 Xitucheng Rd");
+        Store storeBnu = storeManager.addStore("China", "Beijing", "Beijing", "Haidian",
+                "BNU 19 Xinjiekouwaidajie");
+        UserInfo userRenyaoDanjun = userManager.addStaff("renyaodanjun", "test", storeBupt);
+        UserInfo userMaZuanjie = userManager.addStaff("mazuanjie", "test", storeBnu);
     }
 
     private Product createProduct(String name, String description,
