@@ -34,7 +34,7 @@
                             <p:selectOneButton id="admin-add-user-role" value="#{adminAddUserController.role}"
                                                required="true">
                                 <f:selectItems value="#{adminAddUserController.roles}"/>
-                                <p:ajax event="change" update="admin-add-user-nickname admin-add-user-store" />
+                                <p:ajax event="change" update="admin-add-user-nickname admin-add-user-store:inner-box" />
                             </p:selectOneButton>
                             <p:message for="admin-add-user-role"/>
 
@@ -44,7 +44,8 @@
                             <p:message for="admin-add-user-nickname"/>
 
                             <p:outputLabel for="admin-add-user-store" value="${bundle['Ui.Label.Store']}"/>
-                            <components:selectStore id="admin-add-user-store" value="#{adminAddUserController.store}" />
+                            <components:selectStore id="admin-add-user-store" value="#{adminAddUserController.store}"
+                                                    disabled="#{adminAddUserController.role != 'staff'}"/>
                             <p:message for="admin-add-user-store"/>
 
                         </p:panelGrid>
@@ -91,6 +92,17 @@
                     <p:messages for="add-store-form"/>
                 </p:panel>
 
+                <p:panel header="${bundle['Ui.Admin.RemoveStaff.Title']}">
+                    <h:form>
+                        <components:selectStaff id="all-staff"
+                                                value="#{adminRemoveStaffController.selectedStaff}"
+                                                staffList="#{adminRemoveStaffController.staffs}" />
+                        <p:commandButton icon="fa fa-remove" type="submit" update="all-staff:inner-box"
+                                         value="#{bundle['Ui.Admin.RemoveStaff.Remove']}"
+                                         action="#{adminRemoveStaffController.removeStaff}" />
+                    </h:form>
+                </p:panel>
+
                 <p:panel header="${bundle['Ui.Admin.SeasonSpecial.Title']}">
                     <h:form>
                         <p:selectOneListbox  id="current"
@@ -100,7 +112,7 @@
                             <f:selectItems value="#{seasonSpecialContorller.specials}" var="special"
                                            itemLabel="#{special.name}"
                                            itemValue="#{product}" />
-                            <p:column >
+                            <p:column>
                                 <h:outputText  value="#{p.name}" />
                             </p:column>
 
@@ -117,7 +129,7 @@
                             <f:selectItems value="#{seasonSpecialContorller.allProductExceptSeasonSpecial}" var="product"
                                            itemLabel="#{product.name}"
                                            itemValue="#{product}" />
-                            <p:column >
+                            <p:column>
                                 <h:outputText value="#{p.name}" />
                             </p:column>
                         </p:selectOneListbox>

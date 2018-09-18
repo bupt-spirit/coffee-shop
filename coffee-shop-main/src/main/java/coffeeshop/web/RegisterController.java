@@ -1,6 +1,7 @@
 package coffeeshop.web;
 
 import coffeeshop.ejb.UserManager;
+import coffeeshop.ejb.UserManagerException;
 import coffeeshop.web.util.MessageBundle;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
@@ -44,7 +45,7 @@ public class RegisterController {
         this.nickname = nickname;
     }
 
-    public String register() {
+    public String register() throws UserManagerException {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         if (userManager.isUserExisting(username)) {
             facesContext.addMessage("username",

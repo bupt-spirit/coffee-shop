@@ -21,6 +21,7 @@ public class OrderController {
 
     @EJB
     OrderManager orderManager;
+    
     @Inject
     UserInfoController userInfoController;
 
@@ -43,7 +44,12 @@ public class OrderController {
     public void setSelectedOrder(OrderInfo selectedOrder) {
         this.selectedOrder = selectedOrder;
     }
-
+    
+    public void changeOrderStateToPrepared() throws OrderManagerException
+    {
+        orderManager.changeOrderStateToPrepared(selectedOrder);
+    }
+   
     public void finishOrder() throws OrderManagerException {
         orderManager.finishOrder(selectedOrder);
         facesContext.addMessage(null, new FacesMessage(bundle.getString("Ui.Order.FinishSuccess")));

@@ -1,8 +1,8 @@
 package coffeeshop.web.converter;
 
-import coffeeshop.ejb.StoreManager;
-import coffeeshop.ejb.StoreManagerException;
-import coffeeshop.entity.Store;
+import coffeeshop.ejb.UserManager;
+import coffeeshop.ejb.UserManagerException;
+import coffeeshop.entity.Staff;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -14,23 +14,23 @@ import javax.faces.convert.ConverterException;
 import javax.inject.Named;
 
 @Named
-public class StoreConverter implements Converter {
+public class StaffConverter implements Converter {
 
-    private static final Logger LOG = Logger.getLogger(StoreConverter.class.getName());
+    private static final Logger LOG = Logger.getLogger(StaffConverter.class.getName());
 
     @EJB
-    private StoreManager storeManager;
+    private UserManager userManager;
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
         try {
             int id = Integer.parseInt(value);
-            Store store = storeManager.getStoreById(id);
-            return store;
-        } catch (StoreManagerException ex) {
-            LOG.log(Level.SEVERE, "Not a valid store: {0}", ex);
+            Staff staff = userManager.getUserById(id).getStaff();
+            return staff;
+        } catch (UserManagerException ex) {
+            LOG.log(Level.SEVERE, "Not a valid address: {0}", ex);
             throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                    "Conversion Error", "Not a valid store."));
+                    "Conversion Error", "Not a valid address."));
         } catch (NumberFormatException ex) {
             LOG.log(Level.SEVERE, "Not a valid id: {0}", ex);
             throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR,
@@ -40,11 +40,11 @@ public class StoreConverter implements Converter {
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
-        Store store = (Store) value;
-        if (store == null) {
+        Staff staff = (Staff) value;
+        if (staff == null) {
             return null;
         }
-        return String.valueOf(store.getId());
+        return String.valueOf(staff.getUserId());
     }
 
 }

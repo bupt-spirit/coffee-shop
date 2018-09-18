@@ -52,14 +52,14 @@ public class OrderInfoFacade extends AbstractFacade<OrderInfo> {
     }
 
     public List<OrderInfo> findFinishedByStore(Store store) {
-        return getEntityManager().createQuery("SELECT o FROM OrderInfo o WHERE o.storeId = :store AND o.isFinished = 1"
+        return getEntityManager().createQuery("SELECT o FROM OrderInfo o WHERE o.storeId = :store AND o.isFinished = 1 "
                 + "ORDER BY o.dateCreate", OrderInfo.class)
                 .setParameter("store", store)
                 .getResultList();
     }
 
     public List<OrderInfo> findUnfinishedByStore(Store store) {
-        return getEntityManager().createQuery("SELECT o FROM OrderInfo o WHERE o.storeId = :store AND o.isFinished = 0"
+        return getEntityManager().createQuery("SELECT o FROM OrderInfo o WHERE o.storeId = :store AND o.isFinished = 0 "
                 + "ORDER BY o.dateCreate", OrderInfo.class)
                 .setParameter("store", store)
                 .getResultList();
@@ -73,7 +73,7 @@ public class OrderInfoFacade extends AbstractFacade<OrderInfo> {
     }
 
     public List<OrderInfo> findUnpreparedByStore(Store store) {
-        return getEntityManager().createQuery("SELECT o FROM OrderInfo o WHERE o.storeId = :store AND o.isPrepared = 0"
+        return getEntityManager().createQuery("SELECT o FROM OrderInfo o WHERE o.storeId = :store AND o.isPrepared = 0 "
                 + "ORDER BY o.dateCreate", OrderInfo.class)
                 .setParameter("store", store)
                 .getResultList();

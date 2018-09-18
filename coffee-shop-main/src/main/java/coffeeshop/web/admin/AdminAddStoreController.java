@@ -3,17 +3,16 @@ package coffeeshop.web.admin;
 import coffeeshop.ejb.StoreManager;
 import coffeeshop.web.util.MessageBundle;
 import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
-import java.io.Serializable;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
-@Named(value = "adminAddStoreController")
-@SessionScoped
-public class AdminAddStoreController implements Serializable {
+@Named
+@RequestScoped
+public class AdminAddStoreController {
 
     private static final Logger LOG = Logger.getLogger(AdminAddUserController.class.getName());
 
@@ -76,7 +75,4 @@ public class AdminAddStoreController implements Serializable {
     public void setDetail(String detail) {
         this.detail = detail;
     }
-    
-    
-
 }

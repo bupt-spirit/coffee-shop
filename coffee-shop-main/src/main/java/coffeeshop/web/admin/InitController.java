@@ -1,6 +1,7 @@
 package coffeeshop.web.admin;
 
 import coffeeshop.ejb.InitManager;
+import coffeeshop.ejb.UserManagerException;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import javax.ejb.EJB;
@@ -14,7 +15,7 @@ public class InitController {
     @EJB
     private InitManager initManager;
         
-    public void insertDemoData() throws IOException, URISyntaxException {
+    public void insertDemoData() throws IOException, URISyntaxException, UserManagerException {
         initManager.insertDemoData();
     }
 }

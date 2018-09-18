@@ -56,11 +56,24 @@ public class OrderManagerBean implements OrderManager {
 
     @Override
     public OrderInfo getOrderById(int id) throws OrderManagerException {
-        return orderInfoFacade.find(id);
+        OrderInfo orderInfo = orderInfoFacade.find(id);
+        if (orderInfo == null) {
+            throw new OrderManagerException("No orderInfo have id " + id);
+        }
+        return orderInfo;
     }
 
     @Override
-    public void finishOrder(OrderInfo orderInfo) throws OrderManagerException{
+    public void changeOrderStateToPrepared(OrderInfo orderInfo) throws OrderManagerException {
+        if (orderInfo.getIsPrepared() != (short) 0) {
+            throw new OrderManagerException("Order has been prepared");
+        }
+        orderInfo.setIsPrepared((short) 1);
+        orderInfoFacade.edit(orderInfo);
+    }
+
+    @Override
+    public void finishOrder(OrderInfo orderInfo) throws OrderManagerException {
         if (orderInfo.getIsPrepared() == (short) 1) {
             orderInfo.setIsFinished((short) 1);
             orderInfoFacade.edit(orderInfo);

@@ -8,12 +8,14 @@
 
     <cc:interface>
         <cc:attribute name="value" required="true"/>
+        <cc:attribute name="required" type="java.lang.String" default="false" />
     </cc:interface>
 
     <cc:implementation>
         <div class="address-add-summary">
             <p:selectOneListbox value="#{cc.attrs.value}" converter="#{addressConverter}"
-                                var="a" filter="true" filterMatchMode="contains" required="true"
+                                var="a" filter="true" filterMatchMode="contains"
+                                required="#{cc.attrs.required}"
                                 class="select-one-list select-one-list-address">
                 <f:selectItems value="#{addressController.addresses}" var="address"
                                itemLabel="#{address.receiver} #{address.receiverPhone} #{address.detail} #{address.district} #{address.city} #{address.province} #{address.country}"
