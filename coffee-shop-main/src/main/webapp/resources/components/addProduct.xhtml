@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <cc:interface>
+    </cc:interface>
+
+    <cc:implementation>
+        <div class="product-add-summary">
+            <h:form enctype="multipart/form-data">
+                <p:growl id="messages" showDetail="true" />
+                <p:fileUpload value="#{adminAddProductController.image}"
+                              allowTypes="/(\.|\/)(jpg|gif|jpe?g|png)$/"
+                              mode="simple" skinSimple="true"/>
+                <p:commandButton value="#{bundle['Ui.Product.Update']}" ajax="false" actionListener="#" />
+            </h:form>
+            <p:graphicImage value="#{adminAddProductController.selectedFileContent}" cache="false" rendered="" />
+            <h:form>
+                <p:panelGrid columns="3" styleClass="ui-panelgrid-blank">
+                    <p:outputLabel for="product-name" value="#{bundle['Ui.Product.Name']}"/>
+                    <p:inputText type="text" id="product-name" value="#{adminAddProductController.name}"
+                                 required="true"/>
+                    <p:messages for="product-name"/>
+
+                    <p:outputLabel for="product-description" value="#{bundle['Ui.Product.Description']}"/>
+                    <p:inputTextarea id="product-description" rows="8" cols="80" value="#{adminAddProductController.description}"
+                                     required="true"/>
+                    <p:messages for="product-description"/>
+
+                    <p:outputLabel for="product-cost" value="#{bundle['Ui.Product.Cost']} #{bundle['Ui.CurrencySymbol']}"/>
+                    <p:inputText id="product-cost" value="#{adminAddProductController.cost}"
+                                 required="true" type="number" />
+                    <p:messages for="product-cost"/>
+                    <p:outputLabel for="product-category" value="#{bundle['Ui.Product.Category']}"/>
+                    <p:selectOneMenu id="product-category" value="#{adminAddProductController.category}">
+                        <f:selectItems value="#{productController.categories}" var="category" itemLabel="#{category.name}"/>
+                    </p:selectOneMenu>                   
+                </p:panelGrid>
+                <p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
+                    <h:outputLabel for="add-nutrition-switch" value="#{bundle['Ui.Product.Nutrition']} " />
+                    <p:inputSwitch id="add-nutrition-switch" value="#{adminAddProductController.addNutrition}" >
+                        <p:ajax event="change" update="add-nutrition" />
+                    </p:inputSwitch>
+                </p:panelGrid>
+                <p:outputPanel id="add-nutrition" layout="block">
+                    <p:panelGrid columns="3"  styleClass="ui-panelgrid-blank" rendered="#{adminAddProductController.addNutrition}">
+                        <p:outputLabel for="nutrition-calories" value="#{bundle['Ui.Nutrition.Calories']}" />
+                        <p:inputText id="nutrition-calories" value="#{adminAddProductController.calories}"
+                                     required="true" type="number" >
+                            <f:validateLongRange minimum="0" />
+                        </p:inputText>
+                        <p:messages for="nutrition-calories"/>
+                        <p:outputLabel for="nutrition-fat" value="#{bundle['Ui.Nutrition.Fat']}"/>
+                        <p:inputText id="nutrition-fat" value="#{adminAddProductController.fat}"
+                                     required="true" type="number" />
+                        <p:messages for="nutrition-fat"/>
+                        <p:outputLabel for="nutrition-carbon" value="#{bundle['Ui.Nutrition.Carbohydrate']}"/>
+                        <p:inputText id="nutrition-carbon" value="#{adminAddProductController.carbon}"
+                                     required="true" type="number" />
+                        <p:messages for="nutrition-carbon"/>
+                        <p:outputLabel for="nutrition-fiber" value="#{bundle['Ui.Nutrition.Fiber']}"/>
+                        <p:inputText id="nutrition-fiber" value="#{adminAddProductController.fiber}"
+                                     required="true" type="number" />
+                        <p:messages for="nutrition-fiber"/>
+                        <p:outputLabel for="nutrition-protein" value="#{bundle['Ui.Nutrition.Protein']}"/>
+                        <p:inputText id="nutrition-protein" value="#{adminAddProductController.protein}"
+                                     required="true" type="number" />
+                        <p:messages for="nutrition-protein"/>
+                        <p:outputLabel for="nutrition-sodium" value="#{bundle['Ui.Nutrition.Sodium']}"/>
+                        <p:inputText id="nutrition-sodium" value="#{adminAddProductController.sodium}"
+                                     required="true" type="number" />
+                        <p:messages for="nutrition-sodium"/>
+                    </p:panelGrid>
+                </p:outputPanel>
+                <p:commandButton action="#{adminAddProductController.createProduct}" type="submit" ajax="false"
+                                 value="${bundle['Ui.Product.Add']}"/>
+            </h:form>
+        </div>
+
+    </cc:implementation>
+</html>
+
