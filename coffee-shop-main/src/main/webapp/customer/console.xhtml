@@ -46,7 +46,8 @@
                                 <ui:repeat value="#{orderController.customerUnfinishedOrder}" var="order">
                                     <components:customerOrder order="#{order}">
                                         <f:facet name="footer">
-                                            <h:commandButton value="#{bundle['Ui.Order.Finish']}" action="#"/>
+                                            <p:commandButton value="#{bundle['Ui.Order.Finish']}" action="#"
+                                                             ajax="false"/>
                                         </f:facet>
                                     </components:customerOrder>
                                 </ui:repeat>
