@@ -1,6 +1,7 @@
 package coffeeshop.web;
 
 import coffeeshop.ejb.OrderManager;
+import coffeeshop.ejb.OrderManagerException;
 import coffeeshop.ejb.UserManagerException;
 import coffeeshop.entity.OrderInfo;
 import coffeeshop.web.util.MessageBundle;
@@ -44,13 +45,12 @@ public class OrderController {
         this.selectedOrder = selectedOrder;
     }
     
-    public void changeOrderStateToPrepared()
+    public void changeOrderStateToPrepared() throws OrderManagerException
     {
         orderManager.changeOrderStateToPrepared(selectedOrder);
     }
    
-
-    public void finishOrder() {
+    public void finishOrder() throws OrderManagerException {
         orderManager.finishOrder(selectedOrder);
         facesContext.addMessage(null, new FacesMessage(bundle.getString("Ui.Order.FinishSuccess")));
     }
