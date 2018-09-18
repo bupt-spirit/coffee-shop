@@ -9,6 +9,7 @@
     <h:body>
         <ui:composition template="/templates/main-only.xhtml">
             <ui:define name="main">
+                <p:growl id="msgs" showDetail="true" />
                 <h1>
                     <h:outputFormat value="#{bundle['Ui.CostomerConsole.Title']}">
                         <f:param value="#{userInfoController.currentUser.customer.nickname}" />
@@ -45,9 +46,24 @@
                         <components:addressAdd customer="#{userInfoController.currentUser.customer}" />
                     </p:dialog>
                 </p:panel>
-                <h:form>
-                    <components:logoutButton />
-                </h:form>
+                <p:panel header="#{bundle['Ui.Order.Header']}">
+                    <h:form>
+                        <p:growl id="msgs" showDetail="true" />
+                        <p:accordionPanel >
+                            <p:tab title="#{bundle['Ui.Order.Unfinished']}">
+                                <ui:repeat value="#{orderController.customerUnfinishedOrder}" var="order">
+                                    <components:customerOrder order="#{order}"/>
+                                </ui:repeat>
+                            </p:tab>
+                            <p:tab title="#{bundle['Ui.Order.All']}">
+                                <ui:repeat value="#{orderController.customerAllOrder}" var="order">
+                                    <components:customerOrder order="#{order}"/>
+                                </ui:repeat>
+                            </p:tab>
+                        </p:accordionPanel>
+                        <components:logoutButton />
+                    </h:form>
+                </p:panel>
             </ui:define>
         </ui:composition>
     </h:body>
