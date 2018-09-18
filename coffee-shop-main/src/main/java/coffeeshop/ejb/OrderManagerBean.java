@@ -1,4 +1,3 @@
-
 package coffeeshop.ejb;
 
 import coffeeshop.entity.Customer;
@@ -10,10 +9,10 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 @Stateless
-public class OrderManagerBean implements OrderManager{
+public class OrderManagerBean implements OrderManager {
 
-   @EJB
-   OrderInfoFacade orderInfoFacade;
+    @EJB
+    OrderInfoFacade orderInfoFacade;
 
     @Override
     public List<OrderInfo> getCustomerAllOrder(Customer customer) {
@@ -54,10 +53,19 @@ public class OrderManagerBean implements OrderManager{
     public List<OrderInfo> getStoreUnpreparedOrder(Store store) {
         return orderInfoFacade.findUnpreparedByStore(store);
     }
-    
+
     @Override
-    public OrderInfo getOrderById(int id){
+    public OrderInfo getOrderById(int id) throws OrderManagerException {
         return orderInfoFacade.find(id);
     }
-    
+
+    @Override
+    public void finishOrder(OrderInfo orderInfo) throws OrderManagerException{
+        if (orderInfo.getIsPrepared() == (short) 1) {
+            orderInfo.setIsFinished((short) 1);
+            orderInfoFacade.edit(orderInfo);
+        } else {
+            throw new OrderManagerException("can not finish this order");
+        }
+    }
 }
