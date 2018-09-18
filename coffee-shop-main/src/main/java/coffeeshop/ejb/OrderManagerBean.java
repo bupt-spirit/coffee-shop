@@ -65,10 +65,10 @@ public class OrderManagerBean implements OrderManager {
 
     @Override
     public void changeOrderStateToPrepared(OrderInfo orderInfo) throws OrderManagerException {
-        if (orderInfo.getIsPrepared() == 0) {
+        if (orderInfo.getIsPrepared() != (short) 0) {
             throw new OrderManagerException("Order has been prepared");
         }
-        orderInfo.setIsPrepared((short) (1));
+        orderInfo.setIsPrepared((short) 1);
         orderInfoFacade.edit(orderInfo);
     }
 
