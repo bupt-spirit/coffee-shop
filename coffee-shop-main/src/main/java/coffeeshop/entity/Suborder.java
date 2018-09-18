@@ -14,18 +14,20 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 
 @Entity
 @XmlRootElement
 @NamedQueries({
-        @NamedQuery(name = "Suborder.findAll", query = "SELECT s FROM Suborder s"),
-        @NamedQuery(name = "Suborder.findById", query = "SELECT s FROM Suborder s WHERE s.id = :id"),
-        @NamedQuery(name = "Suborder.findByQuantity", query = "SELECT s FROM Suborder s WHERE s.quantity = :quantity")})
+    @NamedQuery(name = "Suborder.findAll", query = "SELECT s FROM Suborder s"),
+    @NamedQuery(name = "Suborder.findById", query = "SELECT s FROM Suborder s WHERE s.id = :id"),
+    @NamedQuery(name = "Suborder.findByQuantity", query = "SELECT s FROM Suborder s WHERE s.quantity = :quantity")})
 public class Suborder implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @NotNull
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
     private Integer id;
     @Basic(optional = false)
