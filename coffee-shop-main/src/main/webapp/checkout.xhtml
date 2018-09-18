@@ -55,7 +55,7 @@
                         <ui:repeat var="ingredient" value="#{suborder.ingredientList}" rendered="#{suborder.ingredientList!=null}">
                             <h:outputText styleClass="check-out-ingredient" value="#{ingredient.name}"/>
                         </ui:repeat>
-                        <h:outputText value="#{bundle['Ui.Button.decreaseItemQuality']}" rendered="#{suborder.ingredientList.size() eq 0}"/>
+                        <h:outputText value="#{bundle['Ui.Button.decreaseItemQuantity']}" rendered="#{suborder.ingredientList.size() eq 0}"/>
                     </p:column>
                 </p:dataTable>
 
