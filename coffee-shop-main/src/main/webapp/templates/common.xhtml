@@ -5,42 +5,42 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
       xmlns:components="http://xmlns.jcp.org/jsf/composite/components">
-<h:head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <h:outputStylesheet name="compiled-css/layout.css"/>
-    <h:outputStylesheet name="css/normalize.css"/>
-    <h:outputStylesheet name="compiled-css/form.css" />
-    <link href="#{resource['images/favicon.ico']}" rel="icon"/>
-    <title>
-        <ui:insert name="title">
-            <h:outputText value="#{bundle['Ui.Name']}"/>
+    <h:head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <h:outputStylesheet name="css/normalize.css"/>
+        <h:outputStylesheet name="compiled-css/layout.css"/>
+        <h:outputStylesheet name="compiled-css/style.css" />
+        <link href="#{resource['images/favicon.ico']}" rel="icon"/>
+        <title>
+            <ui:insert name="title">
+                <h:outputText value="#{bundle['Ui.Name']}"/>
+            </ui:insert>
+        </title>
+    </h:head>
+    <h:body>
+        <ui:insert name="global-message">
+            <h:form>
+                <p:growl id="growl" showDetail="true" life="2000"/>
+            </h:form>
         </ui:insert>
-    </title>
-</h:head>
-<h:body>
-    <ui:insert name="global-message">
-        <h:form>
-            <p:growl id="growl" showDetail="true" life="2000"/>
-        </h:form>
-    </ui:insert>
-    <div id="layout-container">
-        <header id="header">
-            <ui:insert name="header">
-                <components:header title="#{bundle['Ui.Name']}"/>
-            </ui:insert>
-        </header>
-        <div id="main-aside-container-outer">
-            <div id="main-aside-container-inner">
-                <ui:insert name="center-content">Default Center Content</ui:insert>
+        <div id="layout-container">
+            <header id="header">
+                <ui:insert name="header">
+                    <components:header title="#{bundle['Ui.Name']}"/>
+                </ui:insert>
+            </header>
+            <div id="main-aside-container-outer">
+                <div id="main-aside-container-inner">
+                    <ui:insert name="center-content">Default Center Content</ui:insert>
+                </div>
             </div>
+            <footer id="footer">
+                <ui:insert name="footer">
+                    <components:footer servicePhoneNumber="#{bundle['Info.ServicePhoneNumber']}"
+                                       businessHours="#{bundle['Info.BusinessHours']}"/>
+                </ui:insert>
+            </footer>
         </div>
-        <footer id="footer">
-            <ui:insert name="footer">
-                <components:footer servicePhoneNumber="#{bundle['Info.ServicePhoneNumber']}"
-                                   businessHours="#{bundle['Info.BusinessHours']}"/>
-            </ui:insert>
-        </footer>
-    </div>
-</h:body>
+    </h:body>
 </html>

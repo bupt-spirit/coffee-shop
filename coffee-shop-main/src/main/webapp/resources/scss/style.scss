@@ -1,0 +1,17 @@
+.select-one-list {
+    width: auto !important;
+}
+
+.address {
+    padding: .25rem;
+    border: solid 0.0625rem rgb(213, 213, 213);
+    border-radius:  0.1875rem;
+}
+
+.customer-order {
+    margin-bottom: 1rem;
+}
+
+.customer-order:last-child {
+    margin-bottom: 0;
+}

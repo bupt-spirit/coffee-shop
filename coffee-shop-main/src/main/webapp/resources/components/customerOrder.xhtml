@@ -7,11 +7,15 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html">
 
     <cc:interface>
-        <cc:attribute name="order" required="true" type="coffeeshop.entity.OrderInfo"/>
+        <cc:attribute name="order" required="true" type="coffeeshop.entity.OrderInfo" />
         <cc:facet name="footer" />
     </cc:interface>
 
     <cc:implementation>
+        <p:fieldset legend="#{cc.attrs.order.dateCreate} #{bundle['Ui.CurrencySymbol']} #{cc.attrs.order.amount}"
+                    styleClass="customer-order">
+            <components:subordersTable order="#{cc.attrs.order}" />
+            <components:customerAddress address="#{cc.attrs.order.addressId}" />       
         <p:fieldset legend="#{cc.attrs.order.dateCreate} #{bundle['Ui.CurrencySymbol']} #{cc.attrs.order.amount}" 
                     styleClass="customer order">         
             <components:subordersTable order="#{cc.attrs.order}" />
