@@ -17,4 +17,6 @@ public interface ProductManager {
     List<IngredientCategory> getIngredientCategoryByProduct(String productName) throws ProductManagerException;
     
     List<Product> getAllProduct();
+    
+    Product getProductById(int id) throws ProductManagerException;
 }
