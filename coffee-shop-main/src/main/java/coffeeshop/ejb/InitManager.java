@@ -59,7 +59,7 @@ public class InitManager {
     @EJB
     private SeasonSpecialFacade seasonSpecialFacade;
 
-    public void checkAndAddDefaultAdminUser() {
+    public void checkAndAddDefaultAdminUser() throws UserManagerException {
         if (!userManager.isUserExisting(DEFAULT_ADMIN_USERNAME)) {
             LOG.log(Level.INFO, "Default admin user does not exists");
             userManager.addAdmin(DEFAULT_ADMIN_USERNAME, DEFAULT_ADMIN_PASSWORD);
@@ -70,7 +70,7 @@ public class InitManager {
         }
     }
 
-    public void insertDemoData() throws IOException, URISyntaxException {
+    public void insertDemoData() throws IOException, URISyntaxException, UserManagerException {
         Category categoryDrinks = createCategory("Drinks");
         Category categoryFood = createCategory("Food");
         Category categoryCoffeeBean = createCategory("Coffee Bean");
