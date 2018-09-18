@@ -29,8 +29,6 @@ public class CartController implements Serializable {
 
     private Suborder selectedSuborder;
 
-    private Date currentTime;
-
     private Store selectedStore;
 
     private Address selectedAddress;
@@ -93,6 +91,8 @@ public class CartController implements Serializable {
 
     public String saveOrder() {
         OrderInfo orderInfo = cartManager.saveAndGetOrderInfo(selectedStore, selectedAddress);
+        this.selectedAddress = null;
+        this.selectedStore = null;
         LOG.log(Level.INFO, "create order successfully {0}", orderInfo.getId());
         return "/customer/console";
     }

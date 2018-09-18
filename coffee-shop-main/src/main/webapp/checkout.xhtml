@@ -21,10 +21,10 @@
             </p:panel>
             <h:form>
                 <p:panel header="#{bundle['Ui.Address.Address']}">
-                    <components:selectCustomerAddress value="#{cartController.selectedAddress}" />
+                    <components:selectCustomerAddress value="#{cartController.selectedAddress}" required="true" />
                 </p:panel>
                 <p:panel header="#{bundle['Ui.Label.Store']}">
-                    <components:selectStore value="#{cartController.selectedStore}" />
+                    <components:selectStore value="#{cartController.selectedStore}" required="true" />
                 </p:panel>
                 
                 <components:subordersTable order="#{cartController.order}" />
