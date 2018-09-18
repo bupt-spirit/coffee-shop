@@ -41,10 +41,16 @@
                     <h:form>
                         <p:growl id="msgs" showDetail="true" />
                         <p:accordionPanel >
-                            
+
                             <p:tab title="#{bundle['Ui.Order.Unfinished']}">
                                 <ui:repeat value="#{orderController.customerUnfinishedOrder}" var="order">
-                                    <components:customerOrder order="#{order}"/>
+                                    <div>
+                                        <components:customerOrder order="#{order}">
+                                            <f:facet name="footer">
+                                                <h:commandButton value="#{bundle['Ui.Order.Finish']}" action="#"/>
+                                            </f:facet>
+                                        </components:customerOrder>
+                                    </div>
                                 </ui:repeat>
                             </p:tab>
                             <p:tab title="#{bundle['Ui.Order.All']}">
