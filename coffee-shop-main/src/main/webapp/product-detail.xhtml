@@ -29,7 +29,8 @@
                                      actionListener="#{productController.decreaseItemQuantity}"
                                      value="#{bundle['Ui.Button.decreaseItemQuantity']}"/>
 
-                    <p:commandButton update="@(.global-cart-indicator)" value="#{bundle['Ui.Product.AddToCart']}"
+                    <p:commandButton update="@(.global-cart-indicator) growl-form:growl"
+                                     value="#{bundle['Ui.Product.AddToCart']}"
                                      action="#{productController.addToCart}"/>
                 </h:form>
             </ui:define>
