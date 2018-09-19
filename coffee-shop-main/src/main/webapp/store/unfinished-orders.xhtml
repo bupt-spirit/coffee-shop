@@ -8,15 +8,15 @@
         <ui:composition template="/templates/main-aside.xhtml">
             <ui:define name="aside">
                 <h2 class="aside-title"><h:link value="#{bundle['Ui.Store.AsideTitle']}" outcome="/store/console" /></h2>
-                <components:asideNavOfStore current="console" />
+                <components:asideNavOfStore current="unfinished-orders" />
             </ui:define>
             <ui:define name="main">
-                <h1 class="main-title"><h:outputText value="${bundle['Ui.Store.Console.Title']}"/></h1>
-                <p><h:outputText value="#{bundle['Ui.Store.WelcomeText']}" /></p>
-                <h:form>
-                    <components:logoutButton />
-                </h:form>
+                <h1 class="main-title"><h:outputText  value="${bundle['Ui.UnfinishedOrders.Title']}" /></h1>
+                <ui:repeat var="order" value="#{orderController.storePreparedButUnfinishedOrder}">
+                    <components:customerOrder order="#{order}" />
+                </ui:repeat>
             </ui:define>
         </ui:composition>
     </h:body>
 </html>
+

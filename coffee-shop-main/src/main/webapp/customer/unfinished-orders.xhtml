@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:components="http://xmlns.jcp.org/jsf/composite/components"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:body>
+        <ui:composition template="/templates/main-aside.xhtml">
+            <ui:define name="aside">
+                <h2 class="aside-title"><h:link value="#{bundle['Ui.Cusotmer.AsideTitle']}" outcome="/customer/console" /></h2>
+                <components:asideNavOfCustomer current="unfinished-orders" />
+            </ui:define>
+            <ui:define name="main">
+                <h1 class="main-title"><h:outputText value="${bundle['Ui.UnfinishedOrders.Title']}"/></h1>
+                <h:form>
+                    <ui:repeat value="#{orderController.customerUnfinishedOrder}" var="order">                                   
+                        <components:customerOrder order="#{order}">
+                            <f:facet name="footer">
+                                <p:commandButton value="#{bundle['Ui.Order.Finish']}"
+                                                 action="#{orderController.finishOrder}"
+                                                 disabled="#{order.isPrepared eq 0}"
+                                                 ajax="false">
+                                    <f:setPropertyActionListener target="#{orderController.selectedOrder}"
+                                                                 value="#{order}"/>
+                                </p:commandButton>
+                            </f:facet>
+                        </components:customerOrder>
+                    </ui:repeat>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

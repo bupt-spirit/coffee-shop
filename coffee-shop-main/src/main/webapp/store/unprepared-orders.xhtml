@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:components="http://xmlns.jcp.org/jsf/composite/components"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:body>
+        <ui:composition template="/templates/main-aside.xhtml">
+            <ui:define name="aside">
+                <h2 class="aside-title"><h:link value="#{bundle['Ui.Store.AsideTitle']}" outcome="/store/console" /></h2>
+                <components:asideNavOfStore current="unprepared-orders" />
+            </ui:define>
+            <ui:define name="main">
+                <h1 class="main-title"><h:outputText  value="${bundle['Ui.UnpreparedOrders.Title']}" /></h1>
+                <h:form>
+                    <ui:repeat var="order" value="#{orderController.storeUnpreparedOrder}">
+                        <components:customerOrder order="#{order}">
+                            <f:facet name="footer">
+                                <p:commandButton value="has prepared" ajax="false" action="#{orderController.changeOrderStateToPrepared}">
+                                    <f:setPropertyActionListener value="#{order}" 
+                                                                 target="#{orderController.selectedOrder}"/>
+                                </p:commandButton>
+                            </f:facet>
+                        </components:customerOrder>
+                    </ui:repeat>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+
