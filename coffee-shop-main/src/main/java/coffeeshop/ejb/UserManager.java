@@ -17,7 +17,7 @@ public interface UserManager {
     
     UserInfo getUserById(int id) throws UserManagerException;
 
-    void changePassword(String username, String password) throws UserManagerException;
+    void changePassword(String username, String oldPassword, String newPassword) throws UserManagerException;
 
     boolean verifyPassword(String username, String password) throws UserManagerException;
 
