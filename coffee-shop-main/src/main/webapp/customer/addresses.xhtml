@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:components="http://xmlns.jcp.org/jsf/composite/components"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:body>
+        <ui:composition template="/templates/main-aside.xhtml">
+            <ui:define name="aside">
+                <h2 class="aside-title"><h:link value="#{bundle['Ui.Cusotmer.AsideTitle']}" outcome="/customer/console" /></h2>
+                <components:asideNavOfCustomer current="addresses" />
+            </ui:define>
+            <ui:define name="main">
+                <h1 class="main-title"><h:outputText value="${bundle['Ui.Customer.Addresses.Title']}"/></h1>
+                <p:panel header="#{bundle['Ui.CostomerAddressManagement.Header']}">
+                    <p>
+                        <h:outputText value="#{bundle['Ui.CostomerAddressManagement.NoAddressToShow']}"
+                                      rendered="#{addressController.addresses.size() eq 0}"/>
+                    </p>
+                    <h:form styleClass="address-delete-item">
+                        <components:selectCustomerAddress value="#{addressController.selectedAddress}" />
+                        <p:commandButton styleClass="address-delete-button"
+                                         value="#{bundle['Ui.Address.Remove']}"
+                                         icon="fa fa-remove"
+                                         action="#{addressController.removeAddress}" ajax="false">
+                        </p:commandButton>
+                    </h:form>
+                    <h:form>
+                        <p:commandButton value="#{bundle['Ui.Address.Add']}" icon="fa fa-plus"
+                                         onclick="PF('add-address-dialog').show();" />
+                    </h:form>
+                    <p:dialog header="#{bundle['Ui.Address.Add']}" widgetVar="add-address-dialog">
+                        <components:addAddress customer="#{userInfoController.currentUser.customer}" />
+                    </p:dialog>
+                </p:panel>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

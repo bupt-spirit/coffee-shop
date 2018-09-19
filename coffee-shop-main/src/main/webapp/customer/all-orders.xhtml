@@ -10,22 +10,13 @@
         <ui:composition template="/templates/main-aside.xhtml">
             <ui:define name="aside">
                 <h2 class="aside-title"><h:link value="#{bundle['Ui.Cusotmer.AsideTitle']}" outcome="/customer/console" /></h2>
-                <components:asideNavOfCustomer current="console" />
+                <components:asideNavOfCustomer current="all-orders" />
             </ui:define>
             <ui:define name="main">
-                <h1 class="main-title">
-                    <h:outputFormat value="${bundle['Ui.Customer.Console.Title']}">
-                        <f:param value="#{userInfoController.currentUser.customer.nickname}" />
-                    </h:outputFormat>
-                </h1>
-                <p>
-                    <h:outputFormat value="#{bundle['Ui.Customer.WelcomeText']}">
-                        <f:param value="#{userInfoController.currentUser.customer.nickname}" />
-                    </h:outputFormat>
-                </p>
-                <h:form>
-                    <components:logoutButton />
-                </h:form>
+                <h1 class="main-title"><h:outputText value="${bundle['Ui.AllOrders.Title']}"/></h1>
+                <ui:repeat value="#{orderController.customerAllOrder}" var="order">
+                    <components:customerOrder order="#{order}"/>
+                </ui:repeat>
             </ui:define>
         </ui:composition>
     </h:body>
