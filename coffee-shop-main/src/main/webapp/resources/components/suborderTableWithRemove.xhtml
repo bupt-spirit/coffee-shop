@@ -4,7 +4,8 @@
       xmlns:cc="http://xmlns.jcp.org/jsf/composite"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <cc:interface>
         <cc:attribute name="order" required="true" type="coffeeshop.entity.OrderInfo"/>
@@ -12,7 +13,7 @@
 
     <cc:implementation>
         <p:dataTable var="suborder" value="#{cc.attrs.order.suborderList}" >
-            
+
             <p:column headerText="Name">
                 <h:outputText value="#{suborder.productId.name}" />
             </p:column>
@@ -27,6 +28,14 @@
                 <h:outputText value="#{suborder.quantity}" />
             </p:column>
 
+            <p:column>
+                <h:form>
+                    <p:commandButton value="#{bundle['Ui.Cart.Remove']}" ajax="false" action="#{cartController.removeSuborder}">
+                        <f:setPropertyActionListener value="#{suborder}"
+                                                     target="#{cartController.selectedSuborder}"/>
+                    </p:commandButton>
+                </h:form>
+            </p:column>
         </p:dataTable>
     </cc:implementation>
 </html>

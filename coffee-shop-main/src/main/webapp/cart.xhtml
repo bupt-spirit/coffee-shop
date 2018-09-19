@@ -4,7 +4,8 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:components="http://xmlns.jcp.org/jsf/composite/components"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:body>
         <ui:composition template="templates/main-only.xhtml">
             <ui:define name="main">
@@ -14,9 +15,14 @@
                     <p:commandButton value="#{bundle['Ui.Cart.Checkout']}" action="/checkout" ajax="false"/>
                 </h:form>
 
-                <ui:repeat var="suborder" value="#{cartController.suborders}">
-                    <components:suborderSummary suborder="#{suborder}"/>
-                </ui:repeat>
+                <ui:remove>
+                    <ui:repeat var="suborder" value="#{cartController.suborders}">
+                        <components:suborderSummary suborder="#{suborder}"/>
+                    </ui:repeat>
+                </ui:remove>
+
+                <components:suborderTableWithRemove order="#{cartController.order}" />                    
+                
             </ui:define>
         </ui:composition>
     </h:body>
