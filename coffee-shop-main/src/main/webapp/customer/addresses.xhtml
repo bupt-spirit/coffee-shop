@@ -19,7 +19,7 @@
                         <h:outputText value="#{bundle['Ui.CostomerAddressManagement.NoAddressToShow']}"
                                       rendered="#{addressController.addresses.size() eq 0}"/>
                     </p>
-                    <h:form styleClass="address-delete-item">
+                    <h:form id="address-delete-form" styleClass="address-delete-item">
                         <components:selectCustomerAddress value="#{addressController.selectedAddress}" />
                         <p:commandButton styleClass="address-delete-button"
                                          value="#{bundle['Ui.Address.Remove']}"
@@ -30,7 +30,10 @@
                 </p:panel>
                 <p:panel id="add-address" header="#{bundle['Ui.Address.Add']}">
                     <h:form>
-                        <components:addAddress  customer="#{userInfoController.currentUser.customer}" />
+                        <components:addAddress customer="#{userInfoController.currentUser.customer}" />
+                        <p:commandButton action="#{addressController.addAddress}" type="submit"
+                                         value="#{bundle['Ui.Address.Add']}" update="address-delete-form"
+                                         icon="fa fa-plus"/>
                     </h:form>
                 </p:panel>
             </ui:define>
