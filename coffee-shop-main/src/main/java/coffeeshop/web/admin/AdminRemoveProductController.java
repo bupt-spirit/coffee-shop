@@ -2,6 +2,7 @@ package coffeeshop.web.admin;
 
 import coffeeshop.ejb.ProductManager;
 import coffeeshop.ejb.ProductManagerException;
+import coffeeshop.ejb.SeasonSpecialManagerException;
 import coffeeshop.entity.Product;
 import coffeeshop.web.util.MessageBundle;
 import java.util.List;
@@ -36,7 +37,7 @@ public class AdminRemoveProductController {
         return productManager.getAllProduct();
     }
 
-    public void removeProduct() throws ProductManagerException {
+    public void removeProduct() throws ProductManagerException,SeasonSpecialManagerException {
         productManager.removeProduct(selectedProduct);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Success!", bundle.getString("Ui.Product.Remove")));
     }

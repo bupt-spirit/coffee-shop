@@ -42,8 +42,8 @@ public class ProductManagerBean implements ProductManager {
 
     @EJB
     private ImageFacade imageFacade;
-    
-    @EJB 
+
+    @EJB
     SeasonSpecialManager seasonSpecialManager;
 
     @Override
@@ -179,7 +179,7 @@ public class ProductManagerBean implements ProductManager {
     }
 
     @Override
-    public void removeProduct(Product selectedProduct) throws ProductManagerException {
+    public void removeProduct(Product selectedProduct) throws ProductManagerException,SeasonSpecialManagerException {
         selectedProduct.setIsAvailable((short) 0);
         Category category = selectedProduct.getCategoryId();
         List<Product> products = category.getProductList();
@@ -192,13 +192,9 @@ public class ProductManagerBean implements ProductManager {
             }
         }
         selectedProduct.setCategoryId(null);
-        if(selectedProduct.getSeasonSpecial()!=null){
-            try {
-                seasonSpecialManager.removeSeasonSpecial(selectedProduct);
-            } catch (SeasonSpecialManagerException ex) {
-                Logger.getLogger(ProductManagerBean.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }      
+        if (selectedProduct.getSeasonSpecial() != null) {
+            seasonSpecialManager.removeSeasonSpecial(selectedProduct);           
+        }
         productFacade.edit(selectedProduct);
     }
 }
