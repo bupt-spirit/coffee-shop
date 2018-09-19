@@ -74,6 +74,7 @@ public class CartController implements Serializable {
     }
 
     public void removeSuborder() throws CartManagerException {
+        LOG.log(Level.INFO, "Removing suborder: {0}", selectedSuborder);
         cartManager.remove(selectedSuborder);
     }
 
