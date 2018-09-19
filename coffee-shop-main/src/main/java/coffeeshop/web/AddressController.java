@@ -35,6 +35,8 @@ public class AddressController {
     private String receiver;
     private String receiverPhone;
     private Address selectedAddress;
+    
+    private boolean showAddAddress;
 
     @EJB
     CustomerInfoManager customerInfoManager;
@@ -122,6 +124,14 @@ public class AddressController {
         Customer customer = userInfoController.getCurrentUser().getCustomer();
         customerInfoManager.removeAddress(selectedAddress, customer);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(bundle.getString("Ui.Address.RemoveSuccess")));
+    }
+
+    public boolean isShowAddAddress() {
+        return showAddAddress;
+    }
+
+    public void setShowAddAddress(boolean showAddAddress) {
+        this.showAddAddress = showAddAddress;
     }
 
 }
