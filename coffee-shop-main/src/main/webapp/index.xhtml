@@ -13,17 +13,15 @@
             </ui:define>
             <ui:define name="main">
                 <h1><h:outputText value="#{bundle['Ui.Index.Title']}" /></h1>
-                <div>
-                    <ui:repeat var="product" value="#{seasonSpecialContorller.specials}">
-                        <h:form>
-                            <h:commandLink action="/product-detail">
-                                <components:productSummary product="#{product}"/>
-                                <f:setPropertyActionListener target="#{productController.selectedProduct}"
-                                                             value="#{product}"/>
-                            </h:commandLink>
-                        </h:form>
-                    </ui:repeat>
-                </div>
+                <ui:repeat var="product" value="#{seasonSpecialContorller.specials}">
+                    <h:form styleClass="product-summary-container-form">
+                        <h:commandLink action="/product-detail" styleClass="product-summary-link">
+                            <components:productSummary product="#{product}"/>
+                            <f:setPropertyActionListener target="#{productController.selectedProduct}"
+                                                         value="#{product}"/>
+                        </h:commandLink>
+                    </h:form>
+                </ui:repeat>
             </ui:define>
         </ui:composition>
     </h:body>
