@@ -12,7 +12,6 @@
     <cc:implementation>
         <div class="product-add-summary">
             <h:form enctype="multipart/form-data">
-                <p:growl id="messages" showDetail="true" />
                 <p:fileUpload value="#{adminAddProductController.image}"
                               allowTypes="/(\.|\/)(jpe?g|png)$/"
                               mode="simple" skinSimple="true"/>
@@ -28,7 +27,7 @@
                 <p:outputLabel for="product-description" value="#{bundle['Ui.Product.Description']}"/>
                 <p:inputTextarea id="product-description" rows="8" cols="80" value="#{adminAddProductController.description}"
                                  required="true"/>
-                <p:messages for="product-description"/>
+                    <p:messages for="product-name"/>
 
                 <p:outputLabel for="product-cost" value="#{bundle['Ui.Product.Cost']} #{bundle['Ui.CurrencySymbol']}"/>
                 <p:inputText id="product-cost" value="#{adminAddProductController.cost}"
@@ -72,7 +71,11 @@
                     <p:outputLabel for="nutrition-sodium" value="#{bundle['Ui.Nutrition.Sodium']}"/>
                     <p:inputText id="nutrition-sodium" value="#{adminAddProductController.sodium}"
                                  required="true" type="number" />
-                    <p:messages for="nutrition-sodium"/>
+                    <p:messages for="product-cost"/>
+                    <p:outputLabel for="product-category" value="#{bundle['Ui.Product.Category']}"/>
+                    <p:selectOneMenu id="product-category" value="#{adminAddProductController.category}">
+                        <f:selectItems value="#{productController.categories}" var="category" itemLabel="#{category.name}"/>
+                    </p:selectOneMenu>                   
                 </p:panelGrid>
             </p:outputPanel>
             <p:commandButton action="#{adminAddProductController.createProduct}" type="submit" ajax="false"

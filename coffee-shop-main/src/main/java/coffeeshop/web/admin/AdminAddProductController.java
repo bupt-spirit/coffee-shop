@@ -44,6 +44,18 @@ public class AdminAddProductController {
     private int protein;
     private int sodium;
 
+
+    private static String getExtension(String fileName) {
+        if (fileName == null) {
+            return null;
+        }
+        int index = fileName.indexOf('.');
+        if (index == fileName.length() || index == fileName.length() - 1) {
+            return null;
+        }
+        return fileName.substring(index + 1);
+    }
+
     public UploadedFile getImage() {
         return image;
     }
