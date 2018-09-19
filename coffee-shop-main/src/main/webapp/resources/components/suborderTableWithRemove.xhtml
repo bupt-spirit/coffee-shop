@@ -26,7 +26,7 @@
 
             <p:column headerText="Quantity">
                 <h:form>
-                    <p:commandButton update="quantity"
+                    <p:commandButton update="quantity @(.global-cart-indicator)"
                                      action="#{cartController.increaseSuborderQuantity}"
                                      value="#{bundle['Ui.Button.increaseItemQuantity']}">
                         <f:setPropertyActionListener value="#{suborder}"
@@ -34,7 +34,7 @@
                     </p:commandButton>
                     <h:outputText id="quantity" value="#{suborder.quantity}"
                                   styleClass="suborder-quantity-with-adjust-button"/>
-                    <p:commandButton update="quantity"
+                    <p:commandButton update="quantity @(.global-cart-indicator)"
                                      action="#{cartController.decreaseSuborderQuantity}"
                                      value="#{bundle['Ui.Button.decreaseItemQuantity']}"
                                      styleClass="suborder-quantity-adjust-button">
