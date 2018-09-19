@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.faces.context.FacesContext;
 
 @Named
 @SessionScoped
@@ -50,6 +51,10 @@ public class ProductController implements Serializable {
     }
 
     public String getSelectedCategory() {
+        String viewId = FacesContext.getCurrentInstance().getViewRoot().getViewId();
+        if (viewId.equals("/index.xhtml")){
+            this.selectedCategory = null;
+        }
         return selectedCategory;
     }
 
