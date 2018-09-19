@@ -33,4 +33,5 @@ public interface ProductManager {
             boolean addNutrition, int calories, int fat, int carbon, int fiber, int protein, int sodium,
             byte[] bytes, String imageName, List<IngredientCategory> ingredientCategoies) throws IOException, URISyntaxException;
 
+    void removeProduct(Product selectedProduct) throws ProductManagerException;
 }

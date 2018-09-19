@@ -42,6 +42,9 @@ public class ProductManagerBean implements ProductManager {
 
     @EJB
     private ImageFacade imageFacade;
+    
+    @EJB 
+    SeasonSpecialManager seasonSpecialManager;
 
     @Override
     public List<Category> getCategories() {
@@ -86,7 +89,7 @@ public class ProductManagerBean implements ProductManager {
 
     @Override
     public List<Product> getAllProduct() {
-        return productFacade.findAll();
+        return productFacade.findIsAvailable();
     }
 
     @Override
@@ -105,10 +108,10 @@ public class ProductManagerBean implements ProductManager {
 
     @Override
     public Product createProduct(String name, String description, BigDecimal price, Category category,
-            boolean addNutrition,int calories, int fat, int carbon, int fiber, int protein, int sodium,
+            boolean addNutrition, int calories, int fat, int carbon, int fiber, int protein, int sodium,
             byte[] bytes, String imageName, List<IngredientCategory> ingredientCategoies) throws IOException, URISyntaxException {
-        Product product=this.createProduct(name, description, price, category, bytes, imageName, ingredientCategoies);
-        if(addNutrition){
+        Product product = this.createProduct(name, description, price, category, bytes, imageName, ingredientCategoies);
+        if (addNutrition) {
             product.setNutritionId(createNutrition(calories, fat, carbon, fiber, protein, sodium));
             productFacade.edit(product);
         }
@@ -124,6 +127,7 @@ public class ProductManagerBean implements ProductManager {
         product.setCategoryId(category);
         product.setNutritionId(null);
         product.setLastUpdate(new Date());
+        product.setIsAvailable((short) 1);
         Image image = createImage(imageName, bytes);
         product.setImageUuid(image);
         image.setProduct(product);
@@ -133,8 +137,8 @@ public class ProductManagerBean implements ProductManager {
         imageFacade.edit(image);
         categoryFacade.edit(category);
         LOG.log(Level.INFO, "start enable productingredientcategory");
-        enableProductIngredient(product,ingredientCategoies);
-        LOG.log(Level.INFO,"finish enable");
+        enableProductIngredient(product, ingredientCategoies);
+        LOG.log(Level.INFO, "finish enable");
         return product;
     }
 
@@ -172,5 +176,29 @@ public class ProductManagerBean implements ProductManager {
             ingredientCategoryFacade.edit(category);
         }
         productFacade.edit(product);
+    }
+
+    @Override
+    public void removeProduct(Product selectedProduct) throws ProductManagerException {
+        selectedProduct.setIsAvailable((short) 0);
+        Category category = selectedProduct.getCategoryId();
+        List<Product> products = category.getProductList();
+        for (int i = 0; i < products.size(); ++i) {
+            if (products.get(i) == selectedProduct || products.get(i).getId().equals(selectedProduct.getId())) {
+                LOG.log(Level.INFO, "Remove product from category product list");
+                products.remove(i);
+                categoryFacade.edit(category);
+                break;
+            }
+        }
+        selectedProduct.setCategoryId(null);
+        if(selectedProduct.getSeasonSpecial()!=null){
+            try {
+                seasonSpecialManager.removeSeasonSpecial(selectedProduct);
+            } catch (SeasonSpecialManagerException ex) {
+                Logger.getLogger(ProductManagerBean.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }      
+        productFacade.edit(selectedProduct);
     }
 }
