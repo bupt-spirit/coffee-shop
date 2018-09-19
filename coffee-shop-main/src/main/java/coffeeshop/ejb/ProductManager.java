@@ -30,10 +30,8 @@ public interface ProductManager {
     Product getProductById(int id) throws ProductManagerException;
 
     Product createProduct(String name, String description, BigDecimal price, Category category,
+            boolean addNutrition, int calories, int fat, int carbon, int fiber, int protein, int sodium,
             byte[] bytes, String imageName, List<IngredientCategory> ingredientCategoies) throws IOException, URISyntaxException;
 
-    Product createProduct(String name, String description, BigDecimal price, Category category,
-            int calories, int fat, int carbon, int fiber, int protein, int sodium,
-            byte[] bytes, String imageName, List<IngredientCategory> ingredientCategoies) throws IOException, URISyntaxException;
-
+    void removeProduct(Product selectedProduct) throws ProductManagerException,SeasonSpecialManagerException;
 }

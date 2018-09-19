@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:components="http://xmlns.jcp.org/jsf/composite/components"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:body>
+        <ui:composition template="/templates/main-aside.xhtml">
+            <ui:define name="aside">
+                <h2 class="aside-title"><h:link value="#{bundle['Ui.Cusotmer.AsideTitle']}" outcome="/customer/console" /></h2>
+                <components:asideNavOfCustomer current="account" />
+            </ui:define>
+            <ui:define name="main">
+                <h1 class="main-title"><h:outputText value="${bundle['Ui.Account.Title']}"/></h1>
+                <p:panel header="#{bundle['Ui.ChangePassword.ChangePasswordTitle']}">
+                    <h:form>
+                        <p:panelGrid columns="3" styleClass="ui-panelgrid-blank">
+                            <p:outputLabel for="oldPassword" value="#{bundle['Ui.ChangePassword.OldPassword']}"/>
+                            <p:inputText type="password" id="oldPassword" value="#{changePasswordController.oldPassword}"
+                                         required="true"/>
+                            <p:messages for="oldPassword"/>
+
+                            <p:outputLabel for="newPassword" value="#{bundle['Ui.ChangePassword.EnterNewPassword']}"/>
+                            <p:inputText type="password" id="newPassword" value="#{changePasswordController.newPassword}"
+                                         required="true"/>
+                            <p:messages for="newPassword"/>
+
+                            <p:outputLabel for="reenterNewPassword" value="#{bundle['Ui.ChangePassword.ReenterNewPassword']}"/>
+                            <p:inputText type="password" id="reenterNewPassword" value="#{changePasswordController.reenteredNewPassword}"
+                                         required="true"/>
+                            <p:messages for="reenterNewPassword"/>
+                        </p:panelGrid>
+                        <p:commandButton action="#{changePasswordController.changePassword}" type="submit"
+                                         value="#{bundle['Ui.Button.ChangePassword']}" ajax="false"/>
+                        <p:commandButton type="reset" value="Reset"/>
+                    </h:form>
+                </p:panel>
+                <p:panel header="#{bundle['Ui.Logout.Title']}">
+                    <h:form>
+                        <components:logoutButton />
+                    </h:form>
+                </p:panel>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

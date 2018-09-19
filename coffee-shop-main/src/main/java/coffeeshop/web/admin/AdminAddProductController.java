@@ -223,16 +223,13 @@ public class AdminAddProductController implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("ERROR!", bundle.getString("Ui.Product.PhotoError")));
             return;
         }
-        if (addNutrition == true) {
-            LOG.log(Level.INFO, "selectedIngredientCategory:{0}", selectedIngredientCategories);
-            Product newProduct = productManager.createProduct(name, description, cost, category,
-                    calories, fat, carbon, fiber, protein, sodium, bytes, imageSuffix, selectedIngredientCategories);
-            LOG.log(Level.INFO, "create product with nutrition success{0}", newProduct.getId());
-        } else {
-            Product newProduct = productManager.createProduct(name, description, cost, category,
-                    bytes, imageSuffix, selectedIngredientCategories);
-            LOG.log(Level.INFO, "create product without nutrition success{0}", newProduct.getId());
-        }
+
+        LOG.log(Level.INFO, "selectedIngredientCategory:{0}", selectedIngredientCategories);
+        Product newProduct = productManager.createProduct(name, description, cost, category,
+                addNutrition, calories, fat, carbon, fiber, protein, sodium, 
+                bytes, imageSuffix, selectedIngredientCategories);
+        LOG.log(Level.INFO, "create product with nutrition success{0}", newProduct.getId());
+
         name = description = null;
         category = null;
         cost = null;
@@ -241,7 +238,7 @@ public class AdminAddProductController implements Serializable {
         imageSuffix = selectedFile = imageContentType = null;
         addNutrition = false;
         calories = fat = carbon = fiber = protein = sodium = 0;
-        selectedIngredientCategories=null;
+        selectedIngredientCategories = null;
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("SUCCESSFUL!", bundle.getString("Ui.Product.Success")));
     }
 

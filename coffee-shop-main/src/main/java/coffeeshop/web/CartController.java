@@ -94,6 +94,6 @@ public class CartController implements Serializable {
         this.selectedAddress = null;
         this.selectedStore = null;
         LOG.log(Level.INFO, "create order successfully {0}", orderInfo.getId());
-        return "/customer/console";
+        return "/customer/unfinished-orders";
     }
 }
