@@ -11,7 +11,6 @@ $table-margin: 1rem;
         margin-top: 0;
     }
 }
-
 .product-nutrition, .product-customize, .product-quantity {
     margin: $table-margin 0;
 }
@@ -26,4 +25,43 @@ $table-margin: 1rem;
     }
 }
 
+.product-summary-container {
+    $prefered-width: 18rem;
+    $max-size-factor: 1.5;
+    $margin: 1rem;
+    $shadow-color: black;
+    $text-padding: .5rem;
+
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    align-items: flex-start;
+    align-content: flex-start;
+    .product-summary-form {
+        flex: 1 0 $prefered-width;
+        margin: $margin;
+        max-width: $prefered-width * $max-size-factor;
+        box-shadow: 0 0 0.0625rem $shadow-color;
+        .product-summary-link {
+            .product-summary {
+                .product-image {
+                    width: 100%;
+                }
+            }
+            .product-title {
+                margin: $text-padding;
+                font-size: 1.25rem;
+            }
+            .product-description {
+                margin: $text-padding;
+            }
+            .product-price {
+                margin: $text-padding;
+            }
+        }
+    }
+    .product-summary-form:hover {
+        box-shadow: 0 0 0.3125rem $shadow-color;
+    }
+}
 
