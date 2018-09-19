@@ -27,6 +27,8 @@
                                          action="#{addressController.removeAddress}" ajax="false">
                         </p:commandButton>
                     </h:form>
+                </p:panel>
+                <p:panel id="add-address" header="#{bundle['Ui.Address.Add']}">
                     <h:form>
                         <components:addAddress customer="#{userInfoController.currentUser.customer}" />
                         <p:commandButton action="#{addressController.addAddress}" type="submit"

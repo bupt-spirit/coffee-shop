@@ -18,7 +18,8 @@
                 <p:commandButton value="#{bundle['Ui.Product.Update']}" ajax="false" 
                                  actionListener="#{adminAddProductController.uploadHandler}" />
                 <p:graphicImage value="#{adminAddProductController.selectedFileContent}" cache="false"
-                                rendered="#{adminAddProductController.image.fileName != null}"/>
+                                rendered="#{adminAddProductController.image.fileName != null}"
+                                styleClass="product-new-image"/>
             </h:form>
             <h:form>
                 <p:panelGrid columns="3" styleClass="ui-panelgrid-blank">

@@ -13,17 +13,17 @@
     <cc:implementation>
         <p:dataTable var="suborder" value="#{cc.attrs.order.suborderList}" >
             
-            <p:column headerText="Name">
+            <p:column headerText="#{bundle['Ui.Label.ProductName']}">
                 <h:outputText value="#{suborder.productId.name}" />
             </p:column>
 
-            <p:column headerText="Ingredient">
+            <p:column headerText="#{bundle['Ui.Label.Ingredient']}">
                 <ui:repeat var="ingredient" value="#{suborder.ingredientList}">
                     <h:outputText styleClass="check-out-ingredient" value="#{ingredient.name}"/>
                 </ui:repeat>
             </p:column>
 
-            <p:column headerText="Quantity">
+            <p:column headerText="#{bundle['Ui.Label.ItemQuantity']}">
                 <h:outputText value="#{suborder.quantity}" />
             </p:column>
 
