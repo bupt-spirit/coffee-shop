@@ -9,7 +9,7 @@
     <h:body>
         <ui:composition template="/templates/main-only.xhtml">
             <ui:define name="main">
-                <h1>
+                <h1 class="main-title">
                     <h:outputFormat value="#{bundle['Ui.CostomerConsole.Title']}">
                         <f:param value="#{userInfoController.currentUser.customer.nickname}" />
                     </h:outputFormat>

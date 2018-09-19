@@ -13,7 +13,7 @@
                 <components:asideNavOfCategories />
             </ui:define>
             <ui:define name="main">
-                <h1><h:outputText value="#{bundle['Ui.Index.Title']}" /></h1>
+                <h1 class="main-title"><h:outputText value="#{bundle['Ui.Index.Title']}" /></h1>
                 <p:outputPanel styleClass="product-summary-container">
                     <ui:repeat var="product" value="#{seasonSpecialContorller.specials}">
                         <h:form styleClass="product-summary-form">

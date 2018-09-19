@@ -7,6 +7,7 @@ import coffeeshop.entity.Category;
 import coffeeshop.entity.Ingredient;
 import coffeeshop.entity.Product;
 import coffeeshop.facade.IngredientFacade;
+import coffeeshop.web.util.MessageBundle;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
@@ -20,6 +21,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 
 @Named
 @SessionScoped
@@ -34,6 +37,9 @@ public class ProductController implements Serializable {
 
     @Inject
     private CartController cartController;
+    
+    @Inject
+    private MessageBundle bundle;
 
     // For find ingredient by view returned id
     @EJB
@@ -50,6 +56,10 @@ public class ProductController implements Serializable {
     }
 
     public String getSelectedCategory() {
+        String viewId = FacesContext.getCurrentInstance().getViewRoot().getViewId();
+        if (viewId.equals("/index.xhtml")){
+            this.selectedCategory = null;
+        }
         return selectedCategory;
     }
 
@@ -114,6 +124,10 @@ public class ProductController implements Serializable {
         cartController.getCartManager().add(selectedProduct, ingredientsList, itemQuantity);
         LOG.log(Level.INFO, "Add suborder to cart: {0} {1} {2}",
                 new Object[]{selectedProduct, ingredientsList, itemQuantity});
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                bundle.getString("Ui.Message.AddedToCart"),
+                null
+        ));
     }
 
 }

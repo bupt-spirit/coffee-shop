@@ -9,11 +9,11 @@
     <h:body>
         <ui:composition template="/templates/main-aside.xhtml">
             <ui:define name="aside">
-                <h2><h:link value="#{bundle['Ui.Admin.AsideTitle']}" outcome="/admin/console" /></h2>
+                <h2 class="aside-title"><h:link value="#{bundle['Ui.Admin.AsideTitle']}" outcome="/admin/console" /></h2>
                 <components:asideNavOfAdmin current="manage-product" />
             </ui:define>
             <ui:define name="main">
-                <h1><h:outputText value="${bundle['Ui.Admin.ManageProduct.Title']}"/></h1>
+                <h1 class="main-title"><h:outputText value="${bundle['Ui.Admin.ManageProduct.Title']}"/></h1>
                 <p:panel header="#{bundle['Ui.Product.Add']}">
                     <components:addProduct />
                 </p:panel>
