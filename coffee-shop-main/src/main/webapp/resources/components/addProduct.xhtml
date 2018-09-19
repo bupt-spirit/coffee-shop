@@ -41,7 +41,7 @@
             </p:panelGrid>
             <h:panelGrid columns="2" >
                 <h:outputText value="#{bundle['Ui.Product.Nutrition']} " />
-                <p:inputSwitch value="#{adminAddProductController.addNutrition}" >
+                <p:inputSwitch value="#{adminAddProductController.addNutrition}" offLabel="OFF" onLabel="ON" id="nutrition-switch">
                     <p:ajax event="change" update="add-nutrition" />
                 </p:inputSwitch>
             </h:panelGrid>
