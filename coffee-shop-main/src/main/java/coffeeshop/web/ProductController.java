@@ -73,7 +73,9 @@ public class ProductController implements Serializable {
 
     public void setSelectedProduct(Product selectedProduct) {
         this.selectedProduct = selectedProduct;
+        // Important, clear product selections
         this.selectedIngredients.clear();
+        this.itemQuantity = 1;
     }
 
     public List<Category> getCategories() {
