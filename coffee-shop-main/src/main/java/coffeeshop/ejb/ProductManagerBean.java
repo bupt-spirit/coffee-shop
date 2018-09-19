@@ -9,6 +9,7 @@ import coffeeshop.entity.Product;
 import coffeeshop.facade.CategoryFacade;
 import coffeeshop.facade.ImageFacade;
 import coffeeshop.facade.IngredientCategoryFacade;
+import coffeeshop.facade.IngredientFacade;
 import coffeeshop.facade.NutritionFacade;
 import coffeeshop.facade.ProductFacade;
 import java.io.IOException;
@@ -42,6 +43,9 @@ public class ProductManagerBean implements ProductManager {
 
     @EJB
     private ImageFacade imageFacade;
+    
+    @EJB
+    private IngredientFacade ingredientFacade;
 
     @EJB
     SeasonSpecialManager seasonSpecialManager;
@@ -196,5 +200,14 @@ public class ProductManagerBean implements ProductManager {
             seasonSpecialManager.removeSeasonSpecial(selectedProduct);           
         }
         productFacade.edit(selectedProduct);
+    }
+
+    @Override
+    public Ingredient getIngredientById(int id) throws ProductManagerException {
+        Ingredient ingredient = ingredientFacade.find(id);
+        if (ingredient == null) {
+            throw new ProductManagerException("No ingredient having id " + id);
+        }
+        return ingredient;
     }
 }
