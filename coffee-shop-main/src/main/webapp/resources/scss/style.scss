@@ -4,10 +4,12 @@
     width: auto !important;
 }
 
-.address {
-    padding: .25rem;
-    border: solid 0.0625rem rgb(213, 213, 213);
-    border-radius:  0.1875rem;
+.ui-selectlistbox-item {
+    border-bottom: solid 0.0625rem rgb(213, 213, 213) !important;
+}
+
+.ui-selectlistbox-item:last-child {
+    border-bottom: none !important;
 }
 
 .customer-order {
