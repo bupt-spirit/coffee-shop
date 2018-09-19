@@ -1,3 +1,16 @@
 #aside {
-    text-align: center;
+    .aside-title {
+        text-align: center;
+    }
+    .aside-nav-link {
+        display: block;
+        text-align: center;
+        width: 100%;
+        font-size: 1.2rem;
+        line-height: 2rem;
+    }
+
+    .aside-nav-link-current {
+        font-weight: bold;
+    }
 }

@@ -9,10 +9,8 @@
     <h:body>
         <ui:composition template="/templates/main-only.xhtml">
             <ui:define name="main">
-                <h2>
-                    <h:outputText  value="${bundle['Ui.Store.Title']}" />
-                </h2>
-
+                <h1 class="main-title"><h:outputText  value="${bundle['Ui.Store.Title']}" /></h1>
+                
                 <p:accordionPanel>
                     <p:tab title="${bundle['Ui.Order.Unprepared']}">
                         <h:form>

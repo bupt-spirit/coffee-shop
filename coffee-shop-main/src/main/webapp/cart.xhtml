@@ -8,7 +8,7 @@
     <h:body>
         <ui:composition template="templates/main-only.xhtml">
             <ui:define name="main">
-                <h1 class="page-title"><h:outputText value="#{bundle['Ui.Cart.Title']}"/></h1>
+                <h1 class="main-title"><h:outputText value="#{bundle['Ui.Cart.Title']}"/></h1>
                 <h:form>
                     <p:commandButton value="#{bundle['Ui.Cart.Clean']}" action="#{cartController.removeAll}" ajax="false"/>
                     <p:commandButton value="#{bundle['Ui.Cart.Checkout']}" action="/checkout" ajax="false"/>
