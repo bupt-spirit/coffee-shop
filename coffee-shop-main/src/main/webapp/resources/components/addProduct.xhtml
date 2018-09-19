@@ -14,7 +14,7 @@
             <h:form enctype="multipart/form-data">
                 <p:fileUpload value="#{adminAddProductController.image}"
                               allowTypes="/(\.|\/)(jpe?g|png)$/"
-                              mode="simple" skinSimple="true"/>
+                              mode="simple" skinSimple="true" required="true"/>
                 <p:commandButton value="#{bundle['Ui.Product.Update']}" ajax="false" 
                                  actionListener="#{adminAddProductController.uploadHandler}" />
                 <p:graphicImage value="#{adminAddProductController.selectedFileContent}" cache="false"
@@ -77,15 +77,14 @@
                         <p:inputText id="nutrition-sodium" value="#{adminAddProductController.sodium}"
                                      required="true" type="number" />             
                     </p:panelGrid>
-                </p:outputPanel>
-                <h:panelGrid columns="2" >
-                    <h:outputText value="#{bundle['Ui.Product.IngredientCategory']} " />
-                    <p:inputSwitch value="#{adminAddProductController.addIngredientCategory}" offLabel="OFF" onLabel="ON" 
-                                   id="ingredient-category-switch">
-                        <p:ajax event="change" update="add-ingredient-category" />
-                    </p:inputSwitch>
-                </h:panelGrid>      
-                <p:outputPanel id="add-ingredient-category" layout="block">
+                </p:outputPanel>       
+                <h:outputLabel for="ingredient-category" value="#{bundle['Ui.Product.IngredientCategory']} " />  
+                <p:outputPanel  layout="block">                      
+                    <p:selectManyButton id="ingredient-category"  value="#{adminAddProductController.selectedIngredientCategories}"
+                                         required="false">
+                        <f:selectItems value="#{adminAddProductController.ingredientCategories}" var="ingredientCategory"
+                                       itemLabel="#{ingredientCategory.name}" itemValue="#{ingredientCategory}"/>
+                    </p:selectManyButton>
                 </p:outputPanel>       
 
                 <p:commandButton action="#{adminAddProductController.createProduct}" type="submit" ajax="false"

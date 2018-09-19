@@ -9,7 +9,6 @@
     <h:body>
         <ui:composition template="/templates/main-only.xhtml">
             <ui:define name="main">
-                <p:growl id="msgs" showDetail="true" />
                 <h1>
                     <h:outputFormat value="#{bundle['Ui.CostomerConsole.Title']}">
                         <f:param value="#{userInfoController.currentUser.customer.nickname}" />
