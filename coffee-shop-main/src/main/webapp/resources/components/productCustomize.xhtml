@@ -24,7 +24,7 @@
                                        converter="#{ingredientConverter}">
                         <f:selectItems value="#{category.ingredientList}" var="ingredient"
                                        itemValue="#{ingredient}"
-                                       itemLabel="#{ingredient.name} +#{bundle['Ui.CurrencySymbol']}#{ingredient.cost != 0 ? ingredient.cost : ''}"
+                                       itemLabel="#{ingredient.name} +#{bundle['Ui.CurrencySymbol']}#{ingredient.cost}"
                                        itemDescription="#{ingredient.description}"/>
                         <p:ajax event="change" update="@(.ingredient-costs)" />
                     </p:selectOneButton>
