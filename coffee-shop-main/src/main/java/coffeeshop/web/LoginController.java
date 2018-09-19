@@ -3,7 +3,6 @@ package coffeeshop.web;
 import coffeeshop.ejb.InitManager;
 import coffeeshop.ejb.UserManagerException;
 import coffeeshop.web.util.MessageBundle;
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -40,14 +39,8 @@ public class LoginController {
     @EJB
     private InitManager initManager;
 
-    private FacesContext facesContext;
     // User name and password for login
     private String username, password;
-
-    @PostConstruct
-    private void getFacesContext() {
-        facesContext = FacesContext.getCurrentInstance();
-    }
 
     public String getUsername() {
         return username;
@@ -90,14 +83,14 @@ public class LoginController {
                         "Internal error occurred"
                 ));
             case SEND_FAILURE:
-                facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
                         bundle.getString("Ui.Message.AuthFailedTitle"),
                         bundle.getString("Ui.Message.AuthFailedDetail")
                 ));
                 break;
             case SEND_CONTINUE:
             case SUCCESS:
-                facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                         bundle.getFormatted("Ui.Message.AuthSuccess", username),
                         null
                 ));
@@ -106,7 +99,7 @@ public class LoginController {
         String outcome = null;
         switch (status) {
             case SEND_CONTINUE:
-                facesContext.responseComplete();
+                FacesContext.getCurrentInstance().responseComplete();
                 break;
             case SUCCESS:
                 if (securityContext.isCallerInRole("admin")) {
@@ -132,7 +125,7 @@ public class LoginController {
     public String logout() throws ServletException {
         if (isLoggedIn()) {
             getRequest().logout();
-            facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                     bundle.getString("Ui.Message.LogoutTitle"),
                     null
             ));
@@ -143,10 +136,10 @@ public class LoginController {
     }
 
     private HttpServletRequest getRequest() {
-        return (HttpServletRequest) facesContext.getExternalContext().getRequest();
+        return (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
     }
 
     private HttpServletResponse getResponse() {
-        return (HttpServletResponse) facesContext.getExternalContext().getResponse();
+        return (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
     }
 }
