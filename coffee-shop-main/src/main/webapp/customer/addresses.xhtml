@@ -31,9 +31,10 @@
                         <p:commandButton value="#{bundle['Ui.Address.Add']}" icon="fa fa-plus"
                                          onclick="PF('add-address-dialog').show();" />
                     </h:form>
-                    <p:dialog header="#{bundle['Ui.Address.Add']}" widgetVar="add-address-dialog">
-                        <components:addAddress customer="#{userInfoController.currentUser.customer}" />
-                    </p:dialog>
+                    <p:panelGrid id="">
+                        <components:addAddress rendered=""
+                                               customer="#{userInfoController.currentUser.customer}" />
+                    </p:panelGrid>
                 </p:panel>
             </ui:define>
         </ui:composition>

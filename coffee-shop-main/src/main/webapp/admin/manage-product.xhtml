@@ -20,16 +20,16 @@
                 <p:panel header="${bundle['Ui.Admin.SeasonSpecial.Title']}">
                     <h:form>
                         <p:selectOneListbox  id="current"
-                                             value="#{seasonSpecialContorller.selectedSeasonSpecial}" converter="#{seasonSpecialConverter}" var="p" 
+                                             value="#{seasonSpecialContorller.selectedSeasonSpecial}"
+                                             converter="#{seasonSpecialConverter}" var="p" 
                                              filter="true" filterMatchMode="contains"
                                              styleClass="select-one-list select-one-list-season-special">
                             <f:selectItems value="#{seasonSpecialContorller.specials}" var="special"
                                            itemLabel="#{special.name}"
-                                           itemValue="#{product}" />
+                                           itemValue="#{special}" />
                             <p:column>
                                 <h:outputText  value="#{p.name}" />
                             </p:column>
-
                         </p:selectOneListbox>
                         <p:commandButton icon="fa fa-remove" update="current all-other"
                                          action="#{seasonSpecialContorller.removeSeasonSpecial}"

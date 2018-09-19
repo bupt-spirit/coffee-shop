@@ -15,10 +15,9 @@ import javax.faces.event.ValueChangeEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
@@ -37,7 +36,7 @@ public class ProductController implements Serializable {
 
     @Inject
     private CartController cartController;
-    
+
     @Inject
     private MessageBundle bundle;
 
@@ -47,17 +46,17 @@ public class ProductController implements Serializable {
 
     private String selectedCategory;
     private Product selectedProduct;
-    private Set<Ingredient> selectedIngredients;
+    private List<Ingredient> selectedIngredients;
     private short itemQuantity;
 
     @PostConstruct
     private void init() {
-        selectedIngredients = new HashSet<>();
+        selectedIngredients = new ArrayList<>();
     }
 
     public String getSelectedCategory() {
         String viewId = FacesContext.getCurrentInstance().getViewRoot().getViewId();
-        if (viewId.equals("/index.xhtml")){
+        if (viewId.equals("/index.xhtml")) {
             this.selectedCategory = null;
         }
         return selectedCategory;
@@ -106,6 +105,14 @@ public class ProductController implements Serializable {
         this.itemQuantity -= 1;
     }
 
+    public List<Ingredient> getSelectedIngredients() {
+        return selectedIngredients;
+    }
+
+    public void setSelectedIngredients(List<Ingredient> selectedIngredients) {
+        this.selectedIngredients = selectedIngredients;
+    }
+
     public void ingredientChanged(ValueChangeEvent event) {
         String oldValue = (String) event.getOldValue();
         if (oldValue != null) {
@@ -121,11 +128,32 @@ public class ProductController implements Serializable {
         }
     }
 
+    public BigDecimal getSuborderAmount() {
+        BigDecimal cost = selectedProduct.getCost();
+        LOG.log(Level.INFO, "Current cost: {0}", cost);
+        for (Ingredient ingredient : selectedIngredients) {
+            LOG.log(Level.INFO, "Current cost: {0}", cost);
+            cost = cost.add(ingredient.getCost());
+        }
+        LOG.log(Level.INFO, "Current cost: {0}", cost);
+        return cost;
+    }
+
+    public BigDecimal getIngredientsAmount() {
+        BigDecimal cost = BigDecimal.ZERO;
+        LOG.log(Level.INFO, "Current cost: {0}", cost);
+        for (Ingredient ingredient : selectedIngredients) {
+            LOG.log(Level.INFO, "Current cost: {0}", cost);
+            cost = cost.add(ingredient.getCost());
+        }
+        LOG.log(Level.INFO, "Current cost: {0}", cost);
+        return cost;
+    }
+
     public void addToCart() throws CartManagerException {
-        List<Ingredient> ingredientsList = new ArrayList<>(selectedIngredients);
-        cartController.getCartManager().add(selectedProduct, ingredientsList, itemQuantity);
+        cartController.getCartManager().add(selectedProduct, selectedIngredients, itemQuantity);
         LOG.log(Level.INFO, "Add suborder to cart: {0} {1} {2}",
-                new Object[]{selectedProduct, ingredientsList, itemQuantity});
+                new Object[]{selectedProduct, selectedIngredients, itemQuantity});
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                 bundle.getString("Ui.Message.AddedToCart"),
                 null
