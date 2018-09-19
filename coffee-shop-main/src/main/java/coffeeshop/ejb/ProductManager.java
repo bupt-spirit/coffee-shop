@@ -14,6 +14,8 @@ import java.util.List;
 public interface ProductManager {
 
     List<Category> getCategories();
+    
+    Category getCategoryById(int id)throws ProductManagerException;
 
     List<Product> getCategoryProducts(String categoryName) throws ProductManagerException;
 
@@ -25,10 +27,11 @@ public interface ProductManager {
 
     Product getProductById(int id) throws ProductManagerException;
 
-    Product createProduct(String name, String description, BigDecimal price, Category category, Nutrition nutrition,
+    Product createProduct(String name, String description, BigDecimal price, Category category, 
+            byte[] bytes, String imageName) throws IOException, URISyntaxException;
+    
+    Product createProduct(String name, String description, BigDecimal price, Category category,
+            int calories, int fat, int carbon, int fiber, int protein, int sodium,
             byte[] bytes, String imageName) throws IOException, URISyntaxException;
 
-    Nutrition createNutrition(int calories, int fat, int carton, int fiber, int protein, int sodium);
-
-    Image createImage(String imageSuffix, byte[] bytes) throws IOException, URISyntaxException;
 }

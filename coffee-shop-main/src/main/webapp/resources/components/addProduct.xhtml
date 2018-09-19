@@ -15,7 +15,10 @@
                 <p:fileUpload value="#{adminAddProductController.image}"
                               allowTypes="/(\.|\/)(jpe?g|png)$/"
                               mode="simple" skinSimple="true"/>
-                <p:commandButton value="#{bundle['Ui.Product.Update']}" ajax="false" actionListener="#" />
+                <p:commandButton value="#{bundle['Ui.Product.Update']}" ajax="false" 
+                                 actionListener="#{adminAddProductController.uploadHandler}" />
+                <p:graphicImage value="#{adminAddProductController.selectedFileContent}" cache="false"
+                                rendered="#{adminAddProductController.image.fileName != null}"/>
             </h:form>
                 <h:form>
                 <p:panelGrid columns="3" styleClass="ui-panelgrid-blank">
@@ -25,7 +28,7 @@
                 <p:messages for="product-name"/>
 
                 <p:outputLabel for="product-description" value="#{bundle['Ui.Product.Description']}"/>
-                <p:inputTextarea id="product-description" rows="8" cols="80" value="#{adminAddProductController.description}"
+                <p:inputTextarea id="product-description" value="#{adminAddProductController.description}"
                                  required="true"/>
                     <p:messages for="product-name"/>
 
@@ -34,8 +37,10 @@
                              required="true" type="number" />
                 <p:messages for="product-cost"/>
                 <p:outputLabel for="product-category" value="#{bundle['Ui.Product.Category']}"/>
-                <p:selectOneMenu id="product-category" value="#{adminAddProductController.category}">
-                    <f:selectItems value="#{productController.categories}" var="category" itemLabel="#{category.name}"/>
+                <p:selectOneMenu id="product-category" value="#{adminAddProductController.category}" var="c"
+                                 converter="#{categoryConverter}">
+                    <f:selectItems value="#{productController.categories}" var="category" itemLabel="#{category.name}"
+                                   itemValue="#{category}"/>
                 </p:selectOneMenu>                   
             </p:panelGrid>
             <h:panelGrid columns="2" >
@@ -70,12 +75,7 @@
                     <p:messages for="nutrition-protein"/>
                     <p:outputLabel for="nutrition-sodium" value="#{bundle['Ui.Nutrition.Sodium']}"/>
                     <p:inputText id="nutrition-sodium" value="#{adminAddProductController.sodium}"
-                                 required="true" type="number" />
-                    <p:messages for="product-cost"/>
-                    <p:outputLabel for="product-category" value="#{bundle['Ui.Product.Category']}"/>
-                    <p:selectOneMenu id="product-category" value="#{adminAddProductController.category}">
-                        <f:selectItems value="#{productController.categories}" var="category" itemLabel="#{category.name}"/>
-                    </p:selectOneMenu>                   
+                                 required="true" type="number" />             
                 </p:panelGrid>
             </p:outputPanel>
             <p:commandButton action="#{adminAddProductController.createProduct}" type="submit" ajax="false"

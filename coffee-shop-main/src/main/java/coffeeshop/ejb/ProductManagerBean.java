@@ -20,6 +20,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Stateless
@@ -35,10 +36,10 @@ public class ProductManagerBean implements ProductManager {
 
     @EJB
     private IngredientCategoryFacade ingredientCategoryFacade;
-    
+
     @EJB
     private NutritionFacade nutritionFacade;
-    
+
     @EJB
     private ImageFacade imageFacade;
 
@@ -56,6 +57,15 @@ public class ProductManagerBean implements ProductManager {
         return category.getProductList();
     }
 
+    @Override
+    public Category getCategoryById(int id) throws ProductManagerException{
+        Category category=categoryFacade.find(id);
+        if (category==null){
+            throw new ProductManagerException("no such category ["+id+"]");
+        }
+        return category;
+    }
+    
     @Override
     public List<Ingredient> getIngredientsByCategory(String categoryName) throws ProductManagerException {
         IngredientCategory category = ingredientCategoryFacade.findByName(categoryName);
@@ -89,16 +99,39 @@ public class ProductManagerBean implements ProductManager {
     }
 
     @Override
-    public Product createProduct(String name, String description, BigDecimal price, Category category, 
-            Nutrition nutrition,byte[] bytes,String imageName) throws IOException, URISyntaxException {
+    public Product createProduct(String name, String description, BigDecimal price, Category category,
+            int calories, int fat, int carbon, int fiber, int protein, int sodium,
+            byte[] bytes, String imageName) throws IOException, URISyntaxException {
         Product product = new Product();
         product.setName(name);
         product.setDescription(description);
         product.setCost(price);
         product.setCategoryId(category);
-        product.setNutritionId(nutrition);
+        LOG.log(Level.INFO, "set category {0}",category);
+        
+        product.setNutritionId(createNutrition(calories,fat,carbon,fiber,protein,sodium));
         product.setLastUpdate(new Date());
-        Image image = createImage(imageName,bytes);
+        Image image = createImage(imageName, bytes);
+        product.setImageUuid(image);
+        image.setProduct(product);
+        product.setIngredientCategoryList(new ArrayList<>());
+        category.getProductList().add(product);
+        productFacade.create(product);
+        imageFacade.edit(image);
+        categoryFacade.edit(category);
+        return product;
+    }
+    @Override
+    public Product createProduct(String name, String description, BigDecimal price, Category category, 
+            byte[] bytes, String imageName) throws IOException, URISyntaxException{
+        Product product = new Product();
+        product.setName(name);
+        product.setDescription(description);
+        product.setCost(price);
+        product.setCategoryId(category);
+        product.setNutritionId(null);
+        product.setLastUpdate(new Date());
+        Image image = createImage(imageName, bytes);
         product.setImageUuid(image);
         image.setProduct(product);
         product.setIngredientCategoryList(new ArrayList<>());
@@ -109,12 +142,11 @@ public class ProductManagerBean implements ProductManager {
         return product;
     }
 
-    @Override
-    public Nutrition createNutrition(int calories, int fat, int carton, int fiber, int protein, int sodium) {
+    private Nutrition createNutrition(int calories, int fat, int carbon, int fiber, int protein, int sodium) {
         Nutrition nutrition = new Nutrition();
         nutrition.setCalories(calories);
         nutrition.setFat(fat);
-        nutrition.setCarbon(carton);
+        nutrition.setCarbon(carbon);
         nutrition.setProtein(protein);
         nutrition.setFiber(fiber);
         nutrition.setSodium(sodium);
@@ -122,11 +154,10 @@ public class ProductManagerBean implements ProductManager {
         return nutrition;
     }
 
-    @Override
-    public Image createImage(String imageSuffix,byte[] bytes) throws IOException, URISyntaxException {
+    private Image createImage(String imageSuffix, byte[] bytes) throws IOException, URISyntaxException {
         Image image = new Image();
         image.setContent(bytes);
-        image.setMediaType("image/"+imageSuffix);
+        image.setMediaType("image/" + imageSuffix);
         String uuid = null;
         do {
             uuid = UUID.randomUUID().toString();
