@@ -1,6 +1,7 @@
 package coffeeshop.facade;
 
 import coffeeshop.entity.Product;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -27,6 +28,16 @@ public class ProductFacade extends AbstractFacade<Product> {
                     .setParameter("name", productName)
                     .getSingleResult();
         } catch (NoResultException ex) {
+            return null;
+        }
+    }
+    
+    public List<Product> findIsAvailable(){
+        try{
+            return getEntityManager().createNamedQuery("Product.findByIsAvailable", Product.class)
+                    .setParameter("isAvailable", 1)
+                    .getResultList();
+        }catch(NoResultException ex) {
             return null;
         }
     }
