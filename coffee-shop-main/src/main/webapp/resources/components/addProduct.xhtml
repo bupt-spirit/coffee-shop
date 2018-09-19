@@ -13,11 +13,13 @@
         <div class="product-add-summary">
             <h:form enctype="multipart/form-data">
                 <p:fileUpload value="#{adminAddProductController.image}"
-                              allowTypes="/(\.|\/)(jpg|gif|jpe?g|png)$/"
+                              allowTypes="/(\.|\/)(jpe?g|png)$/"
                               mode="simple" skinSimple="true"/>
-                <p:commandButton value="#{bundle['Ui.Product.Update']}" ajax="false" actionListener="#" />
+                <p:commandButton value="#{bundle['Ui.Product.Update']}" ajax="false" 
+                                 actionListener="#{adminAddProductController.uploadHandler}" />
+                <p:graphicImage value="#{adminAddProductController.selectedFileContent}" cache="false"
+                                rendered="#{adminAddProductController.image.fileName != null}"/>
             </h:form>
-            <p:graphicImage value="#{adminAddProductController.selectedFileContent}" cache="false" rendered="" />
             <h:form>
                 <p:panelGrid columns="3" styleClass="ui-panelgrid-blank">
                     <p:outputLabel for="product-name" value="#{bundle['Ui.Product.Name']}"/>
@@ -27,24 +29,26 @@
 
                     <p:outputLabel for="product-description" value="#{bundle['Ui.Product.Description']}"/>
                     <p:inputTextarea id="product-description" value="#{adminAddProductController.description}"
-                                     autoResize="true" required="true"/>
-                    <p:messages for="product-description"/>
+                                     required="true"/>
+                    <p:messages for="product-name"/>
 
                     <p:outputLabel for="product-cost" value="#{bundle['Ui.Product.Cost']} #{bundle['Ui.CurrencySymbol']}"/>
                     <p:inputText id="product-cost" value="#{adminAddProductController.cost}"
                                  required="true" type="number" />
                     <p:messages for="product-cost"/>
                     <p:outputLabel for="product-category" value="#{bundle['Ui.Product.Category']}"/>
-                    <p:selectOneMenu id="product-category" value="#{adminAddProductController.category}">
-                        <f:selectItems value="#{productController.categories}" var="category" itemLabel="#{category.name}"/>
+                    <p:selectOneMenu id="product-category" value="#{adminAddProductController.category}" 
+                                     converter="#{categoryConverter}" required="true">
+                        <f:selectItems value="#{productController.categories}" var="category" itemLabel="#{category.name}"
+                                       itemValue="#{category}"/>
                     </p:selectOneMenu>                   
                 </p:panelGrid>
-                <p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
-                    <h:outputLabel for="add-nutrition-switch" value="#{bundle['Ui.Product.Nutrition']} " />
-                    <p:inputSwitch id="add-nutrition-switch" value="#{adminAddProductController.addNutrition}" >
+                <h:panelGrid columns="2" >
+                    <h:outputText value="#{bundle['Ui.Product.Nutrition']} " />
+                    <p:inputSwitch value="#{adminAddProductController.addNutrition}" offLabel="OFF" onLabel="ON" id="nutrition-switch">
                         <p:ajax event="change" update="add-nutrition" />
                     </p:inputSwitch>
-                </p:panelGrid>
+                </h:panelGrid>
                 <p:outputPanel id="add-nutrition" layout="block">
                     <p:panelGrid columns="3"  styleClass="ui-panelgrid-blank" rendered="#{adminAddProductController.addNutrition}">
                         <p:outputLabel for="nutrition-calories" value="#{bundle['Ui.Nutrition.Calories']}" />
@@ -71,10 +75,19 @@
                         <p:messages for="nutrition-protein"/>
                         <p:outputLabel for="nutrition-sodium" value="#{bundle['Ui.Nutrition.Sodium']}"/>
                         <p:inputText id="nutrition-sodium" value="#{adminAddProductController.sodium}"
-                                     required="true" type="number" />
-                        <p:messages for="nutrition-sodium"/>
+                                     required="true" type="number" />             
                     </p:panelGrid>
                 </p:outputPanel>
+                <h:panelGrid columns="2" >
+                    <h:outputText value="#{bundle['Ui.Product.IngredientCategory']} " />
+                    <p:inputSwitch value="#{adminAddProductController.addIngredientCategory}" offLabel="OFF" onLabel="ON" 
+                                   id="ingredient-category-switch">
+                        <p:ajax event="change" update="add-ingredient-category" />
+                    </p:inputSwitch>
+                </h:panelGrid>      
+                <p:outputPanel id="add-ingredient-category" layout="block">
+                </p:outputPanel>       
+
                 <p:commandButton action="#{adminAddProductController.createProduct}" type="submit" ajax="false"
                                  value="${bundle['Ui.Product.Add']}"/>
             </h:form>
