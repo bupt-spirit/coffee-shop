@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <cc:interface>
+        <cc:attribute name="current" type="java.lang.String" required="true"/>
+    </cc:interface>
+
+    <cc:implementation>
+        <h:form>
+            <p:link styleClass="aside-nav-link aside-nav-link-admin #{cc.attrs.current == 'account' ? 'aside-nav-link-current' : ''}"
+                    value="#{bundle['Ui.Account.Title']}" outcome="/customer/account"/>
+            <p:link styleClass="aside-nav-link aside-nav-link-admin #{cc.attrs.current== 'unfinished-orders' ? 'aside-nav-link-current' : ''}" 
+                    value="#{bundle['Ui.UnfinishedOrders.Title']}" outcome="/customer/unfinished-orders"/>
+            <p:link styleClass="aside-nav-link aside-nav-link-admin #{cc.attrs.current == 'finished-orders' ? 'aside-nav-link-current' : ''}" 
+                    value="#{bundle['Ui.FinishedOrders.Title']}" outcome="/customer/finished-orders"/>
+            <p:link styleClass="aside-nav-link aside-nav-link-admin #{cc.attrs.current == 'addresses' ? 'aside-nav-link-current' : ''}"
+                    value="#{bundle['Ui.Customer.Addresses.Title']}" outcome="/customer/addresses"/>
+        </h:form>
+    </cc:implementation>
+</html>

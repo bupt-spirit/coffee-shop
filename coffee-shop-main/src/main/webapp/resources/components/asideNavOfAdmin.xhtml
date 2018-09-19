@@ -11,6 +11,8 @@
 
     <cc:implementation>
         <h:form>
+            <p:link styleClass="aside-nav-link aside-nav-link-admin #{cc.attrs.current == 'account' ? 'aside-nav-link-current' : ''}"
+                    value="#{bundle['Ui.Account.Title']}" outcome="/admin/account"/>
             <p:link styleClass="aside-nav-link aside-nav-link-admin #{cc.attrs.current == 'manage-data' ? 'aside-nav-link-current' : ''}"
                     value="#{bundle['Ui.Admin.ManageData.Title']}" outcome="/admin/manage-data"/>
             <p:link styleClass="aside-nav-link aside-nav-link-admin #{cc.attrs.current== 'manage-user' ? 'aside-nav-link-current' : ''}" 

@@ -13,7 +13,7 @@
                 <components:asideNavOfAdmin current="manage-store" />
             </ui:define>
             <ui:define name="main">
-                <h1 class="main-title"><h:outputText value="${bundle['Ui.Admin.AdminConsoleTitle']}"/></h1>
+                <h1 class="main-title"><h:outputText value="${bundle['Ui.Admin.ManageStore.Title']}"/></h1>
                 <p:panel header="${bundle['Ui.Admin.AddStore.Title']}">
                     <h:form id="add-store-form">
                         <p:panelGrid columns="3" styleClass="ui-panelgrid-blank">
@@ -49,10 +49,7 @@
                         <p:commandButton type="reset" value="Reset"/>
                     </h:form>
                     <p:messages for="add-store-form"/>
-                </p:panel>
-                <h:form>
-                    <components:logoutButton />
-                </h:form>    
+                </p:panel>  
             </ui:define>
         </ui:composition>
     </h:body>
