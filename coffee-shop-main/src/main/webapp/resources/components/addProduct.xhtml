@@ -51,33 +51,32 @@
                 </h:panelGrid>
                 <p:outputPanel id="add-nutrition" layout="block">
                     <p:panelGrid columns="3"  styleClass="ui-panelgrid-blank" rendered="#{adminAddProductController.addNutrition}">
-                        <p:outputLabel for="nutrition-calories" value="#{bundle['Ui.Nutrition.Calories']}" />
-                        <p:inputText id="nutrition-calories" value="#{adminAddProductController.calories}"
-                                     required="true" type="number" >
-                            <f:validateLongRange minimum="0" />
-                        </p:inputText>
+                        <p:outputLabel for="nutrition-calories" value="#{bundle['Ui.Nutrition.Calories']}" /> 
+                        <p:inputNumber id="nutrition-calories" value="#{adminAddProductController.calories}"
+                                     required="true" minValue="0" decimalPlaces="0" emptyValue="0"/>
                         <p:messages for="nutrition-calories"/>
                         <p:outputLabel for="nutrition-fat" value="#{bundle['Ui.Nutrition.Fat']}"/>
-                        <p:inputText id="nutrition-fat" value="#{adminAddProductController.fat}"
-                                     required="true" type="number" />
+                        <p:inputNumber id="nutrition-fat" value="#{adminAddProductController.fat}"
+                                     required="true" minValue="0" decimalPlaces="0" emptyValue="0" />
                         <p:messages for="nutrition-fat"/>
                         <p:outputLabel for="nutrition-carbon" value="#{bundle['Ui.Nutrition.Carbohydrate']}"/>
-                        <p:inputText id="nutrition-carbon" value="#{adminAddProductController.carbon}"
-                                     required="true" type="number" />
+                        <p:inputNumber id="nutrition-carbon" value="#{adminAddProductController.carbon}"
+                                     required="true" minValue="0" decimalPlaces="0" emptyValue="0"/>
                         <p:messages for="nutrition-carbon"/>
                         <p:outputLabel for="nutrition-fiber" value="#{bundle['Ui.Nutrition.Fiber']}"/>
-                        <p:inputText id="nutrition-fiber" value="#{adminAddProductController.fiber}"
-                                     required="true" type="number" />
+                        <p:inputNumber id="nutrition-fiber" value="#{adminAddProductController.fiber}"
+                                     required="true" minValue="0" decimalPlaces="0" emptyValue="0"/>
                         <p:messages for="nutrition-fiber"/>
                         <p:outputLabel for="nutrition-protein" value="#{bundle['Ui.Nutrition.Protein']}"/>
-                        <p:inputText id="nutrition-protein" value="#{adminAddProductController.protein}"
-                                     required="true" type="number" />
+                        <p:inputNumber id="nutrition-protein" value="#{adminAddProductController.protein}"
+                                     required="true" minValue="0" decimalPlaces="0" emptyValue="0" />
                         <p:messages for="nutrition-protein"/>
                         <p:outputLabel for="nutrition-sodium" value="#{bundle['Ui.Nutrition.Sodium']}"/>
-                        <p:inputText id="nutrition-sodium" value="#{adminAddProductController.sodium}"
-                                     required="true" type="number" />             
+                        <p:inputNumber id="nutrition-sodium" value="#{adminAddProductController.sodium}"
+                                     required="true" minValue="0" decimalPlaces="0" emptyValue="0"/>             
                     </p:panelGrid>
-                </p:outputPanel>       
+                </p:outputPanel> 
+                
                 <h:outputLabel for="ingredient-category" value="#{bundle['Ui.Product.IngredientCategory']} " />  
                 <p:outputPanel  layout="block">                      
                     <p:selectManyButton id="ingredient-category"  value="#{adminAddProductController.selectedIngredientCategories}"

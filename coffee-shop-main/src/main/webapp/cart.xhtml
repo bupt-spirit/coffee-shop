@@ -12,7 +12,7 @@
                 <h1 class="main-title"><h:outputText value="#{bundle['Ui.Cart.Title']}"/></h1>
                 <h:form>
                     <p:commandButton value="#{bundle['Ui.Cart.Clean']}" action="#{cartController.removeAll}" ajax="false"/>
-                    <p:commandButton value="#{bundle['Ui.Cart.Checkout']}" action="/checkout" ajax="false"/>
+                    <p:button value="#{bundle['Ui.Cart.Checkout']}" outcome="/checkout"/>
                 </h:form>
 
                 <ui:remove>

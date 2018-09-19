@@ -331,6 +331,7 @@ public class InitManager {
         product.setCategoryId(category);
         product.setNutritionId(nutrition);
         product.setLastUpdate(new Date());
+        product.setIsAvailable((short)1);
         Image image = createImage(category.getName(), name);
         product.setImageUuid(image);
         image.setProduct(product);

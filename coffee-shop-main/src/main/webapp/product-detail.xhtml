@@ -13,10 +13,12 @@
             <ui:define name="main">
                 <c:set var="product" value="#{productController.selectedProduct}"/>
                 <components:productDetail product="#{product}"/>
-                <components:productCustomize product="#{product}"
-                                             rendered="#{product.ingredientCategoryList != null and
-                                                         product.ingredientCategoryList.size() != 0}"/>
+
                 <h:form class="product-quantity">
+                    <components:productCustomize product="#{product}"
+                                                 rendered="#{product.ingredientCategoryList != null and
+                                                             product.ingredientCategoryList.size() != 0}"/>
+
                     <p:outputLabel for="quantity" value="#{bundle['Ui.Label.ItemQuantity']}"/>
                     <p:inputNumber id="quantity" value="#{productController.itemQuantity}" minValue="1"
                                    decimalPlaces="0" emptyValue="1">
