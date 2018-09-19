@@ -2,21 +2,26 @@ package coffeeshop.web.admin;
 
 import coffeeshop.ejb.ProductManager;
 import coffeeshop.entity.Category;
+import coffeeshop.entity.IngredientCategory;
 import coffeeshop.entity.Product;
+import coffeeshop.web.util.MessageBundle;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.net.URISyntaxException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
+import javax.inject.Inject;
 import javax.inject.Named;
 import org.primefaces.model.UploadedFile;
 import org.apache.commons.io.IOUtils;
@@ -29,6 +34,9 @@ public class AdminAddProductController implements Serializable {
 
     private static final Logger LOG = Logger.getLogger(AdminAddProductController.class.getName());
 
+    @Inject
+    private MessageBundle bundle;
+
     @EJB
     ProductManager productManager;
 
@@ -36,21 +44,24 @@ public class AdminAddProductController implements Serializable {
     private String description;
     private Category category;
     private BigDecimal cost;
-    private boolean addNutrition;
-    
+
     private UploadedFile image;
     private byte[] bytes;
     private String imageSuffix;
     private String selectedFile;
     private static Pattern getFileNameExtension = Pattern.compile(".+?//.([a-zA-z]+)");
     private String imageContentType;
-    
+
+    private boolean addNutrition;
     private int calories;
     private int fat;
     private int carbon;
     private int fiber;
     private int protein;
     private int sodium;
+
+    private boolean addIngredientCategory;
+    private List<IngredientCategory> selectedIngredientCategories;
 
     private static String getExtension(String fileName) {
         if (fileName == null) {
@@ -62,12 +73,12 @@ public class AdminAddProductController implements Serializable {
         }
         return fileName.substring(index + 1);
     }
-    
-    public String getImageSuffix(){
+
+    public String getImageSuffix() {
         return this.imageSuffix;
     }
-    
-    public String getSelectedFile(){
+
+    public String getSelectedFile() {
         return this.selectedFile;
     }
 
@@ -88,7 +99,8 @@ public class AdminAddProductController implements Serializable {
             this.bytes = IOUtils.toByteArray(is);
             this.imageSuffix = getExtension(image.getFileName()).toLowerCase();
             switch (this.imageSuffix) {
-                case "jpg": case "jpeg":
+                case "jpg":
+                case "jpeg":
                     this.imageContentType = "image/jpeg";
                     break;
                 case "png":
@@ -97,14 +109,14 @@ public class AdminAddProductController implements Serializable {
                 default:
                     throw new ValidatorException(new FacesMessage("invalid image suffx"));
             }
-            this.selectedFile=image.getFileName();
+            this.selectedFile = image.getFileName();
             LOG.log(Level.INFO, "image extension:{0}", imageSuffix);
         }
     }
-    
+
     public StreamedContent getSelectedFileContent() {
         LOG.log(Level.INFO, "File: {0}", selectedFile);
-        InputStream is = new ByteArrayInputStream(bytes);     
+        InputStream is = new ByteArrayInputStream(bytes);
         LOG.log(Level.INFO, "bytes to inputstream successfully");
         return new DefaultStreamedContent(is, imageContentType, selectedFile);
     }
@@ -207,16 +219,50 @@ public class AdminAddProductController implements Serializable {
     }
 
     public void createProduct() throws IOException, URISyntaxException {
+        if (image == null) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("ERROR!", bundle.getString("Ui.Product.PhotoError")));
+            return;
+        }
         if (addNutrition == true) {
+            LOG.log(Level.INFO, "selectedIngredientCategory:{0}", selectedIngredientCategories);
             Product newProduct = productManager.createProduct(name, description, cost, category,
-                    calories, fat, carbon, fiber, protein, sodium, bytes, imageSuffix);
+                    calories, fat, carbon, fiber, protein, sodium, bytes, imageSuffix, selectedIngredientCategories);
             LOG.log(Level.INFO, "create product with nutrition success{0}", newProduct.getId());
-        }else{
-            Product newProduct=productManager.createProduct(name, description, cost, category,
-                     bytes, imageSuffix);
+        } else {
+            Product newProduct = productManager.createProduct(name, description, cost, category,
+                    bytes, imageSuffix, selectedIngredientCategories);
             LOG.log(Level.INFO, "create product without nutrition success{0}", newProduct.getId());
         }
-        
+        name = description = null;
+        category = null;
+        cost = null;
+        image = null;
+        bytes = null;
+        imageSuffix = selectedFile = imageContentType = null;
+        addNutrition = false;
+        calories = fat = carbon = fiber = protein = sodium = 0;
+        selectedIngredientCategories=null;
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("SUCCESSFUL!", bundle.getString("Ui.Product.Success")));
+    }
+
+    public boolean isAddIngredientCategory() {
+        return addIngredientCategory;
+    }
+
+    public void setAddIngredientCategory(boolean addIngredientCategory) {
+        this.addIngredientCategory = addIngredientCategory;
+    }
+
+    public List<IngredientCategory> getIngredientCategories() {
+        return productManager.getIngredientCategories();
+    }
+
+    public List<IngredientCategory> getSelectedIngredientCategories() {
+        return selectedIngredientCategories;
+    }
+
+    public void setSelectedIngredientCategories(List<IngredientCategory> selectedIngredientCategories) {
+        this.selectedIngredientCategories = selectedIngredientCategories;
     }
 
 }

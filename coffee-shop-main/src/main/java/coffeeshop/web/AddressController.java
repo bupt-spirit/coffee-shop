@@ -44,13 +44,6 @@ public class AddressController {
     @Inject
     private MessageBundle bundle;
 
-    private FacesContext facesContext;
-
-    @PostConstruct
-    private void getFacesContext() {
-        facesContext = FacesContext.getCurrentInstance();
-    }
-
     public String getCountry() {
         return country;
     }
@@ -110,7 +103,7 @@ public class AddressController {
     public void addAddress() throws UserManagerException {
         Customer customer = userInfoController.getCurrentUser().getCustomer();
         customerInfoManager.addAddress(customer, country, province, city, district, detail, receiver, receiverPhone);
-        facesContext.addMessage(null, new FacesMessage(bundle.getString("Ui.Address.AddSuccess")));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(bundle.getString("Ui.Address.AddSuccess")));
     }
 
     public List<Address> getAddresses() throws UserManagerException {
@@ -128,6 +121,7 @@ public class AddressController {
     public void removeAddress() throws UserManagerException, CustomerInfoManagerException {
         Customer customer = userInfoController.getCurrentUser().getCustomer();
         customerInfoManager.removeAddress(selectedAddress, customer);
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(bundle.getString("Ui.Address.RemoveSuccess")));
     }
 
 }
