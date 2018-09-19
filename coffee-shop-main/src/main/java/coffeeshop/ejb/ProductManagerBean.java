@@ -105,33 +105,17 @@ public class ProductManagerBean implements ProductManager {
 
     @Override
     public Product createProduct(String name, String description, BigDecimal price, Category category,
-            int calories, int fat, int carbon, int fiber, int protein, int sodium,
+            boolean addNutrition,int calories, int fat, int carbon, int fiber, int protein, int sodium,
             byte[] bytes, String imageName, List<IngredientCategory> ingredientCategoies) throws IOException, URISyntaxException {
-        Product product = new Product();
-        product.setName(name);
-        product.setDescription(description);
-        product.setCost(price);
-        product.setCategoryId(category);
-        LOG.log(Level.INFO, "set category {0}", category);
-
-        product.setNutritionId(createNutrition(calories, fat, carbon, fiber, protein, sodium));
-        product.setLastUpdate(new Date());
-        Image image = createImage(imageName, bytes);
-        product.setImageUuid(image);
-        image.setProduct(product);
-        product.setIngredientCategoryList(new ArrayList<>());
-        category.getProductList().add(product);
-        productFacade.create(product);
-        imageFacade.edit(image);
-        categoryFacade.edit(category);
-        LOG.log(Level.INFO, "start enable productingredientcategory");
-        enableProductIngredient(product,ingredientCategoies);
-        LOG.log(Level.INFO,"finish enable");
+        Product product=this.createProduct(name, description, price, category, bytes, imageName, ingredientCategoies);
+        if(addNutrition){
+            product.setNutritionId(createNutrition(calories, fat, carbon, fiber, protein, sodium));
+            productFacade.edit(product);
+        }
         return product;
     }
 
-    @Override
-    public Product createProduct(String name, String description, BigDecimal price, Category category,
+    private Product createProduct(String name, String description, BigDecimal price, Category category,
             byte[] bytes, String imageName, List<IngredientCategory> ingredientCategoies) throws IOException, URISyntaxException {
         Product product = new Product();
         product.setName(name);
