@@ -39,7 +39,7 @@
                                  required="true"/>
                     <p:messages for="address-receiver"/>
                     <p:outputLabel for="address-receiver-phone" value="#{bundle['Ui.Address.ReceiverPhone']}"/>
-                    <p:inputText type="text" id="address-receiver-phone" value="#{addressController.receiverPhone}"
+                    <p:inputText type="tel" id="address-receiver-phone" value="#{addressController.receiverPhone}"
                                  required="true"/>
                     <p:messages for="address-receiver-phone"/>
                     <p:commandButton action="#{addressController.addAddress}" type="submit"

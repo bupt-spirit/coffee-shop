@@ -58,14 +58,14 @@ public class ProductManagerBean implements ProductManager {
     }
 
     @Override
-    public Category getCategoryById(int id) throws ProductManagerException{
-        Category category=categoryFacade.find(id);
-        if (category==null){
-            throw new ProductManagerException("no such category ["+id+"]");
+    public Category getCategoryById(int id) throws ProductManagerException {
+        Category category = categoryFacade.find(id);
+        if (category == null) {
+            throw new ProductManagerException("no such category [" + id + "]");
         }
         return category;
     }
-    
+
     @Override
     public List<Ingredient> getIngredientsByCategory(String categoryName) throws ProductManagerException {
         IngredientCategory category = ingredientCategoryFacade.findByName(categoryName);
@@ -99,17 +99,22 @@ public class ProductManagerBean implements ProductManager {
     }
 
     @Override
+    public List<IngredientCategory> getIngredientCategories() {
+        return ingredientCategoryFacade.findAll();
+    }
+
+    @Override
     public Product createProduct(String name, String description, BigDecimal price, Category category,
             int calories, int fat, int carbon, int fiber, int protein, int sodium,
-            byte[] bytes, String imageName) throws IOException, URISyntaxException {
+            byte[] bytes, String imageName, List<IngredientCategory> ingredientCategoies) throws IOException, URISyntaxException {
         Product product = new Product();
         product.setName(name);
         product.setDescription(description);
         product.setCost(price);
         product.setCategoryId(category);
-        LOG.log(Level.INFO, "set category {0}",category);
-        
-        product.setNutritionId(createNutrition(calories,fat,carbon,fiber,protein,sodium));
+        LOG.log(Level.INFO, "set category {0}", category);
+
+        product.setNutritionId(createNutrition(calories, fat, carbon, fiber, protein, sodium));
         product.setLastUpdate(new Date());
         Image image = createImage(imageName, bytes);
         product.setImageUuid(image);
@@ -119,11 +124,15 @@ public class ProductManagerBean implements ProductManager {
         productFacade.create(product);
         imageFacade.edit(image);
         categoryFacade.edit(category);
+        LOG.log(Level.INFO, "start enable productingredientcategory");
+        enableProductIngredient(product,ingredientCategoies);
+        LOG.log(Level.INFO,"finish enable");
         return product;
     }
+
     @Override
-    public Product createProduct(String name, String description, BigDecimal price, Category category, 
-            byte[] bytes, String imageName) throws IOException, URISyntaxException{
+    public Product createProduct(String name, String description, BigDecimal price, Category category,
+            byte[] bytes, String imageName, List<IngredientCategory> ingredientCategoies) throws IOException, URISyntaxException {
         Product product = new Product();
         product.setName(name);
         product.setDescription(description);
@@ -139,6 +148,9 @@ public class ProductManagerBean implements ProductManager {
         productFacade.create(product);
         imageFacade.edit(image);
         categoryFacade.edit(category);
+        LOG.log(Level.INFO, "start enable productingredientcategory");
+        enableProductIngredient(product,ingredientCategoies);
+        LOG.log(Level.INFO,"finish enable");
         return product;
     }
 
@@ -167,4 +179,14 @@ public class ProductManagerBean implements ProductManager {
         return image;
     }
 
+    private void enableProductIngredient(Product product, List<IngredientCategory> ingredientCategoies) {
+        product.getIngredientCategoryList().addAll(ingredientCategoies);
+        for (IngredientCategory category : ingredientCategoies) {
+            category.getProductList().add(product);
+        }
+        for (IngredientCategory category : ingredientCategoies) {
+            ingredientCategoryFacade.edit(category);
+        }
+        productFacade.edit(product);
+    }
 }

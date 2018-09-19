@@ -28,13 +28,6 @@ public class OrderController {
     @Inject
     private MessageBundle bundle;
 
-    private FacesContext facesContext;
-
-    @PostConstruct
-    private void getFacesContext() {
-        facesContext = FacesContext.getCurrentInstance();
-    }
-
     private OrderInfo selectedOrder;
 
     public OrderInfo getSelectedOrder() {
@@ -52,7 +45,7 @@ public class OrderController {
    
     public void finishOrder() throws OrderManagerException {
         orderManager.finishOrder(selectedOrder);
-        facesContext.addMessage(null, new FacesMessage(bundle.getString("Ui.Order.FinishSuccess")));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(bundle.getString("Ui.Order.FinishSuccess")));
     }
 
     public void handleToggle(ToggleEvent event) {
