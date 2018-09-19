@@ -23,7 +23,8 @@
                                        valueChangeListener="#{productController.ingredientChanged}"
                                        converter="#{ingredientConverter}">
                         <f:selectItems value="#{category.ingredientList}" var="ingredient"
-                                       itemValue="#{ingredient}" itemLabel="#{ingredient.name}"
+                                       itemValue="#{ingredient}"
+                                       itemLabel="#{ingredient.name} +#{bundle['Ui.CurrencySymbol']}#{ingredient.cost}"
                                        itemDescription="#{ingredient.description}"/>
                         <p:ajax event="change" update="@(.ingredient-costs)" />
                     </p:selectOneButton>
@@ -32,14 +33,14 @@
             <h:panelGrid columns="2">
                 <h:outputLabel for="ingredient-costs" value="#{bundle['Ui.Label.TotalCost']}" />
                 <p:outputPanel id="ingredient-costs" layout="span" styleClass="ingredient-costs">
-                    <h:outputText value="#{product.cost}" />
+                    <h:outputText value="#{bundle['Ui.CurrencySymbol']}#{product.cost}" />
                     <ui:repeat value="#{productController.selectedIngredients}" var="ingredient">
                         <h:panelGroup styleClass="ingredient-cost" rendered="#{ingredient.cost.unscaledValue() > 0}">
-                            <h:outputText value="+#{ingredient.cost}" />
+                            <h:outputText value="+#{bundle['Ui.CurrencySymbol']}#{ingredient.cost}" />
                         </h:panelGroup>
                     </ui:repeat>
                     <h:outputText styleClass="total-cost"
-                                  value="=#{productController.suborderAmount}"
+                                  value="=#{bundle['Ui.CurrencySymbol']}#{productController.suborderAmount}"
                                   rendered="#{productController.ingredientsAmount.unscaledValue() > 0}"/>
                 </p:outputPanel>
             </h:panelGrid>
