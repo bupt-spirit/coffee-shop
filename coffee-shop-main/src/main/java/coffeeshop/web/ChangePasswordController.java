@@ -12,13 +12,13 @@ import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.logging.Logger;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
 
 @Named
-@SessionScoped
+@RequestScoped
 public class ChangePasswordController implements Serializable {
 
     @Inject
@@ -28,9 +28,9 @@ public class ChangePasswordController implements Serializable {
     private UserInfoController userInfoController;
 
     @Inject
-    private MessageBundle messageBundle;
+    private MessageBundle bundle;
 
-    String oldPassword, newPassword, reenteredNewPassword;
+    private String oldPassword, newPassword, reenteredNewPassword;
 
     public String getOldPassword() {
         return oldPassword;
@@ -48,23 +48,36 @@ public class ChangePasswordController implements Serializable {
         this.newPassword = newPassword;
     }
 
-    public String getReenteredPassword() {
+    public String getReenteredNewPassword() {
         return reenteredNewPassword;
     }
 
-    public void setReenteredPassword(String reenteredPassword) {
+    public void setReenteredNewPassword(String reenteredPassword) {
         this.reenteredNewPassword = reenteredPassword;
     }
 
     public void changePassword() throws UserManagerException {
+        if (newPassword.equals(reenteredNewPassword)) {
+            try {
+                userManager.changePassword(userInfoController.getCurrentUser().getUsername(), oldPassword, newPassword);
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        bundle.getString("Ui.Message.ChangePasswordSuccessTitle"),
+                        null
+                ));
 
-        if (userInfoController.getCurrentUser().) {
-            throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                    messageBundle.getString("")));
-        } else if (newPassword == reenteredNewPassword) {
-            userManager.changePassword(userInfoController.getCurrentUser().getUsername(), newPassword);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
-                    messageBundle.getString("Ui.Message.ChangePasswordSuccessTitle")));
+            } catch (UserManagerException ex) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                        bundle.getString("Ui.Message.ChangePassword.OldPasswordWrong"),
+                        null
+                ));
+            }
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    bundle.getString("Ui.Message.ChangePassword.Mismatch"),
+                    null
+            ));
         }
-
+        oldPassword = newPassword = reenteredNewPassword = null;
     }
+    
+}

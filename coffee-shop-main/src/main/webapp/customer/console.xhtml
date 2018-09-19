@@ -72,12 +72,12 @@
                             <p:messages for="oldPassword"/>
                             
                             <p:outputLabel for="newPassword" value="#{bundle['Ui.ChangePassword.EnterNewPassword']}"/>
-                            <p:inputText type="password" id="password" value="#{changePasswordController.newPassword}"
+                            <p:inputText type="password" id="newPassword" value="#{changePasswordController.newPassword}"
                                          required="true"/>
                             <p:messages for="newPassword"/>
                             
                             <p:outputLabel for="reenterNewPassword" value="#{bundle['Ui.ChangePassword.ReenterNewPassword']}"/>
-                            <p:inputText type="password" id="password" value="#{changePasswordController.reenteredNewPassword}"
+                            <p:inputText type="password" id="reenterNewPassword" value="#{changePasswordController.reenteredNewPassword}"
                                          required="true"/>
                             <p:messages for="reenterNewPassword"/>
                         </p:panelGrid>
