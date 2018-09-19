@@ -57,13 +57,15 @@ public class UserManagerBean implements UserManager {
     }
 
     @Override
-    public void changePassword(String username, String password) throws UserManagerException {
+    public void changePassword(String username, String oldPassword, String newPassword) throws UserManagerException {
         UserInfo userInfo = userInfoFacade.findByUsername(username);
         if (userInfo == null) {
             throw new UserManagerException("No such user");
-        } else {
-            userInfo.setPassword(passwordHash.generate(password.toCharArray()));
+        } else if (passwordHash.verify(oldPassword.toCharArray(), userInfo.getPassword())) {
+            userInfo.setPassword(passwordHash.generate(newPassword.toCharArray()));
             userInfoFacade.edit(userInfo);
+        } else {
+            throw new UserManagerException("Old password is not correct");
         }
     }
 
