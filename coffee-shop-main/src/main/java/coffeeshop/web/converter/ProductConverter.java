@@ -15,9 +15,9 @@ import javax.inject.Named;
 
 
 @Named
-public class SeasonSpecialConverter implements Converter{
+public class ProductConverter implements Converter{
     
-    private static final Logger LOG = Logger.getLogger(SeasonSpecialConverter.class.getName());
+    private static final Logger LOG = Logger.getLogger(ProductConverter.class.getName());
     
     @EJB
     private ProductManager productManager;

@@ -17,39 +17,39 @@
                 <p:panel header="#{bundle['Ui.Product.Add']}">
                     <components:addProduct />
                 </p:panel>
-                <p:panel header="${bundle['Ui.Admin.SeasonSpecial.Title']}">
+                
+                <p:panel id="all-product" header="#{bundle['Ui.Product.Remove']}">
                     <h:form>
-                        <p:selectOneListbox  id="current"
-                                             value="#{seasonSpecialContorller.selectedSeasonSpecial}"
-                                             converter="#{seasonSpecialConverter}" var="p" 
-                                             filter="true" filterMatchMode="contains"
-                                             styleClass="select-one-list select-one-list-season-special">
-                            <f:selectItems value="#{seasonSpecialContorller.specials}" var="special"
-                                           itemLabel="#{special.name}"
-                                           itemValue="#{special}" />
-                            <p:column>
-                                <h:outputText  value="#{p.name}" />
-                            </p:column>
-                        </p:selectOneListbox>
-                        <p:commandButton icon="fa fa-remove" update="current all-other"
+                        <components:selectProduct list="#{adminRemoveProductController.allProducts}"
+                                                  selected="#{adminRemoveProductController.selectedProduct}">
+                            <f:facet name="actionButton">
+                                <p:commandButton icon="fa fa-remove" update="season-special all-product"
+                                         action="#{adminRemoveProductController.removeProduct}" type="submit"
+                                         value="#{bundle['Ui.Product.Remove']}" />
+                            </f:facet>
+                        </components:selectProduct>
+                    </h:form>
+                </p:panel>
+                
+                <p:panel header="${bundle['Ui.Admin.SeasonSpecial.Title']}" id="season-special">
+                    <h:form>                        
+                        <components:selectProduct list="#{seasonSpecialContorller.specials}"
+                                                  selected="#{seasonSpecialContorller.selectedSeasonSpecial}">
+                            <f:facet name="actionButton">
+                                <p:commandButton icon="fa fa-remove" update="season-special"
                                          action="#{seasonSpecialContorller.removeSeasonSpecial}"
                                          value="#{bundle['Ui.Admin.SeasonSpecial.Button.Remove']}"/>
-
-                        <p:selectOneListbox id="all-other"
-                                            value="#{seasonSpecialContorller.selectedProduct}"
-                                            converter="#{seasonSpecialConverter}" var="p" 
-                                            filter="true" filterMatchMode="contains"
-                                            styleClass="select-one-list select-one-list-season-special">
-                            <f:selectItems value="#{seasonSpecialContorller.allProductExceptSeasonSpecial}" var="product"
-                                           itemLabel="#{product.name}"
-                                           itemValue="#{product}" />
-                            <p:column>
-                                <h:outputText value="#{p.name}" />
-                            </p:column>
-                        </p:selectOneListbox>
-                        <p:commandButton icon="fa fa-plus" update="current all-other"
+                            </f:facet>
+                        </components:selectProduct>
+                        
+                        <components:selectProduct list="#{seasonSpecialContorller.allProductExceptSeasonSpecial}"
+                                                 selected="#{seasonSpecialContorller.selectedProduct}">
+                            <f:facet name="actionButton">
+                                <p:commandButton icon="fa fa-plus" update="season-special"
                                          action="#{seasonSpecialContorller.addSeasonSpecial}" type="submit"
                                          value="#{bundle['Ui.Admin.SeasonSpecial.Button.Add']}" />
+                            </f:facet>
+                        </components:selectProduct>
                     </h:form>
                 </p:panel>
             </ui:define>

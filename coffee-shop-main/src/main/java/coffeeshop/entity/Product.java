@@ -37,7 +37,8 @@ import java.util.List;
     @NamedQuery(name = "Product.findByName", query = "SELECT p FROM Product p WHERE p.name = :name"),
     @NamedQuery(name = "Product.findByDescription", query = "SELECT p FROM Product p WHERE p.description = :description"),
     @NamedQuery(name = "Product.findByLastUpdate", query = "SELECT p FROM Product p WHERE p.lastUpdate = :lastUpdate"),
-    @NamedQuery(name = "Product.findByCost", query = "SELECT p FROM Product p WHERE p.cost = :cost")})
+    @NamedQuery(name = "Product.findByCost", query = "SELECT p FROM Product p WHERE p.cost = :cost"),
+    @NamedQuery(name = "Product.findByIsAvailable", query = "SELECT p FROM Product p WHERE p.isAvailable = :isAvailable")})
 public class Product implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -63,9 +64,13 @@ public class Product implements Serializable {
     @NotNull
     @Column(nullable = false, precision = 12, scale = 2)
     private BigDecimal cost;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "is_available")
+    private short isAvailable;
     @ManyToMany(mappedBy = "productList")
     private List<IngredientCategory> ingredientCategoryList;
-    @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "category_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Category categoryId;
     @JoinColumn(name = "nutrition_id", referencedColumnName = "id")
@@ -86,11 +91,12 @@ public class Product implements Serializable {
         this.id = id;
     }
 
-    public Product(Integer id, String name, Date lastUpdate, BigDecimal cost) {
+    public Product(Integer id, String name, Date lastUpdate, BigDecimal cost, short isAvailable) {
         this.id = id;
         this.name = name;
         this.lastUpdate = lastUpdate;
         this.cost = cost;
+        this.isAvailable = isAvailable;
     }
 
     public Integer getId() {
@@ -131,6 +137,14 @@ public class Product implements Serializable {
 
     public void setCost(BigDecimal cost) {
         this.cost = cost;
+    }
+    
+    public short getIsAvailable() {
+        return isAvailable;
+    }
+
+    public void setIsAvailable(short isAvailable) {
+        this.isAvailable = isAvailable;
     }
 
     @XmlTransient

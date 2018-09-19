@@ -20,9 +20,10 @@
                 </h:column>
                 <h:column>
                     <p:selectOneButton id="ingredient-category-selector"
-                                       valueChangeListener="#{productController.ingredientChanged}">
+                                       valueChangeListener="#{productController.ingredientChanged}"
+                                       converter="#{ingredientConverter}">
                         <f:selectItems value="#{category.ingredientList}" var="ingredient"
-                                       itemValue="#{ingredient.id}" itemLabel="#{ingredient.name}"
+                                       itemValue="#{ingredient}" itemLabel="#{ingredient.name}"
                                        itemDescription="#{ingredient.description}"/>
                         <p:ajax event="change" update="@(.ingredient-costs)" />
                     </p:selectOneButton>

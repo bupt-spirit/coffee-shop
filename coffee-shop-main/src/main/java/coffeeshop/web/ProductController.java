@@ -17,7 +17,9 @@ import javax.inject.Named;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
@@ -46,12 +48,12 @@ public class ProductController implements Serializable {
 
     private String selectedCategory;
     private Product selectedProduct;
-    private List<Ingredient> selectedIngredients;
+    private Set<Ingredient> selectedIngredients;
     private short itemQuantity;
 
     @PostConstruct
     private void init() {
-        selectedIngredients = new ArrayList<>();
+        selectedIngredients = new HashSet<>();
     }
 
     public String getSelectedCategory() {
@@ -105,26 +107,22 @@ public class ProductController implements Serializable {
         this.itemQuantity -= 1;
     }
 
-    public List<Ingredient> getSelectedIngredients() {
+    public Set<Ingredient> getSelectedIngredients() {
         return selectedIngredients;
     }
 
-    public void setSelectedIngredients(List<Ingredient> selectedIngredients) {
+    public void setSelectedIngredients(Set<Ingredient> selectedIngredients) {
         this.selectedIngredients = selectedIngredients;
     }
 
     public void ingredientChanged(ValueChangeEvent event) {
-        String oldValue = (String) event.getOldValue();
+        Ingredient oldValue = (Ingredient) event.getOldValue();
         if (oldValue != null) {
-            int id = Integer.parseInt(oldValue);
-            Ingredient ingredient = ingredientFacade.find(id);
-            selectedIngredients.remove(ingredient);
+            selectedIngredients.remove(oldValue);
         }
-        String newValue = (String) event.getNewValue();
+        Ingredient newValue = (Ingredient) event.getNewValue();
         if (newValue != null) {
-            int id = Integer.parseInt(newValue);
-            Ingredient ingredient = ingredientFacade.find(id);
-            selectedIngredients.add(ingredient);
+            selectedIngredients.add(newValue);
         }
     }
 
@@ -151,7 +149,7 @@ public class ProductController implements Serializable {
     }
 
     public void addToCart() throws CartManagerException {
-        cartController.getCartManager().add(selectedProduct, selectedIngredients, itemQuantity);
+        cartController.getCartManager().add(selectedProduct, new ArrayList(selectedIngredients), itemQuantity);
         LOG.log(Level.INFO, "Add suborder to cart: {0} {1} {2}",
                 new Object[]{selectedProduct, selectedIngredients, itemQuantity});
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
