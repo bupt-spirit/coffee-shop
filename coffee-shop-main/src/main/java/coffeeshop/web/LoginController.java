@@ -61,7 +61,7 @@ public class LoginController {
     public String login() throws UserManagerException {
         initManager.checkAndAddDefaultAdminUser();
         if (isLoggedIn()) {
-            facesContext.addMessage(null, new FacesMessage(bundle.getString("Ui.Message.LogoutFirst")));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(bundle.getString("Ui.Message.LogoutFirst")));
             return null;
         }
         Credential credential = new UsernamePasswordCredential(username, new Password(password));
