@@ -17,6 +17,20 @@
                 <p:panel header="#{bundle['Ui.Product.Add']}">
                     <components:addProduct />
                 </p:panel>
+                
+                <p:panel id="all-product" header="#{bundle['Ui.Product.Remove']}">
+                    <h:form>
+                        <components:selectProduct list="#{adminRemoveProductController.allProducts}"
+                                                  selected="#{adminRemoveProductController.selectedProduct}">
+                            <f:facet name="actionButton">
+                                <p:commandButton icon="fa fa-remove" update="season-special all-product"
+                                         action="#{adminRemoveProductController.removeProduct}" type="submit"
+                                         value="#{bundle['Ui.Product.Remove']}" />
+                            </f:facet>
+                        </components:selectProduct>
+                    </h:form>
+                </p:panel>
+                
                 <p:panel header="${bundle['Ui.Admin.SeasonSpecial.Title']}" id="season-special">
                     <h:form>                        
                         <components:selectProduct list="#{seasonSpecialContorller.specials}"
@@ -34,18 +48,6 @@
                                 <p:commandButton icon="fa fa-plus" update="season-special"
                                          action="#{seasonSpecialContorller.addSeasonSpecial}" type="submit"
                                          value="#{bundle['Ui.Admin.SeasonSpecial.Button.Add']}" />
-                            </f:facet>
-                        </components:selectProduct>
-                    </h:form>
-                </p:panel>
-                <p:panel id="all-product">
-                    <h:form>
-                        <components:selectProduct list="#{adminRemoveProductController.allProducts}"
-                                                  selected="#{adminRemoveProductController.selectedProduct}">
-                            <f:facet name="actionButton">
-                                <p:commandButton icon="fa fa-remove" update="season-special all-product"
-                                         action="#{adminRemoveProductController.removeProduct}" type="submit"
-                                         value="#{bundle['Ui.Product.Remove']}" />
                             </f:facet>
                         </components:selectProduct>
                     </h:form>
