@@ -10,9 +10,7 @@
     </cc:interface>
 
     <cc:implementation>
-
         <div class="address-add-summary">
-            <h:form>
                 <p:panelGrid columns="3" styleClass="ui-panelgrid-blank">
                     <p:outputLabel for="address-country" value="#{bundle['Ui.Address.Country']}"/>
                     <p:inputText type="text" id="address-country" value="#{addressController.country}"
@@ -42,10 +40,7 @@
                     <p:inputText type="tel" id="address-receiver-phone" value="#{addressController.receiverPhone}"
                                  required="true"/>
                     <p:messages for="address-receiver-phone"/>
-                    <p:commandButton action="#{addressController.addAddress}" type="submit"
-                                     value="#{bundle['Ui.Address.Add']}" ajax="false" />
                 </p:panelGrid>
-            </h:form>
         </div>
 
     </cc:implementation>
