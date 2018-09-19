@@ -21,7 +21,7 @@ import java.util.logging.Logger;
 public class CartController implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     private static final Logger LOG = Logger.getLogger(CartController.class.getName());
 
     @EJB
@@ -64,7 +64,7 @@ public class CartController implements Serializable {
     public List<Suborder> getSuborders() {
         return cartManager.getSuborders();
     }
-    
+
     public OrderInfo getOrder() {
         return cartManager.getOrder();
     }
@@ -88,6 +88,18 @@ public class CartController implements Serializable {
 
     public Date getCurrentTime() {
         return new Date();
+    }
+
+    public void increaseSuborderQuantity() {
+        this.selectedSuborder.setQuantity((short) (this.selectedSuborder.getQuantity() + 1));
+    }
+
+    public void decreaseSuborderQuantity() {
+        short quantity = (short) (this.selectedSuborder.getQuantity() - 1);
+        if (quantity <= 0) {
+            quantity = 1;
+        }
+        this.selectedSuborder.setQuantity(quantity);
     }
 
     public String saveOrder() {
