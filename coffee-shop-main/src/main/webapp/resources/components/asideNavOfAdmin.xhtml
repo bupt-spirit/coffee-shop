@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <cc:interface>
+        <cc:attribute name="current" type="java.lang.String" required="true"/>
+    </cc:interface>
+
+    <cc:implementation>
+        <h:form>
+            <p:link styleClass="aside-nav-link aside-nav-link-admin #{cc.attrs.current == 'manage-data' ? 'aside-nav-link-current' : ''}"
+                    value="#{bundle['Ui.Admin.ManageData.Title']}" outcome="/admin/manage-data"/>
+            <p:link styleClass="aside-nav-link aside-nav-link-admin #{cc.attrs.current== 'manage-user' ? 'aside-nav-link-current' : ''}" 
+                    value="#{bundle['Ui.Admin.ManageUser.Title']}" outcome="/admin/manage-user"/>
+            <p:link styleClass="aside-nav-link aside-nav-link-admin #{cc.attrs.current == 'manage-store' ? 'aside-nav-link-current' : ''}" 
+                    value="#{bundle['Ui.Admin.ManageStore.Title']}" outcome="/admin/manage-store"/>
+            <p:link styleClass="aside-nav-link aside-nav-link-admin #{cc.attrs.current == 'manage-product' ? 'aside-nav-link-current' : ''}"
+                    value="#{bundle['Ui.Admin.ManageProduct.Title']}" outcome="/admin/manage-product"/>
+        </h:form>
+    </cc:implementation>
+</html>

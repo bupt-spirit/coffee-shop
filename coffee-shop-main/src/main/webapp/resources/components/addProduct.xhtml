@@ -12,7 +12,6 @@
     <cc:implementation>
         <div class="product-add-summary">
             <h:form enctype="multipart/form-data">
-                <p:growl id="messages" showDetail="true" />
                 <p:fileUpload value="#{adminAddProductController.image}"
                               allowTypes="/(\.|\/)(jpg|gif|jpe?g|png)$/"
                               mode="simple" skinSimple="true"/>
@@ -27,8 +26,8 @@
                     <p:messages for="product-name"/>
 
                     <p:outputLabel for="product-description" value="#{bundle['Ui.Product.Description']}"/>
-                    <p:inputTextarea id="product-description" rows="8" cols="80" value="#{adminAddProductController.description}"
-                                     required="true"/>
+                    <p:inputTextarea id="product-description" value="#{adminAddProductController.description}"
+                                     autoResize="true" required="true"/>
                     <p:messages for="product-description"/>
 
                     <p:outputLabel for="product-cost" value="#{bundle['Ui.Product.Cost']} #{bundle['Ui.CurrencySymbol']}"/>

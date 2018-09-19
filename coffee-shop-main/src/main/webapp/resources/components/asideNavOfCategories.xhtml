@@ -12,12 +12,11 @@
     <cc:implementation>
         <h:form>
             <ui:repeat var="category" value="#{productController.categories}">
-                <div class="category-link">
-                    <h:commandLink value="#{category.name}" action="category-detail">
-                        <f:setPropertyActionListener value="#{category.name}"
-                                                     target="#{productController.selectedCategory}"/>
-                    </h:commandLink>
-                </div>
+                <h:commandLink value="#{category.name}" action="category-detail"
+                               styleClass="aside-nav-link aside-nav-link-admin #{productController.selectedCategory == category.name ? 'aside-nav-link-current' : ''}">
+                    <f:setPropertyActionListener value="#{category.name}"
+                                                 target="#{productController.selectedCategory}"/>
+                </h:commandLink>
             </ui:repeat>
         </h:form>
     </cc:implementation>
