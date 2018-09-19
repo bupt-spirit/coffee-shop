@@ -41,17 +41,17 @@
                         <p:accordionPanel>
                             <p:tab title="#{bundle['Ui.Order.Unfinished']}">
                                 <ui:repeat value="#{orderController.customerUnfinishedOrder}" var="order">                                   
-                                        <components:customerOrder order="#{order}">
-                                            <f:facet name="footer">
-                                                <p:commandButton value="#{bundle['Ui.Order.Finish']}"
-                                                                 action="#{orderController.finishOrder}"
-                                                                 disabled="#{order.isPrepared eq 0}"
-                                                                 ajax="false">
-                                                    <f:setPropertyActionListener target="#{orderController.selectedOrder}"
-                                                                                 value="#{order}"/>
-                                                </p:commandButton>
-                                            </f:facet>
-                                        </components:customerOrder>
+                                    <components:customerOrder order="#{order}">
+                                        <f:facet name="footer">
+                                            <p:commandButton value="#{bundle['Ui.Order.Finish']}"
+                                                             action="#{orderController.finishOrder}"
+                                                             disabled="#{order.isPrepared eq 0}"
+                                                             ajax="false">
+                                                <f:setPropertyActionListener target="#{orderController.selectedOrder}"
+                                                                             value="#{order}"/>
+                                            </p:commandButton>
+                                        </f:facet>
+                                    </components:customerOrder>
                                 </ui:repeat>
                             </p:tab>
                             <p:tab title="#{bundle['Ui.Order.All']}">
@@ -62,6 +62,31 @@
                         </p:accordionPanel>
                     </h:form>
                 </p:panel>
+
+                <p:panel header="#{bundle['Ui.ChangePassword.ChangePasswordTitle']}">
+                    <h:form>
+                        <p:panelGrid columns="3" styleClass="ui-panelgrid-blank">
+                            <p:outputLabel for="oldPassword" value="#{bundle['Ui.ChangePassword.OldPassword']}"/>
+                            <p:inputText type="password" id="oldPassword" value="#{changePasswordController.oldPassword}"
+                                         required="true"/>
+                            <p:messages for="oldPassword"/>
+                            
+                            <p:outputLabel for="newPassword" value="#{bundle['Ui.ChangePassword.EnterNewPassword']}"/>
+                            <p:inputText type="password" id="newPassword" value="#{changePasswordController.newPassword}"
+                                         required="true"/>
+                            <p:messages for="newPassword"/>
+                            
+                            <p:outputLabel for="reenterNewPassword" value="#{bundle['Ui.ChangePassword.ReenterNewPassword']}"/>
+                            <p:inputText type="password" id="reenterNewPassword" value="#{changePasswordController.reenteredNewPassword}"
+                                         required="true"/>
+                            <p:messages for="reenterNewPassword"/>
+                        </p:panelGrid>
+                        <p:commandButton action="#{changePasswordController.changePassword}" type="submit"
+                                         value="#{bundle['Ui.Button.ChangePassword']}" ajax="false"/>
+                        <p:commandButton type="reset" value="Reset"/>
+                    </h:form>
+                </p:panel>
+
                 <h:form>
                     <components:logoutButton />
                 </h:form>
