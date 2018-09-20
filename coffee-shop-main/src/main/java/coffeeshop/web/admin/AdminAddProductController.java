@@ -19,6 +19,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
@@ -47,9 +48,7 @@ public class AdminAddProductController implements Serializable {
 
     private UploadedFile image;
     private byte[] bytes;
-    private String imageSuffix;
     private String selectedFile;
-    private static Pattern getFileNameExtension = Pattern.compile(".+?//.([a-zA-z]+)");
     private String imageContentType;
 
     private boolean addNutrition;
@@ -63,7 +62,9 @@ public class AdminAddProductController implements Serializable {
     private boolean addIngredientCategory;
     private List<IngredientCategory> selectedIngredientCategories;
 
-    private static String getExtension(String fileName) {
+    private UIComponent imageUploadComponent;
+
+    private static String getContentType(String fileName) {
         if (fileName == null) {
             return null;
         }
@@ -71,11 +72,15 @@ public class AdminAddProductController implements Serializable {
         if (index == fileName.length() || index == fileName.length() - 1) {
             return null;
         }
-        return fileName.substring(index + 1);
-    }
-
-    public String getImageSuffix() {
-        return this.imageSuffix;
+        switch (fileName.substring(index + 1)) {
+            case "jpg":
+            case "jpeg":
+                return "image/jpeg";
+            case "png":
+                return "image/png";
+            default:
+                return null;
+        }
     }
 
     public String getSelectedFile() {
@@ -93,24 +98,20 @@ public class AdminAddProductController implements Serializable {
 
     public void uploadHandler() throws IOException {
         if (image != null) {
-            FacesMessage message = new FacesMessage("Succesful", image.getFileName() + " is uploaded.");
-            FacesContext.getCurrentInstance().addMessage(null, message);
+            this.selectedFile = image.getFileName();
+            this.imageContentType = getContentType(this.selectedFile);
+            if (this.imageContentType == null) {
+                FacesContext.getCurrentInstance().addMessage(imageUploadComponent.getClientId(),
+                        new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                                bundle.getString("Ui.Message.InvalidImage"),
+                                null
+                        ));
+            }
             InputStream is = image.getInputstream();
             this.bytes = IOUtils.toByteArray(is);
-            this.imageSuffix = getExtension(image.getFileName()).toLowerCase();
-            switch (this.imageSuffix) {
-                case "jpg":
-                case "jpeg":
-                    this.imageContentType = "image/jpeg";
-                    break;
-                case "png":
-                    this.imageContentType = "image/png";
-                    break;
-                default:
-                    throw new ValidatorException(new FacesMessage("invalid image suffx"));
-            }
-            this.selectedFile = image.getFileName();
-            LOG.log(Level.INFO, "image extension:{0}", imageSuffix);
+            FacesMessage message = new FacesMessage(
+                    bundle.getFormatted("Ui.Message.UploadSuccess", image.getFileName()));
+            FacesContext.getCurrentInstance().addMessage(imageUploadComponent.getClientId(), message);
         }
     }
 
@@ -218,6 +219,14 @@ public class AdminAddProductController implements Serializable {
         this.sodium = sodium;
     }
 
+    public UIComponent getImageUploadComponent() {
+        return imageUploadComponent;
+    }
+
+    public void setImageUploadComponent(UIComponent imageUploadComponent) {
+        this.imageUploadComponent = imageUploadComponent;
+    }
+
     public void createProduct() throws IOException, URISyntaxException {
         if (image == null) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("ERROR!", bundle.getString("Ui.Product.PhotoError")));
@@ -226,8 +235,8 @@ public class AdminAddProductController implements Serializable {
 
         LOG.log(Level.INFO, "selectedIngredientCategory:{0}", selectedIngredientCategories);
         Product newProduct = productManager.createProduct(name, description, cost, category,
-                addNutrition, calories, fat, carbon, fiber, protein, sodium, 
-                bytes, imageSuffix, selectedIngredientCategories);
+                addNutrition, calories, fat, carbon, fiber, protein, sodium,
+                bytes, imageContentType, selectedIngredientCategories);
         LOG.log(Level.INFO, "create product with nutrition success{0}", newProduct.getId());
 
         name = description = null;
@@ -235,11 +244,11 @@ public class AdminAddProductController implements Serializable {
         cost = null;
         image = null;
         bytes = null;
-        imageSuffix = selectedFile = imageContentType = null;
+        imageContentType = selectedFile = null;
         addNutrition = false;
         calories = fat = carbon = fiber = protein = sodium = 0;
         selectedIngredientCategories = null;
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("SUCCESSFUL!", bundle.getString("Ui.Product.Success")));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(bundle.getString("Ui.Product.Success")));
     }
 
     public boolean isAddIngredientCategory() {

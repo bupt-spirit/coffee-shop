@@ -113,8 +113,8 @@ public class ProductManagerBean implements ProductManager {
     @Override
     public Product createProduct(String name, String description, BigDecimal price, Category category,
             boolean addNutrition, int calories, int fat, int carbon, int fiber, int protein, int sodium,
-            byte[] bytes, String imageName, List<IngredientCategory> ingredientCategoies) throws IOException, URISyntaxException {
-        Product product = this.createProduct(name, description, price, category, bytes, imageName, ingredientCategoies);
+            byte[] bytes, String contentType, List<IngredientCategory> ingredientCategoies) throws IOException, URISyntaxException {
+        Product product = this.createProduct(name, description, price, category, bytes, contentType, ingredientCategoies);
         if (addNutrition) {
             product.setNutritionId(createNutrition(calories, fat, carbon, fiber, protein, sodium));
             productFacade.edit(product);
@@ -123,7 +123,7 @@ public class ProductManagerBean implements ProductManager {
     }
 
     private Product createProduct(String name, String description, BigDecimal price, Category category,
-            byte[] bytes, String imageName, List<IngredientCategory> ingredientCategoies) throws IOException, URISyntaxException {
+            byte[] bytes, String contentType, List<IngredientCategory> ingredientCategoies) throws IOException, URISyntaxException {
         Product product = new Product();
         product.setName(name);
         product.setDescription(description);
@@ -132,7 +132,7 @@ public class ProductManagerBean implements ProductManager {
         product.setNutritionId(null);
         product.setLastUpdate(new Date());
         product.setIsAvailable((short) 1);
-        Image image = createImage(imageName, bytes);
+        Image image = createImage(contentType, bytes);
         product.setImageUuid(image);
         image.setProduct(product);
         product.setIngredientCategoryList(new ArrayList<>());
@@ -158,10 +158,10 @@ public class ProductManagerBean implements ProductManager {
         return nutrition;
     }
 
-    private Image createImage(String imageSuffix, byte[] bytes) throws IOException, URISyntaxException {
+    private Image createImage(String contentType, byte[] bytes) throws IOException, URISyntaxException {
         Image image = new Image();
         image.setContent(bytes);
-        image.setMediaType("image/" + imageSuffix);
+        image.setMediaType(contentType);
         String uuid = null;
         do {
             uuid = UUID.randomUUID().toString();

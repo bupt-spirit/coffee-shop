@@ -1,6 +1,8 @@
 # Maven target files
 target
 
+coffee-shop-main/src/main/resources/coffeeshop/database/*.bak
+
 # Generated css and map Files
 coffee-shop-main/src/main/webapp/resources/compiled-css/*.css
 coffee-shop-main/src/main/webapp/resources/compiled-css/*.map

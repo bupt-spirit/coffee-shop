@@ -64,7 +64,7 @@
                         <components:selectStaff id="all-staff"
                                                 value="#{adminRemoveStaffController.selectedStaff}"
                                                 staffList="#{adminRemoveStaffController.staffs}" />
-                        <p:commandButton icon="fa fa-remove" type="submit" update="all-staff:inner-box"
+                        <p:commandButton icon="fa fa-remove" type="submit" update="all-staff:select-staff"
                                          value="#{bundle['Ui.Admin.RemoveStaff.Remove']}"
                                          action="#{adminRemoveStaffController.removeStaff}" />
                     </h:form>

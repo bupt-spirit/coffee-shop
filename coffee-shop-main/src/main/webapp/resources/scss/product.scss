@@ -69,8 +69,11 @@ $table-margin: 1rem;
     margin-left: .5rem;
 }
 
-.check-out-ingredient{
-   display: block;
+.ingredient-list {
+    display: inline-block;
+    .ingredient-list-item {
+        display: block;
+    }
 }
 
 .product-new-image{
@@ -81,7 +84,7 @@ $table-margin: 1rem;
     .product-image{
         max-width: 7rem;
     }   
-    
+
     .image-column{
         text-align: center;
     }
