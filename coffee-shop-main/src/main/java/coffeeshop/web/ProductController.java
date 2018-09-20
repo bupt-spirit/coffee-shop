@@ -128,9 +128,7 @@ public class ProductController implements Serializable {
 
     public BigDecimal getSuborderAmount() {
         BigDecimal cost = selectedProduct.getCost();
-        LOG.log(Level.INFO, "Current cost: {0}", cost);
         for (Ingredient ingredient : selectedIngredients) {
-            LOG.log(Level.INFO, "Current cost: {0}", cost);
             cost = cost.add(ingredient.getCost());
         }
         LOG.log(Level.INFO, "Current cost: {0}", cost);
@@ -139,9 +137,7 @@ public class ProductController implements Serializable {
 
     public BigDecimal getIngredientsAmount() {
         BigDecimal cost = BigDecimal.ZERO;
-        LOG.log(Level.INFO, "Current cost: {0}", cost);
         for (Ingredient ingredient : selectedIngredients) {
-            LOG.log(Level.INFO, "Current cost: {0}", cost);
             cost = cost.add(ingredient.getCost());
         }
         LOG.log(Level.INFO, "Current cost: {0}", cost);

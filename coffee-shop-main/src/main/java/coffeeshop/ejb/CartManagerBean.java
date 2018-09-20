@@ -91,6 +91,12 @@ public class CartManagerBean implements CartManager, Serializable {
         suborder.setOrderId(orderInfo);
         suborder.setProductId(product);
         suborder.setQuantity(quantity);
+        for(Suborder existedSuborder : orderInfo.getSuborderList()){
+            if(existedSuborder.getProductId().equals(suborder.getProductId()) && existedSuborder.getIngredientList().equals(suborder.getIngredientList())){
+                existedSuborder.setQuantity((short) (existedSuborder.getQuantity()+suborder.getQuantity()));
+                return;
+            }
+        }
         orderInfo.getSuborderList().add(suborder);
         LOG.log(Level.INFO, "Added, current: {0}", orderInfo);
     }
