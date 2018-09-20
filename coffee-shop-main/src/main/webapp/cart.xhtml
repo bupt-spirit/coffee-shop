@@ -17,12 +17,6 @@
                               disabled="#{cartController.itemCount == 0}"/>
                 </h:form>
 
-                <ui:remove>
-                    <ui:repeat var="suborder" value="#{cartController.suborders}">
-                        <components:suborderSummary suborder="#{suborder}"/>
-                    </ui:repeat>
-                </ui:remove>
-
                 <components:suborderTableWithRemove order="#{cartController.order}" />                    
                 
             </ui:define>
