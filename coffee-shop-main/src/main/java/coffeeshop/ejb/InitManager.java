@@ -28,8 +28,11 @@ import java.util.Date;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 
+@RolesAllowed("admin")
 @Stateless
 public class InitManager {
 
@@ -59,6 +62,7 @@ public class InitManager {
     @EJB
     private SeasonSpecialFacade seasonSpecialFacade;
 
+    @PermitAll
     public void checkAndAddDefaultAdminUser() throws UserManagerException {
         if (!userManager.isUserExisting(DEFAULT_ADMIN_USERNAME)) {
             LOG.log(Level.INFO, "Default admin user does not exists");
