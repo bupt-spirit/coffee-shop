@@ -25,6 +25,8 @@
                                 rendered="#{adminAddProductController.selectedFileContent != null}"
                                 styleClass="product-new-image"/>
                 <p:message for="image-upload" />
+            </h:form>
+            <h:form>
                 <p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
                     <p:outputLabel for="product-name" value="#{bundle['Ui.Product.Name']}"/>
                     <p:inputText type="text" id="product-name" value="#{adminAddProductController.name}"
