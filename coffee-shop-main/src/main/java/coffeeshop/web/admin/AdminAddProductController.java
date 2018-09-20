@@ -1,6 +1,7 @@
 package coffeeshop.web.admin;
 
 import coffeeshop.ejb.ProductManager;
+import coffeeshop.ejb.ProductManagerException;
 import coffeeshop.entity.Category;
 import coffeeshop.entity.IngredientCategory;
 import coffeeshop.entity.Product;
@@ -274,4 +275,55 @@ public class AdminAddProductController implements Serializable {
         this.selectedIngredientCategories = selectedIngredientCategories;
     }
 
+    private Product selectedProduct;
+
+    public Product getSelectedProduct() {
+        return selectedProduct;
+    }
+
+    public void setSelectedProduct(Product selectedProduct) {
+        LOG.log(Level.INFO, "selected Product changed");
+        this.selectedProduct = selectedProduct;
+    }
+
+    public String beforeJumpToEditProduct() {
+        name = selectedProduct.getName();
+        description = selectedProduct.getDescription();
+        cost = selectedProduct.getCost();
+        category = selectedProduct.getCategoryId();
+        if (selectedProduct.getNutritionId() == null) {
+            addNutrition = false;
+        } else {
+            addNutrition = true;
+            calories = selectedProduct.getNutritionId().getCalories();
+            fat = selectedProduct.getNutritionId().getFat();
+            carbon = selectedProduct.getNutritionId().getCarbon();
+            fiber = selectedProduct.getNutritionId().getFiber();
+            protein = selectedProduct.getNutritionId().getProtein();
+            sodium = selectedProduct.getNutritionId().getSodium();
+        }
+        LOG.log(Level.INFO, "start to get image");
+        bytes = selectedProduct.getImageUuid().getContent();
+        imageContentType = selectedProduct.getImageUuid().getMediaType();
+        LOG.log(Level.INFO, "get image finish");
+        selectedIngredientCategories = selectedProduct.getIngredientCategoryList();
+        return "/admin/edit-product";
+    }
+
+    public String editProduct() throws ProductManagerException {
+        productManager.editProduct(selectedProduct, name, description, cost, category,
+                addNutrition, calories, fat, carbon, fiber, protein, sodium,
+                bytes, imageContentType, selectedIngredientCategories);
+        name = description = null;
+        category = null;
+        cost = null;
+        image = null;
+        bytes = null;
+        imageContentType = selectedFile = null;
+        addNutrition = false;
+        calories = fat = carbon = fiber = protein = sodium = 0;
+        selectedIngredientCategories = null;
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Success!", bundle.getString("Ui.Product.Edit")));
+        return "/admin/manage-product";
+    }
 }

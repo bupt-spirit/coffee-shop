@@ -43,7 +43,7 @@ public class ProductManagerBean implements ProductManager {
 
     @EJB
     private ImageFacade imageFacade;
-    
+
     @EJB
     private IngredientFacade ingredientFacade;
 
@@ -183,7 +183,7 @@ public class ProductManagerBean implements ProductManager {
     }
 
     @Override
-    public void removeProduct(Product selectedProduct) throws ProductManagerException,SeasonSpecialManagerException {
+    public void removeProduct(Product selectedProduct) throws ProductManagerException, SeasonSpecialManagerException {
         selectedProduct.setIsAvailable((short) 0);
         Category category = selectedProduct.getCategoryId();
         List<Product> products = category.getProductList();
@@ -197,9 +197,49 @@ public class ProductManagerBean implements ProductManager {
         }
         selectedProduct.setCategoryId(null);
         if (selectedProduct.getSeasonSpecial() != null) {
-            seasonSpecialManager.removeSeasonSpecial(selectedProduct);           
+            seasonSpecialManager.removeSeasonSpecial(selectedProduct);
         }
         productFacade.edit(selectedProduct);
+    }
+
+    @Override
+    public Product editProduct(Product selectedProduct, String name, String description, BigDecimal price, Category category,
+            boolean addNutrition, int calories, int fat, int carbon, int fiber, int protein, int sodium,
+            byte[] bytes, String contentType, List<IngredientCategory> ingredientCategoies) throws ProductManagerException {
+        if (selectedProduct.getCategoryId() != category) {
+            List<Product> products = selectedProduct.getCategoryId().getProductList();
+            for (int i = 0; i < products.size(); ++i) {
+                if (products.get(i) == selectedProduct || products.get(i).getId().equals(selectedProduct.getId())) {
+                    LOG.log(Level.INFO, "Remove product from category product list");
+                    products.remove(i);
+                    category.getProductList().add(selectedProduct);
+                    categoryFacade.edit(selectedProduct.getCategoryId());
+                    categoryFacade.edit(category);
+                    break;
+                }
+            }
+            selectedProduct.setCategoryId(category);
+        }
+        selectedProduct.setName(name);
+        selectedProduct.setDescription(description);
+        selectedProduct.setCost(price);
+        if(addNutrition==true && selectedProduct.getNutritionId()!=null){
+            Nutrition nutrition=selectedProduct.getNutritionId();
+            nutrition.setCalories(calories);
+            nutrition.setFat(fat);
+            nutrition.setCarbon(carbon);
+            nutrition.setFiber(fiber);
+            nutrition.setProtein(protein);
+            nutrition.setSodium(sodium);
+            nutritionFacade.edit(nutrition);
+        }else if(addNutrition==false && selectedProduct.getNutritionId()==null){
+            selectedProduct.setNutritionId(createNutrition(calories, fat, carbon, fiber, protein, sodium));
+        }
+        selectedProduct.getImageUuid().setMediaType(contentType);
+        selectedProduct.getImageUuid().setContent(bytes);
+        imageFacade.edit(selectedProduct.getImageUuid());
+        productFacade.edit(selectedProduct);
+        return selectedProduct;
     }
 
     @Override
