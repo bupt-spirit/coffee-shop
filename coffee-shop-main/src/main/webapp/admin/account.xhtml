@@ -15,25 +15,7 @@
                 <h1 class="main-title"><h:outputText value="${bundle['Ui.Account.Title']}"/></h1>
                 <p:panel header="#{bundle['Ui.ChangePassword.ChangePasswordTitle']}">
                     <h:form id="change-password-form">
-                        <p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
-                            <p:outputLabel for="oldPassword" value="#{bundle['Ui.ChangePassword.OldPassword']}"/>
-                            <p:inputText type="password" id="oldPassword" value="#{changePasswordController.oldPassword}"
-                                         required="true"/>
-                            <p:outputPanel /><p:messages for="oldPassword"/>
-
-                            <p:outputLabel for="newPassword" value="#{bundle['Ui.ChangePassword.EnterNewPassword']}"/>
-                            <p:inputText type="password" id="newPassword" value="#{changePasswordController.newPassword}"
-                                         required="true"/>
-                            <p:outputPanel /><p:messages for="newPassword"/>
-
-                            <p:outputLabel for="reenterNewPassword" value="#{bundle['Ui.ChangePassword.ReenterNewPassword']}"/>
-                            <p:inputText type="password" id="reenterNewPassword" value="#{changePasswordController.reenteredNewPassword}"
-                                         required="true"/>
-                            <p:outputPanel /><p:messages for="reenterNewPassword"/>
-                        </p:panelGrid>
-                        <p:commandButton action="#{changePasswordController.changePassword}" type="submit"
-                                         value="#{bundle['Ui.Button.ChangePassword']}" ajax="false"/>
-                        <p:commandButton type="reset" value="Reset"/>
+                        <components:changePassword />
                     </h:form>
                 </p:panel>
                 <p:panel header="#{bundle['Ui.Logout.Title']}">
