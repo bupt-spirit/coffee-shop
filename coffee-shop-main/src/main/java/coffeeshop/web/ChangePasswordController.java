@@ -66,18 +66,20 @@ public class ChangePasswordController implements Serializable {
                 ));
 
             } catch (UserManagerException ex) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                        bundle.getString("Ui.Message.ChangePassword.OldPasswordWrong"),
-                        null
-                ));
+                FacesContext.getCurrentInstance().addMessage("change-password-form:oldPassword",
+                        new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                                bundle.getString("Ui.Message.ChangePassword.OldPasswordWrong"),
+                                null
+                        ));
             }
         } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                    bundle.getString("Ui.Message.ChangePassword.Mismatch"),
-                    null
-            ));
+            FacesContext.getCurrentInstance().addMessage("change-password-form:reenterNewPassword",
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                            bundle.getString("Ui.Message.ChangePassword.Mismatch"),
+                            null
+                    ));
         }
         oldPassword = newPassword = reenteredNewPassword = null;
     }
-    
+
 }
