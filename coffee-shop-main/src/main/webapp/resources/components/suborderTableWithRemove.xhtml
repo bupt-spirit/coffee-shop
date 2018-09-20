@@ -31,7 +31,21 @@
                 </p:column>
 
                 <p:column headerText="#{bundle['Ui.Label.ItemQuantity']}">
-                    <h:outputText value="#{suborder.quantity}" />
+                    <p:commandButton update="quantity"
+                                     action="#{cartController.increaseSuborderQuantity}"
+                                     value="#{bundle['Ui.Button.increaseItemQuantity']}">
+                        <f:setPropertyActionListener value="#{suborder}"
+                                                     target="#{cartController.selectedSuborder}"/>
+                    </p:commandButton>
+                    <h:outputText id="quantity" value="#{suborder.quantity}"
+                                  styleClass="suborder-quantity-with-adjust-button"/>
+                    <p:commandButton update="quantity"
+                                     action="#{cartController.decreaseSuborderQuantity}"
+                                     value="#{bundle['Ui.Button.decreaseItemQuantity']}"
+                                     styleClass="suborder-quantity-adjust-button">
+                        <f:setPropertyActionListener value="#{suborder}"
+                                                     target="#{cartController.selectedSuborder}"/>
+                    </p:commandButton>
                 </p:column>
 
                 <p:column>
