@@ -84,6 +84,10 @@
         </user-data-constraint>
     </security-constraint>
 
+    <error-page>
+        <location>/faces/error/generic.xhtml</location>
+    </error-page>
+
     <!-- web fonts -->
     <mime-mapping>
         <extension>eot</extension>
