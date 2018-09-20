@@ -22,7 +22,7 @@
                                  value="#{bundle['Ui.Product.Upload']}" ajax="false" 
                                  actionListener="#{adminAddProductController.uploadHandler}" />
                 <p:graphicImage value="#{adminAddProductController.selectedFileContent}" cache="false"
-                                rendered="#{adminAddProductController.image.fileName != null}"
+                                rendered="#{adminAddProductController.selectedFileContent != null}"
                                 styleClass="product-new-image"/>
                 <p:message for="image-upload" />
                 <p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
