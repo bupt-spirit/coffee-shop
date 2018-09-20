@@ -21,7 +21,8 @@
                 <p:panel id="all-product" header="#{bundle['Ui.Product.Remove']}">
                     <h:form>
                         <components:selectProduct list="#{adminRemoveProductController.allProducts}"
-                                                  selected="#{adminRemoveProductController.selectedProduct}">
+                                                  selected="#{adminRemoveProductController.selectedProduct}"
+                                                  required="true">
                             <f:facet name="actionButton">
                                 <p:commandButton icon="fa fa-remove" update="season-special all-product"
                                                  action="#{adminRemoveProductController.removeProduct}" type="submit"
