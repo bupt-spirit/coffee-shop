@@ -15,6 +15,14 @@
 
 .customer-order {
     margin-bottom: 1rem;
+    
+    h4 {
+        margin: .5rem 0;
+    }
+
+    .order-table-footer {
+        margin-top: .5rem;
+    }
 }
 
 .customer-order:last-child {

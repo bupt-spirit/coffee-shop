@@ -14,6 +14,7 @@ import java.io.Serializable;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
@@ -31,6 +32,8 @@ public class ChangePasswordController implements Serializable {
     private MessageBundle bundle;
 
     private String oldPassword, newPassword, reenteredNewPassword;
+    
+    private UIComponent oldPasswordComponent, reenteredPasswordComponent;
 
     public String getOldPassword() {
         return oldPassword;
@@ -56,6 +59,22 @@ public class ChangePasswordController implements Serializable {
         this.reenteredNewPassword = reenteredPassword;
     }
 
+    public UIComponent getOldPasswordComponent() {
+        return oldPasswordComponent;
+    }
+
+    public void setOldPasswordComponent(UIComponent oldPasswordComponent) {
+        this.oldPasswordComponent = oldPasswordComponent;
+    }
+
+    public UIComponent getReenteredPasswordComponent() {
+        return reenteredPasswordComponent;
+    }
+
+    public void setReenteredPasswordComponent(UIComponent reenteredPasswordComponent) {
+        this.reenteredPasswordComponent = reenteredPasswordComponent;
+    }
+
     public void changePassword() throws UserManagerException {
         if (newPassword.equals(reenteredNewPassword)) {
             try {
@@ -66,18 +85,20 @@ public class ChangePasswordController implements Serializable {
                 ));
 
             } catch (UserManagerException ex) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                        bundle.getString("Ui.Message.ChangePassword.OldPasswordWrong"),
-                        null
-                ));
+                FacesContext.getCurrentInstance().addMessage(oldPasswordComponent.getClientId(),
+                        new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                                bundle.getString("Ui.Message.ChangePassword.OldPasswordWrong"),
+                                null
+                        ));
             }
         } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                    bundle.getString("Ui.Message.ChangePassword.Mismatch"),
-                    null
-            ));
+            FacesContext.getCurrentInstance().addMessage(reenteredPasswordComponent.getClientId(),
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                            bundle.getString("Ui.Message.ChangePassword.Mismatch"),
+                            null
+                    ));
         }
         oldPassword = newPassword = reenteredNewPassword = null;
     }
-    
+
 }

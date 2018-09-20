@@ -15,16 +15,19 @@
             <ui:define name="main">
                 <h1 class="main-title"><h:outputText  value="${bundle['Ui.UnpreparedOrders.Title']}" /></h1>
                 <h:form>
-                    <ui:repeat var="order" value="#{orderController.storeUnpreparedOrder}">
-                        <components:customerOrder order="#{order}">
-                            <f:facet name="footer">
-                                <p:commandButton value="has prepared" ajax="false" action="#{orderController.changeOrderStateToPrepared}">
-                                    <f:setPropertyActionListener value="#{order}" 
-                                                                 target="#{orderController.selectedOrder}"/>
-                                </p:commandButton>
-                            </f:facet>
-                        </components:customerOrder>
-                    </ui:repeat>
+                    <p:poll interval="#{bundle['Ajax.Poll.Interval']}" update="orders" />
+                    <p:outputPanel id="orders">
+                        <ui:repeat var="order" value="#{orderController.storeUnpreparedOrder}">
+                            <components:customerOrder order="#{order}">
+                                <f:facet name="footer">
+                                    <p:commandButton value="has prepared" ajax="false" action="#{orderController.changeOrderStateToPrepared}">
+                                        <f:setPropertyActionListener value="#{order}" 
+                                                                     target="#{orderController.selectedOrder}"/>
+                                    </p:commandButton>
+                                </f:facet>
+                            </components:customerOrder>
+                        </ui:repeat>
+                    </p:outputPanel>
                 </h:form>
             </ui:define>
         </ui:composition>

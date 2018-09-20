@@ -31,7 +31,7 @@ public interface ProductManager {
 
     Product createProduct(String name, String description, BigDecimal price, Category category,
             boolean addNutrition, int calories, int fat, int carbon, int fiber, int protein, int sodium,
-            byte[] bytes, String imageName, List<IngredientCategory> ingredientCategoies) throws IOException, URISyntaxException;
+            byte[] bytes, String contentType, List<IngredientCategory> ingredientCategoies) throws IOException, URISyntaxException;
 
     void removeProduct(Product selectedProduct) throws ProductManagerException,SeasonSpecialManagerException;
 }

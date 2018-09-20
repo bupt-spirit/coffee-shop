@@ -12,8 +12,9 @@
     </cc:interface>
 
     <cc:implementation>
-        <div class="address-add-summary">
-            <p:selectOneListbox value="#{cc.attrs.value}" converter="#{addressConverter}"
+        <div class="select-customer-address">
+            <p:selectOneListbox id="select-customer-address"
+                                value="#{cc.attrs.value}" converter="#{addressConverter}"
                                 var="a" filter="true" filterMatchMode="contains"
                                 required="#{cc.attrs.required}"
                                 class="select-one-list select-one-list-address">
@@ -24,6 +25,9 @@
                     <components:customerAddress address="#{a}" />
                 </p:column>
             </p:selectOneListbox>
+            <p:message for="select-customer-address">
+                <p:autoUpdate />
+            </p:message>
         </div>
 
     </cc:implementation>
