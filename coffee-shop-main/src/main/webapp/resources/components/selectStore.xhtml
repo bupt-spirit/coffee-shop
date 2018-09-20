@@ -14,7 +14,7 @@
 
     <cc:implementation>
         <div class="address-add-summary">
-            <p:selectOneListbox id="inner-box" value="#{cc.attrs.value}" converter="#{storeConverter}"
+            <p:selectOneListbox id="select-staff" value="#{cc.attrs.value}" converter="#{storeConverter}"
                                 var="s" filter="true" filterMatchMode="contains"
                                 disabled="#{cc.attrs.disabled}"
                                 required="#{cc.attrs.required}"
@@ -26,6 +26,9 @@
                     <components:storeAddress store="#{s}" />
                 </p:column>
             </p:selectOneListbox>
+            <p:message for="select-staff">
+                <p:autoUpdate />
+            </p:message>
         </div>
 
     </cc:implementation>
