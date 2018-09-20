@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:components="http://xmlns.jcp.org/jsf/composite/components">
+      xmlns:components="http://xmlns.jcp.org/jsf/composite/components"
+      xmlns:p="http://primefaces.org/ui">
     <h:body>
         <ui:composition template="/templates/main-aside.xhtml">
             <ui:define name="aside">
@@ -12,9 +13,14 @@
             </ui:define>
             <ui:define name="main">
                 <h1 class="main-title"><h:outputText  value="${bundle['Ui.FinishedOrders.Title']}" /></h1>
-                <ui:repeat var="order" value="#{orderController.storeFinishedOrder}" >
-                    <components:customerOrder order="#{order}" />
-                </ui:repeat>
+                <h:form>
+                    <p:poll interval="#{bundle['Ajax.Poll.Interval']}" update="orders" />
+                    <p:outputPanel id="orders">
+                        <ui:repeat var="order" value="#{orderController.storeFinishedOrder}" >
+                            <components:customerOrder order="#{order}" />
+                        </ui:repeat>
+                    </p:outputPanel>
+                </h:form>
             </ui:define>
         </ui:composition>
     </h:body>

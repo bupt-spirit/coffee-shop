@@ -15,19 +15,22 @@
             <ui:define name="main">
                 <h1 class="main-title"><h:outputText value="${bundle['Ui.UnfinishedOrders.Title']}"/></h1>
                 <h:form>
-                    <ui:repeat value="#{orderController.customerUnfinishedOrder}" var="order">                                   
-                        <components:customerOrder order="#{order}">
-                            <f:facet name="footer">
-                                <p:commandButton value="#{bundle['Ui.Order.Finish']}"
-                                                 action="#{orderController.finishOrder}"
-                                                 disabled="#{order.isPrepared eq 0}"
-                                                 ajax="false">
-                                    <f:setPropertyActionListener target="#{orderController.selectedOrder}"
-                                                                 value="#{order}"/>
-                                </p:commandButton>
-                            </f:facet>
-                        </components:customerOrder>
-                    </ui:repeat>
+                    <p:poll interval="#{bundle['Ajax.Poll.Interval']}" update="orders" />
+                    <p:outputPanel id="orders">
+                        <ui:repeat value="#{orderController.customerUnfinishedOrder}" var="order">
+                            <components:customerOrder order="#{order}">
+                                <f:facet name="footer">
+                                    <p:commandButton value="#{bundle['Ui.Order.Finish']}"
+                                                     action="#{orderController.finishOrder}"
+                                                     disabled="#{order.isPrepared eq 0}"
+                                                     ajax="false">
+                                        <f:setPropertyActionListener target="#{orderController.selectedOrder}"
+                                                                     value="#{order}"/>
+                                    </p:commandButton>
+                                </f:facet>
+                            </components:customerOrder>
+                        </ui:repeat>
+                    </p:outputPanel>
                 </h:form>
             </ui:define>
         </ui:composition>
