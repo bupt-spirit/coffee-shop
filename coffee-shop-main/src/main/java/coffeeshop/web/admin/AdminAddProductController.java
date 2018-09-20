@@ -103,6 +103,8 @@ public class AdminAddProductController implements Serializable {
                                 bundle.getString("Ui.Message.InvalidImage"),
                                 null
                         ));
+                this.image = null;
+                return;
             }
             InputStream is = image.getInputstream();
             this.bytes = IOUtils.toByteArray(is);
