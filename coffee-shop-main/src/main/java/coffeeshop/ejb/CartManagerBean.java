@@ -110,7 +110,8 @@ public class CartManagerBean implements CartManager, Serializable {
         return amount;
     }
 
-    private BigDecimal getSuborderAmount(Suborder suborder) {
+    @Override
+    public BigDecimal getSuborderAmount(Suborder suborder) {
         BigDecimal amount = BigDecimal.ZERO.setScale(2, RoundingMode.CEILING);
         amount = amount.add(suborder.getProductId().getCost());
         for (Ingredient ingredient : suborder.getIngredientList()) {

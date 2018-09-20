@@ -17,6 +17,8 @@ public interface CartManager {
     void remove(Suborder suborder) throws CartManagerException;
 
     BigDecimal getOrderAmount();
+    
+    BigDecimal getSuborderAmount(Suborder suborder);
 
     int getItemCount();
 

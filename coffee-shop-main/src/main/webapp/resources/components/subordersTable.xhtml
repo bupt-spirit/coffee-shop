@@ -29,6 +29,11 @@
                 <h:outputText value="#{suborder.quantity}" />
             </p:column>
 
+            <p:column headerText="#{bundle['Ui.Label.SuborderTotal']}">
+                    <h:outputText id="suborder-total"
+                                  value="#{bundle['Ui.CurrencySymbol']}#{cartController.suborderAmount(suborder)}"/>
+            </p:column>
+
         </p:dataTable>
     </cc:implementation>
 </html>

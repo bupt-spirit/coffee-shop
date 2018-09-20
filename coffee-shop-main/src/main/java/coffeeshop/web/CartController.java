@@ -101,6 +101,10 @@ public class CartController implements Serializable {
         }
         this.selectedSuborder.setQuantity(quantity);
     }
+    
+    public BigDecimal suborderAmount(Suborder suborder) {
+        return cartManager.getSuborderAmount(suborder);
+    }
 
     public String saveOrder() {
         OrderInfo orderInfo = cartManager.saveAndGetOrderInfo(selectedStore, selectedAddress);
