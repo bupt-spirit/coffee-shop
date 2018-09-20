@@ -23,7 +23,7 @@
         <ui:insert name="global-message">
             <h:form id="growl-form">
                 <components:globalAjaxStatus />
-                <p:growl id="growl" showDetail="true" life="2000"/>
+                <p:growl id="growl" globalOnly="true" showDetail="true" life="2000"  autoUpdate="true"/>
             </h:form>
         </ui:insert>
         <div id="layout-container">
