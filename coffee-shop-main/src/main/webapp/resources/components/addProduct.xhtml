@@ -30,17 +30,17 @@
                 <p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
                     <p:outputLabel for="product-name" value="#{bundle['Ui.Product.Name']}"/>
                     <p:inputText type="text" id="product-name" value="#{adminAddProductController.name}"
-                                 required="true"/>
+                                 required="true" maxlength="#{limit['Product.Name.Max']}"/>
                     <p:outputPanel /><p:message for="product-name"/>
 
                     <p:outputLabel for="product-description" value="#{bundle['Ui.Product.Description']}"/>
                     <p:inputTextarea id="product-description" value="#{adminAddProductController.description}"
-                                     required="true"/>
+                                     required="true" maxlength="#{limit['Product.Description.Max']}"/>
                     <p:outputPanel /><p:message for="product-description"/>
 
                     <p:outputLabel for="product-cost" value="#{bundle['Ui.Product.Cost']} #{bundle['Ui.CurrencySymbol']}"/>
-                    <p:inputText id="product-cost" value="#{adminAddProductController.cost}"
-                                 required="true" type="number" />
+                    <p:inputNumber id="product-cost" value="#{adminAddProductController.cost}"
+                                   required="true"  maxValue="#{limit['Product.Cost.Max']}" minValue="0" decimalPlaces="0" emptyValue="0"/>
                     <p:outputPanel /><p:message for="product-cost"/>
 
                     <p:outputLabel for="product-category" value="#{bundle['Ui.Product.Category']}"/>
@@ -59,32 +59,32 @@
                     <p:panelGrid columns="2"  styleClass="ui-panelgrid-blank" rendered="#{adminAddProductController.addNutrition}">
                         <p:outputLabel for="nutrition-calories" value="#{bundle['Ui.Nutrition.Calories']}" /> 
                         <p:inputNumber id="nutrition-calories" value="#{adminAddProductController.calories}"
-                                       required="true" minValue="0" decimalPlaces="0" emptyValue="0"/>
+                                       required="true" minValue="0" decimalPlaces="0" emptyValue="0" maxValue="#{limit['Nutrition.Common.Max']}" />
                         <p:outputPanel /><p:message for="nutrition-calories"/>
 
                         <p:outputLabel for="nutrition-fat" value="#{bundle['Ui.Nutrition.Fat']}"/>
                         <p:inputNumber id="nutrition-fat" value="#{adminAddProductController.fat}"
-                                       required="true" minValue="0" decimalPlaces="0" emptyValue="0" />
+                                       required="true" minValue="0" decimalPlaces="0" emptyValue="0" maxValue="#{limit['Nutrition.Common.Max']}"/>
                         <p:outputPanel /><p:message for="nutrition-fat"/>
 
                         <p:outputLabel for="nutrition-carbon" value="#{bundle['Ui.Nutrition.Carbohydrate']}"/>
                         <p:inputNumber id="nutrition-carbon" value="#{adminAddProductController.carbon}"
-                                       required="true" minValue="0" decimalPlaces="0" emptyValue="0"/>
+                                       required="true" minValue="0" decimalPlaces="0" emptyValue="0" maxValue="#{limit['Nutrition.Common.Max']}"/>
                         <p:outputPanel /><p:message for="nutrition-carbon"/>
 
                         <p:outputLabel for="nutrition-fiber" value="#{bundle['Ui.Nutrition.Fiber']}"/>
                         <p:inputNumber id="nutrition-fiber" value="#{adminAddProductController.fiber}"
-                                       required="true" minValue="0" decimalPlaces="0" emptyValue="0"/>
+                                       required="true" minValue="0" decimalPlaces="0" emptyValue="0" maxValue="#{limit['Nutrition.Common.Max']}"/>
                         <p:outputPanel /><p:message for="nutrition-fiber"/>
 
                         <p:outputLabel for="nutrition-protein" value="#{bundle['Ui.Nutrition.Protein']}"/>
                         <p:inputNumber id="nutrition-protein" value="#{adminAddProductController.protein}"
-                                       required="true" minValue="0" decimalPlaces="0" emptyValue="0" />
+                                       required="true" minValue="0" decimalPlaces="0" emptyValue="0"  maxValue="#{limit['Nutrition.Common.Max']}"/>
                         <p:outputPanel /><p:message for="nutrition-protein"/>
 
                         <p:outputLabel for="nutrition-sodium" value="#{bundle['Ui.Nutrition.Sodium']}"/>
                         <p:inputNumber id="nutrition-sodium" value="#{adminAddProductController.sodium}"
-                                       required="true" minValue="0" decimalPlaces="0" emptyValue="0"/>
+                                       required="true" minValue="0" decimalPlaces="0" emptyValue="0" maxValue="#{limit['Nutrition.Common.Max']}"/>
                         <p:outputPanel /><p:message for="nutrition-sodium"/>
                     </p:panelGrid>
                 </p:outputPanel> 

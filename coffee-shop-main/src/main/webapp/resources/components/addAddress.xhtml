@@ -13,31 +13,31 @@
                 <p:panelGrid columns="3" styleClass="ui-panelgrid-blank">
                     <p:outputLabel for="address-country" value="#{bundle['Ui.Address.Country']}"/>
                     <p:inputText type="text" id="address-country" value="#{addressController.country}"
-                                 required="true"/>
+                                 required="true" maxlength="#{limit['Address.Common.Max']}"/>
                     <p:messages for="address-country"/>
                     <p:outputLabel for="address-province" value="#{bundle['Ui.Address.Province']}"/>
                     <p:inputText type="text" id="address-province" value="#{addressController.province}"
-                                 required="true"/>
+                                 required="true" maxlength="#{limit['Address.Common.Max']}"/>
                     <p:messages for="address-province"/>
                     <p:outputLabel for="address-city" value="#{bundle['Ui.Address.City']}"/>
                     <p:inputText type="text" id="address-city" value="#{addressController.city}"
-                                 required="true"/>
+                                 required="true" maxlength="#{limit['Address.Common.Max']}"/>
                     <p:messages for="address-city"/>
                     <p:outputLabel for="address-district" value="#{bundle['Ui.Address.District']}"/>
                     <p:inputText type="text" id="address-district" value="#{addressController.district}"
-                                 required="true"/>
+                                 required="true" maxlength="#{limit['Address.Common.Max']}"/>
                     <p:messages for="address-district"/>
                     <p:outputLabel for="address-detail" value="#{bundle['Ui.Address.Detail']}"/>
                     <p:inputText type="text" id="address-detail" value="#{addressController.detail}"
-                                 required="true"/>
+                                 required="true" maxlength="#{limit['Address.Detail.Max']}"/>
                     <p:messages for="address-detail"/>
                     <p:outputLabel for="address-receiver" value="#{bundle['Ui.Address.Receiver']}"/>
                     <p:inputText type="text" id="address-receiver" value="#{addressController.receiver}"
-                                 required="true"/>
+                                 required="true" maxlength="#{limit['Address.Common.Max']}"/>
                     <p:messages for="address-receiver"/>
                     <p:outputLabel for="address-receiver-phone" value="#{bundle['Ui.Address.ReceiverPhone']}"/>
                     <p:inputText type="tel" id="address-receiver-phone" value="#{addressController.receiverPhone}"
-                                 required="true"/>
+                                 required="true" maxlength="#{limit['Address.Common.Max']}"/>
                     <p:messages for="address-receiver-phone"/>
                 </p:panelGrid>
         </div>

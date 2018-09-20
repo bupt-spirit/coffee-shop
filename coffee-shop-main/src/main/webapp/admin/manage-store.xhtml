@@ -19,27 +19,27 @@
                         <p:panelGrid columns="3" styleClass="ui-panelgrid-blank">
                             <p:outputLabel for="admin-add-store-countryname" value="${bundle['Ui.Store.Country']}"/>
                             <p:inputText id="admin-add-store-countryname" value="#{adminAddStoreController.country}"
-                                         type="text" required="true"/>
+                                         type="text" required="true" maxlength="#{limit['Store.Common.Max']}"/>
                             <p:message for="admin-add-store-countryname"/>
 
                             <p:outputLabel for="admin-add-store-province" value="${bundle['Ui.Store.Province']}"/>
                             <p:inputText id="admin-add-store-province" value="#{adminAddStoreController.province}"
-                                         type="text" required="true"/>
+                                         type="text" required="true" maxlength="#{limit['Store.Common.Max']}"/>
                             <p:message for="admin-add-store-province"/>
 
                             <p:outputLabel for="admin-add-store-city" value="${bundle['Ui.Store.City']}"/>
                             <p:inputText id="admin-add-store-city" value="#{adminAddStoreController.city}"
-                                         type="text" required="true"/>
+                                         type="text" required="true" maxlength="#{limit['Store.Common.Max']}"/>
                             <p:message for="admin-add-store-city"/>
 
                             <p:outputLabel for="admin-add-store-district" value="${bundle['Ui.Store.District']}"/>
                             <p:inputText id="admin-add-store-district" value="#{adminAddStoreController.district}"
-                                         type="text" required="true"/>
+                                         type="text" required="true" maxlength="#{limit['Store.Common.Max']}"/>
                             <p:message for="admin-add-store-district"/>
 
                             <p:outputLabel for="admin-add-store-detail" value="${bundle['Ui.Store.Detail']}"/>
                             <p:inputText id="admin-add-store-detail" value="#{adminAddStoreController.detail}"
-                                         type="text" required="true"/>
+                                         type="text" required="true" maxlength="#{limit['Store.Detail.Max']}"/>
                             <p:message for="admin-add-store-detail"/>
 
                         </p:panelGrid>
