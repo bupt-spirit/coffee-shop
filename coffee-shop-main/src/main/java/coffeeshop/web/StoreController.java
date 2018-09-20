@@ -1,7 +1,6 @@
 package coffeeshop.web;
 
 import coffeeshop.ejb.StoreManager;
-import coffeeshop.ejb.StoreManagerException;
 import coffeeshop.entity.Store;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,22 +15,12 @@ import javax.inject.Named;
 public class StoreController {
 
     private static final Logger LOG = Logger.getLogger(StoreController.class.getName());
-    
+
     @EJB
     private StoreManager storeManager;
-    
-    private Store selectedStore;
 
-    public Store getSelectedStore() {
-        return selectedStore;
-    }
-
-    public void setSelectedStore(Store selectedStore) {
-        this.selectedStore = selectedStore;
-    }
-     
     public List<Store> getStores() {
-        List<Store> selectedStoreList = new ArrayList<Store>();
+        List<Store> selectedStoreList = new ArrayList<>();
         for(Store store : storeManager.getStores()){
             if (store.getIsAvailable() == (short)1){
                 selectedStoreList.add(store);
@@ -40,12 +29,5 @@ public class StoreController {
         LOG.log(Level.INFO, "Get all store: {0}", storeManager.getStores());
         return selectedStoreList;
     }
-    
-    public void setStoreUnavailable(){
-        try {
-            storeManager.removeStore(selectedStore);
-        } catch (StoreManagerException ex) {
-            Logger.getLogger(StoreController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+
 }

@@ -46,22 +46,17 @@ public class StoreManagerBean implements StoreManager {
 
     @Override
     public void removeStore(Store selectedStore) throws StoreManagerException {
-        if (storeCanBeRemoved(selectedStore)) {
-            for (Staff staff : selectedStore.getStaffList()) {
+        if (orderManager.getStoreUnfinishedOrder(selectedStore).isEmpty()) {
+            List<Staff> staffs = selectedStore.getStaffList();
+            selectedStore.setStaffList(null);
+            selectedStore.setIsAvailable((short) 0);
+            for (Staff staff : staffs) {
                 userManager.removeStaff(staff);
             }
-            selectedStore.setIsAvailable((short) 0);
             storeFacade.edit(selectedStore);
         } else {
-            //TO DO
+            throw new StoreManagerException("Unfinish order exist");
         }
     }
     
-    private boolean storeCanBeRemoved(Store selectedStore) {
-        if (orderManager.getStoreUnfinishedOrder(selectedStore).isEmpty()){
-            return true;
-        } else{
-            return false;
-        }
-    }
 }
