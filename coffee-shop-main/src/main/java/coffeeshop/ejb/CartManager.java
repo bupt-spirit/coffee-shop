@@ -17,16 +17,16 @@ public interface CartManager {
     void remove(Suborder suborder) throws CartManagerException;
 
     BigDecimal getOrderAmount();
-    
+
     BigDecimal getSuborderAmount(Suborder suborder);
 
     int getItemCount();
 
     List<Suborder> getSuborders();
-    
+
     OrderInfo getOrder();
 
     OrderInfo saveAndGetOrderInfo(Store store, Address address);
-    
+
     void removeAll();
 }
