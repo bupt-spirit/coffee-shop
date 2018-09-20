@@ -14,7 +14,7 @@
     </cc:interface>
 
     <cc:implementation>    
-        <p:fieldset legend="#{cc.attrs.order.dateCreate} #{bundle['Ui.CurrencySymbol']}#{cc.attrs.order.amount}" 
+        <p:fieldset legend="#{dateTimeFormater.formatDate(cc.attrs.order.dateCreate)} #{bundle['Ui.CurrencySymbol']}#{cc.attrs.order.amount}" 
                     toggleable="#{cc.attrs.toggleable}"
                     collapsed="#{cc.attrs.collapsed}"
                     styleClass="customer-order">

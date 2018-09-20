@@ -87,7 +87,9 @@ public class CartController implements Serializable {
     }
 
     public Date getCurrentTime() {
-        return new Date();
+        Date date = new Date(); 
+        LOG.log(Level.INFO, "Return current time: {0}", date.getTime());
+        return date;
     }
 
     public void increaseSuborderQuantity() {

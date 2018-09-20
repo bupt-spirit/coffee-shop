@@ -131,7 +131,6 @@ public class ProductController implements Serializable {
         for (Ingredient ingredient : selectedIngredients) {
             cost = cost.add(ingredient.getCost());
         }
-        LOG.log(Level.INFO, "Current cost: {0}", cost);
         return cost;
     }
 
@@ -140,7 +139,6 @@ public class ProductController implements Serializable {
         for (Ingredient ingredient : selectedIngredients) {
             cost = cost.add(ingredient.getCost());
         }
-        LOG.log(Level.INFO, "Current cost: {0}", cost);
         return cost;
     }
 

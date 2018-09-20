@@ -12,8 +12,8 @@
                 <h2><h:outputText value="#{bundle['Ui.Order.BasicInfo']}" /></h2>
                 <p:panelGrid columns="2">
                     <h:outputLabel value="#{bundle['Ui.Label.OrderTime']}"/> 
-                    <h:outputText value="#{cartController.currentTime} UTC-0">  
-                        <f:convertDateTime type="both" pattern="HH:mm:ss dd.MM.yyyy" />
+                    <h:outputText value="#{cartController.currentTime}">  
+                        <f:convertDateTime type="both" pattern="#{bundle['DateTime.Pattern']}" />
                     </h:outputText>
                     <h:outputLabel value="#{bundle['Ui.Label.Username']}"/>
                     <h:outputText value="#{userInfoController.currentUser.username}"/>
