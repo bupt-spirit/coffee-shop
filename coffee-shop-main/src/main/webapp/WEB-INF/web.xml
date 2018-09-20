@@ -74,7 +74,7 @@
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>checkout</web-resource-name>
-            <url-pattern>/faces/staff/*</url-pattern>
+            <url-pattern>/faces/store/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <role-name>staff</role-name>
