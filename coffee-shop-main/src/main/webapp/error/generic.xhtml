@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:body>
+        <ui:composition template="/templates/main-only.xhtml">
+            <!-- Remove header right prevent additional errors -->
+            <ui:define name="header-right" />
+            <ui:define name="main">
+                <h1 class="main-title"><h:outputText value="#{bundle['Ui.Error.Generic.Title']}" /></h1>
+                <p class="error-content">
+                    <h:outputFormat value="#{bundle['Ui.Error.Generic.Message.Status']}"
+                                    rendered="#{requestScope['javax.servlet.error.status_code'] != null}">
+                        <f:param value="#{requestScope['javax.servlet.error.status_code']}" />
+                    </h:outputFormat>
+                    <h:outputFormat value="#{bundle['Ui.Error.Generic.Message.Exception']}"
+                                    rendered="#{requestScope['javax.servlet.error.exception_type'] != null}">
+                        <f:param value="#{requestScope['javax.servlet.error.exception_type']}" />
+                    </h:outputFormat>
+                </p>
+
+                <p:button value="#{bundle['Ui.Error.Back']}" outcome="/index" icon="fa fa-link" />
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

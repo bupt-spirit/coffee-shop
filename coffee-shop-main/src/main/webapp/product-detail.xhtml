@@ -21,7 +21,7 @@
 
                     <p:outputLabel for="quantity" value="#{bundle['Ui.Label.ItemQuantity']}"/>
                     <p:inputNumber id="quantity" value="#{productController.itemQuantity}" minValue="1"
-                                   decimalPlaces="0" emptyValue="1">
+                                   decimalPlaces="0" emptyValue="1" maxValue="#{limit['Cart.Quantity.Max']}">
                         <p:ajax event="change"/>
                     </p:inputNumber>
                     <p:commandButton update="quantity"
