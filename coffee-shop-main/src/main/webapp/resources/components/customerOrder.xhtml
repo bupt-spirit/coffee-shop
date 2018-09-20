@@ -8,11 +8,15 @@
 
     <cc:interface>
         <cc:attribute name="order" required="true" type="coffeeshop.entity.OrderInfo" />
+        <cc:attribute name="toggleable" default="false" type="java.lang.String" />
+        <cc:attribute name="collapsed" default="false" type="java.lang.String" />
         <cc:facet name="footer" />
     </cc:interface>
 
     <cc:implementation>    
         <p:fieldset legend="#{cc.attrs.order.dateCreate} #{bundle['Ui.CurrencySymbol']}#{cc.attrs.order.amount}" 
+                    toggleable="#{cc.attrs.toggleable}"
+                    collapsed="#{cc.attrs.collapsed}"
                     styleClass="customer-order">
             <h4><h:outputText value="#{bundle['Ui.Order.Detail']}" /></h4>
             <components:subordersTable order="#{cc.attrs.order}" />
