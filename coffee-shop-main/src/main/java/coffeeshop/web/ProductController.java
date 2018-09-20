@@ -17,6 +17,8 @@ import javax.inject.Named;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -50,6 +52,7 @@ public class ProductController implements Serializable {
     private Product selectedProduct;
     private Set<Ingredient> selectedIngredients;
     private short itemQuantity;
+    private boolean sorted = false;
 
     @PostConstruct
     private void init() {
@@ -88,9 +91,25 @@ public class ProductController implements Serializable {
     }
 
     public List<Product> getSelectedCategoryProducts() throws ProductManagerException {
-        return getCategoryProducts(selectedCategory);
+        List<Product> originalList = getCategoryProducts(selectedCategory);
+        if(sorted)
+            Collections.sort(originalList, (Product p1, Product p2) -> {
+                return p1.getCost().compareTo(p2.getCost());
+            });
+        return originalList;
     }
-
+    
+    public void changeSortedStatus(){
+        sorted = !sorted;
+    }
+    
+    public String getButtonName(){
+        if(sorted)
+            return bundle.getString("Ui.Button.OriginalOrder");
+        else
+            return bundle.getString("Ui.Button.SortOrder");
+    }
+    
     public short getItemQuantity() {
         return itemQuantity;
     }

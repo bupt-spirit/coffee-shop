@@ -15,7 +15,7 @@
 
 .customer-order {
     margin-bottom: 1rem;
-    
+
     h4 {
         margin: .5rem 0;
     }
@@ -37,4 +37,16 @@
 
 .suborder-quantity-with-adjust-button {
     margin: 0 .5rem;
+}
+
+.category-nav-products-number {
+    font-size: small;
+    margin-left: .5rem;
+    font-weight: normal;
+}
+.category-nav-products-number::before {
+    content: "(";
+}
+.category-nav-products-number::after {
+    content: ")";
 }
