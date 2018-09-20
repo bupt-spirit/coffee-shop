@@ -33,7 +33,7 @@
                 </p:column>
 
                 <p:column headerText="#{bundle['Ui.Label.ItemQuantity']}">
-                    <p:commandButton update="quantity"
+                    <p:commandButton update="quantity @(.global-cart-indicator) suborder-total"
                                      action="#{cartController.increaseSuborderQuantity}"
                                      value="#{bundle['Ui.Button.increaseItemQuantity']}">
                         <f:setPropertyActionListener value="#{suborder}"
@@ -41,7 +41,7 @@
                     </p:commandButton>
                     <h:outputText id="quantity" value="#{suborder.quantity}"
                                   styleClass="suborder-quantity-with-adjust-button"/>
-                    <p:commandButton update="quantity"
+                    <p:commandButton update="quantity @(.global-cart-indicator) suborder-total"
                                      action="#{cartController.decreaseSuborderQuantity}"
                                      value="#{bundle['Ui.Button.decreaseItemQuantity']}"
                                      styleClass="suborder-quantity-adjust-button">
@@ -50,7 +50,12 @@
                     </p:commandButton>
                 </p:column>
 
-                <p:column>
+                <p:column headerText="#{bundle['Ui.Label.SuborderTotal']}">
+                    <h:outputText id="suborder-total"
+                                  value="#{bundle['Ui.CurrencySymbol']}#{cartController.suborderAmount(suborder)}"/>
+                </p:column>
+
+                <p:column headerText="#{bundle['Ui.Label.Action']}">
                     <h:form>
                         <p:commandButton value="#{bundle['Ui.Cart.Remove']}" ajax="false" action="#{cartController.removeSuborder}">
                             <f:setPropertyActionListener value="#{suborder}"

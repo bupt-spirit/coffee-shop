@@ -25,8 +25,6 @@
                                 rendered="#{adminAddProductController.image.fileName != null}"
                                 styleClass="product-new-image"/>
                 <p:message for="image-upload" />
-            </h:form>
-            <h:form>
                 <p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
                     <p:outputLabel for="product-name" value="#{bundle['Ui.Product.Name']}"/>
                     <p:inputText type="text" id="product-name" value="#{adminAddProductController.name}"
@@ -50,13 +48,11 @@
                                        itemValue="#{category}"/>
                     </p:selectOneMenu>
                     <p:outputPanel /><p:message for="product-category"/>
-                </p:panelGrid>
-                <h:panelGrid columns="2" >
                     <h:outputText value="#{bundle['Ui.Product.Nutrition']} " />
                     <p:inputSwitch value="#{adminAddProductController.addNutrition}" offLabel="OFF" onLabel="ON" id="nutrition-switch">
                         <p:ajax event="change" update="add-nutrition" />
                     </p:inputSwitch>
-                </h:panelGrid>
+                </p:panelGrid>
                 <p:outputPanel id="add-nutrition" layout="block">
                     <p:panelGrid columns="2"  styleClass="ui-panelgrid-blank" rendered="#{adminAddProductController.addNutrition}">
                         <p:outputLabel for="nutrition-calories" value="#{bundle['Ui.Nutrition.Calories']}" /> 

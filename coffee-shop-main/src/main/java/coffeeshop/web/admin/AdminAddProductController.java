@@ -14,14 +14,11 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.regex.Pattern;
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.primefaces.model.UploadedFile;
@@ -228,8 +225,10 @@ public class AdminAddProductController implements Serializable {
     }
 
     public void createProduct() throws IOException, URISyntaxException {
-        if (image == null) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("ERROR!", bundle.getString("Ui.Product.PhotoError")));
+        if (bytes == null || bytes.length == 0 || imageContentType == null) {
+            FacesContext.getCurrentInstance().addMessage(imageUploadComponent.getClientId(),
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                            bundle.getString("Ui.Product.PhotoError"), null));
             return;
         }
 
@@ -238,7 +237,6 @@ public class AdminAddProductController implements Serializable {
                 addNutrition, calories, fat, carbon, fiber, protein, sodium,
                 bytes, imageContentType, selectedIngredientCategories);
         LOG.log(Level.INFO, "create product with nutrition success{0}", newProduct.getId());
-
         name = description = null;
         category = null;
         cost = null;
