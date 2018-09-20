@@ -25,9 +25,11 @@
                 </p:column>
 
                 <p:column headerText="#{bundle['Ui.Label.Ingredient']}">
-                    <ui:repeat var="ingredient" value="#{suborder.ingredientList}">
-                        <h:outputText styleClass="check-out-ingredient" value="#{ingredient.name}"/>
-                    </ui:repeat>
+                    <p:outputPanel styleClass="ingredient-list">
+                        <ui:repeat var="ingredient" value="#{suborder.ingredientList}">
+                            <h:outputText styleClass="ingredient-list-item" value="#{ingredient.name}"/>
+                        </ui:repeat>
+                    </p:outputPanel>
                 </p:column>
 
                 <p:column headerText="#{bundle['Ui.Label.ItemQuantity']}">
