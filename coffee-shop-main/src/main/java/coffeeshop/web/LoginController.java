@@ -22,6 +22,7 @@ import java.security.Principal;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
+import javax.faces.component.UIComponent;
 
 @Named
 @RequestScoped
@@ -35,9 +36,11 @@ public class LoginController {
 
     @Inject
     private MessageBundle bundle;
-    
+
     @EJB
     private InitManager initManager;
+    
+    private UIComponent passwordComponent;
 
     // User name and password for login
     private String username, password;
@@ -56,6 +59,14 @@ public class LoginController {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public UIComponent getPasswordComponent() {
+        return passwordComponent;
+    }
+
+    public void setPasswordComponent(UIComponent passwordComponent) {
+        this.passwordComponent = passwordComponent;
     }
 
     public String login() throws UserManagerException {
@@ -83,10 +94,11 @@ public class LoginController {
                         "Internal error occurred"
                 ));
             case SEND_FAILURE:
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                        bundle.getString("Ui.Message.AuthFailedTitle"),
-                        bundle.getString("Ui.Message.AuthFailedDetail")
-                ));
+                FacesContext.getCurrentInstance().addMessage(passwordComponent.getClientId(),
+                        new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                                bundle.getString("Ui.Message.AuthFailed"),
+                                null
+                        ));
                 break;
             case SEND_CONTINUE:
             case SUCCESS:

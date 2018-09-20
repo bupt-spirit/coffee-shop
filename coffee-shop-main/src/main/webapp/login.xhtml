@@ -8,16 +8,16 @@
         <ui:composition template="/templates/main-only.xhtml">
             <ui:define name="main">
                 <h1 class="main-title"><h:outputText value="#{bundle['Ui.Login.Title']}" /></h1>
-                <h:form>
-                    <p:panelGrid columns="3" styleClass="ui-panelgrid-blank">
+                <h:form id="login-form">
+                    <p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
                         <p:outputLabel for="username" value="#{bundle['Ui.Label.Username']}"/>
                         <p:inputText type="text" id="username" value="#{loginController.username}"
-                                     required="true"/>
-                        <p:messages for="username"/>
+                                     required="true" />
+                        <p:outputPanel /><p:message for="username"/>
                         <p:outputLabel for="password" value="#{bundle['Ui.Label.Password']}"/>
                         <p:inputText type="password" id="password" value="#{loginController.password}"
-                                     required="true"/>
-                        <p:messages for="password"/>
+                                     required="true" binding="#{loginController.passwordComponent}" />
+                        <p:outputPanel /><p:message for="password"/>
                     </p:panelGrid>
                     <p:commandButton action="#{loginController.login}" type="submit"
                                      value="#{bundle['Ui.Button.Login']}" ajax="false"/>
