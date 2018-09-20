@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:cc="http://xmlns.jcp.org/jsf/composite"
       xmlns:components="http://xmlns.jcp.org/jsf/composite/components"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
 
     <cc:interface>
         <cc:attribute name="order" required="true" type="coffeeshop.entity.OrderInfo" />
@@ -11,11 +12,19 @@
     </cc:interface>
 
     <cc:implementation>    
-        <p:fieldset legend="#{cc.attrs.order.dateCreate} #{bundle['Ui.CurrencySymbol']} #{cc.attrs.order.amount}" 
-                    styleClass="customer-order">         
+        <p:fieldset legend="#{cc.attrs.order.dateCreate} #{bundle['Ui.CurrencySymbol']}#{cc.attrs.order.amount}" 
+                    styleClass="customer-order">
+            <h4><h:outputText value="#{bundle['Ui.Order.Detail']}" /></h4>
             <components:subordersTable order="#{cc.attrs.order}" />
-            <components:customerAddress address="#{cc.attrs.order.addressId}"/>  
-            <cc:renderFacet name="footer" />
+            <h4><h:outputText value="#{bundle['Ui.Order.DeliverTo']}" /></h4>
+            <components:customerAddress address="#{cc.attrs.order.addressId}"/>
+            <h4><h:outputText value="#{bundle['Ui.Order.Store']}" /></h4>
+            <components:storeAddress store="#{cc.attrs.order.storeId}" />
+            <h4><h:outputText value="#{bundle['Ui.Order.Amount']}" /></h4>
+            <components:price price="#{cc.attrs.order.amount}" />
+            <p:outputPanel styleClass="order-table-footer">
+                <cc:renderFacet name="footer" />
+            </p:outputPanel>
         </p:fieldset>
     </cc:implementation>
 </html>
