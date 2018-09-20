@@ -60,7 +60,7 @@
     </security-constraint>
     <security-constraint>
         <web-resource-collection>
-            <web-resource-name>checkout</web-resource-name>
+            <web-resource-name>customer</web-resource-name>
             <url-pattern>/faces/checkout.xhtml</url-pattern>
             <url-pattern>/faces/customer/*</url-pattern>
         </web-resource-collection>
@@ -73,7 +73,7 @@
     </security-constraint>
     <security-constraint>
         <web-resource-collection>
-            <web-resource-name>checkout</web-resource-name>
+            <web-resource-name>store</web-resource-name>
             <url-pattern>/faces/store/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
