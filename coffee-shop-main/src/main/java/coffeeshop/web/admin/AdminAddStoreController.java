@@ -34,6 +34,8 @@ public class AdminAddStoreController {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
                 bundle.getFormatted("Ui.Admin.Message.AddStoreSuccess")
         ));
+        
+        country = province = city = district = detail = null;
     }
 
     public String getCountry() {
