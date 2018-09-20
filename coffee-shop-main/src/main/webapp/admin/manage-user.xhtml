@@ -19,7 +19,7 @@
                         <p:panelGrid columns="3" styleClass="ui-panelgrid-blank">
                             <p:outputLabel for="admin-add-user-username" value="${bundle['Ui.Label.Username']}"/>
                             <p:inputText id="admin-add-user-username" value="#{adminAddUserController.username}"
-                                         type="text" required="true"/>
+                                         type="text" required="true" maxlength="#{limit['User.Name.Max']}"/>
                             <p:message for="admin-add-user-username"/>
 
                             <p:outputLabel for="admin-add-user-password" value="${bundle['Ui.Label.Password']}"/>
@@ -41,7 +41,7 @@
                                          rendered="#{adminAddUserController.role == 'customer'}">
                                 <p:outputLabel for="admin-add-user-nickname" value="${bundle['Ui.Label.Nickname']}"/>
                                 <p:inputText id="admin-add-user-nickname" type="text" required="true"
-                                             value="#{adminAddUserController.nickname}"/>
+                                             value="#{adminAddUserController.nickname}" maxlength="#{limit['Customer.Nickname.Max']}"/>
                                 <p:message for="admin-add-user-nickname"/>
                             </p:panelGrid>
                         </p:outputPanel>

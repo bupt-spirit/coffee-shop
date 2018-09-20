@@ -9,6 +9,10 @@
             <base-name>coffeeshop.messages.bundle</base-name>
             <var>bundle</var>
         </resource-bundle>
+        <resource-bundle>
+            <base-name>coffeeshop.limit.limit</base-name>
+            <var>limit</var>
+        </resource-bundle>
         <locale-config>
             <default-locale>en</default-locale>
         </locale-config>
