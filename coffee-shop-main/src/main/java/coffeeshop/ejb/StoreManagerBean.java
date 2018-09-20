@@ -51,6 +51,7 @@ public class StoreManagerBean implements StoreManager {
                 userManager.removeStaff(staff);
             }
             selectedStore.setIsAvailable((short) 0);
+            storeFacade.edit(selectedStore);
         } else {
             //TO DO
         }
