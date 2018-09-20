@@ -65,8 +65,8 @@ public class AdminAddProductController implements Serializable {
         if (fileName == null) {
             return null;
         }
-        int index = fileName.indexOf('.');
-        if (index == fileName.length() || index == fileName.length() - 1) {
+        int index = fileName.lastIndexOf('.');
+        if (index == -1 || index == fileName.length() - 1) {
             return null;
         }
         switch (fileName.substring(index + 1)) {
@@ -114,9 +114,12 @@ public class AdminAddProductController implements Serializable {
 
     public StreamedContent getSelectedFileContent() {
         LOG.log(Level.INFO, "File: {0}", selectedFile);
-        InputStream is = new ByteArrayInputStream(bytes);
-        LOG.log(Level.INFO, "bytes to inputstream successfully");
-        return new DefaultStreamedContent(is, imageContentType, selectedFile);
+        if (bytes != null) {
+            InputStream is = new ByteArrayInputStream(bytes);
+            LOG.log(Level.INFO, "bytes to inputstream successfully");
+            return new DefaultStreamedContent(is, imageContentType, selectedFile);
+        }
+        return null;
     }
 
     public boolean isAddNutrition() {
