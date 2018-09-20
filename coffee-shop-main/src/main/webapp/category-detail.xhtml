@@ -14,9 +14,10 @@
             </ui:define>
             <ui:define name="main">
                 <h1 class="main-title"><h:outputText value="#{productController.selectedCategory}" /></h1>  
-                <h:form>
-                    <p:commandButton id="orderButton" value="#{productController.buttonName}" actionListener="#{productController.changeSortedStatus}" 
-                                         update="panel orderButton"/>
+                <h:form class="below-main-title">
+                    <p:commandButton id="orderButton" value="#{productController.buttonName}"
+                                     actionListener="#{productController.changeSortedStatus}" 
+                                     update="panel orderButton"/>
                 </h:form>
                 <p:outputPanel id ="panel" styleClass="product-summary-container">                             
                     <ui:repeat var="product" value="#{productController.selectedCategoryProducts}">

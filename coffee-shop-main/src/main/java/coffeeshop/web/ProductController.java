@@ -93,17 +93,10 @@ public class ProductController implements Serializable {
     public List<Product> getSelectedCategoryProducts() throws ProductManagerException {
         List<Product> originalList = getCategoryProducts(selectedCategory);
         if(sorted)
-            Collections.sort(originalList, new costComparator());
+            Collections.sort(originalList, (Product p1, Product p2) -> {
+                return p1.getCost().compareTo(p2.getCost());
+            });
         return originalList;
-    }
-    
-    static class costComparator implements Comparator{
-        @Override
-        public int compare(Object object1,Object object2){
-            Product p1 = (Product)object1;
-            Product p2 = (Product)object2;
-            return p1.getCost().compareTo(p2.getCost());
-        }
     }
     
     public void changeSortedStatus(){
@@ -117,7 +110,6 @@ public class ProductController implements Serializable {
             return bundle.getString("Ui.Button.SortOrder");
     }
     
-
     public short getItemQuantity() {
         return itemQuantity;
     }
