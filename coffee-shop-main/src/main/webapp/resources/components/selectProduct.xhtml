@@ -10,7 +10,6 @@
         <cc:attribute name="list" required="true" type="java.util.List"/>
         <cc:attribute name="selected" required="true" type="coffeeshop.entity.Product"/>
         <cc:attribute name="required" type="java.lang.String" default="false"/>
-        <cc:facet name="actionButton" />
     </cc:interface>
 
     <cc:implementation>
@@ -26,8 +25,9 @@
                 <h:outputText  value="#{p.name}" />
             </p:column>
         </p:selectOneListbox>
-        <p:message for="select-product"/>
-        <cc:renderFacet name="actionButton" />
+        <p:message for="select-product">
+            <p:autoUpdate />
+        </p:message>
     </cc:implementation>
 </html>
 

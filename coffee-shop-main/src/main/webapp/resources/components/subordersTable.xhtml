@@ -11,7 +11,7 @@
     </cc:interface>
 
     <cc:implementation>
-        <p:dataTable var="suborder" value="#{cc.attrs.order.suborderList}" >
+        <p:dataTable reflow="true" var="suborder" value="#{cc.attrs.order.suborderList}" >
             
             <p:column headerText="#{bundle['Ui.Label.ProductName']}">
                 <h:outputText value="#{suborder.productId.name}" />

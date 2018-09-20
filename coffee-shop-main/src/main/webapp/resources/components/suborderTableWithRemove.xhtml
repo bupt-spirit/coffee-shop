@@ -14,7 +14,7 @@
 
     <cc:implementation>
         <div class="suborder-table-with-remove">
-            <p:dataTable var="suborder" value="#{cc.attrs.order.suborderList}" >
+            <p:dataTable reflow="true" var="suborder" value="#{cc.attrs.order.suborderList}" >
 
                 <p:column headerText="#{bundle['Ui.Label.ProductImage']}"   styleClass="image-column">
                     <components:productImage product="#{suborder.productId}" />
