@@ -7,6 +7,8 @@ public interface StoreManager {
     
     Store addStore(String country, String province, String city, String district, String detail);
     
+    Store addStore(Store store);
+    
     List<Store> getStores();
     
     Store getStoreById(int id) throws StoreManagerException;
