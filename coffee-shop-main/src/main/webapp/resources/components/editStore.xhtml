@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:p="http://primefaces.org/ui">
+
+    <cc:interface>
+        <cc:attribute name="store" type="coffeeshop.entity.Store" required="true" />
+    </cc:interface>
+
+    <cc:implementation>
+        <p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
+            <p:outputLabel for="admin-add-store-countryname" value="#{bundle['Ui.Store.Country']}"/>
+            <p:inputText id="admin-add-store-countryname" value="#{cc.attrs.store.country}"
+                         type="text" required="true"/>
+            <p:outputPanel /><p:message for="admin-add-store-countryname"/>
+
+            <p:outputLabel for="admin-add-store-province" value="#{bundle['Ui.Store.Province']}"/>
+            <p:inputText id="admin-add-store-province" value="#{cc.attrs.store.province}"
+                         type="text" required="true"/>
+            <p:outputPanel /><p:message for="admin-add-store-province"/>
+
+            <p:outputLabel for="admin-add-store-city" value="#{bundle['Ui.Store.City']}"/>
+            <p:inputText id="admin-add-store-city" value="#{cc.attrs.store.city}"
+                         type="text" required="true"/>
+            <p:outputPanel /><p:message for="admin-add-store-city"/>
+
+            <p:outputLabel for="admin-add-store-district" value="#{bundle['Ui.Store.District']}"/>
+            <p:inputText id="admin-add-store-district" value="#{cc.attrs.store.district}"
+                         type="text" required="true"/>
+            <p:outputPanel /><p:message for="admin-add-store-district"/>
+
+            <p:outputLabel for="admin-add-store-detail" value="#{bundle['Ui.Store.Detail']}"/>
+            <p:inputText id="admin-add-store-detail" value="#{adminAddStoreController.store.detail}"
+                         type="text" required="true"/>
+            <p:outputPanel /><p:message for="admin-add-store-detail"/>
+        </p:panelGrid>
+    </cc:implementation>
+</html>

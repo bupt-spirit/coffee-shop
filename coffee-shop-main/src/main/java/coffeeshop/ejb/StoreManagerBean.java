@@ -33,6 +33,7 @@ public class StoreManagerBean implements StoreManager {
     public Store addStore(Store store) {
         store.setOrderInfoList(new ArrayList<>());
         store.setStaffList(new ArrayList<>());
+        store.setIsAvailable((short) 1);
         storeFacade.create(store);
         return store;
     }
