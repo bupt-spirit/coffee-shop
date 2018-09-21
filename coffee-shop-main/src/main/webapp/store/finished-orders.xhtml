@@ -17,7 +17,7 @@
                     <p:poll interval="#{bundle['Ajax.Poll.Interval']}" update="orders" />
                     <p:outputPanel id="orders">
                         <ui:repeat var="order" value="#{orderController.storeFinishedOrder}" >
-                            <components:customerOrder order="#{order}" toggleable="true" collapsed="true" />
+                            <components:customerOrder order="#{order}" />
                         </ui:repeat>
                     </p:outputPanel>
                 </h:form>
