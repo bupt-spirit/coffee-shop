@@ -17,14 +17,14 @@
                     <h:form id="add-store-form">
                         <components:inputStore store="#{adminAddStoreController.store}" />
                         <p:commandButton  icon="fa fa-plus" action="#{adminAddStoreController.addStore}"
-                                          type="submit" ajax="false"
+                                          type="submit" update="@(.select-store)"
                                           value="#{bundle['Ui.Admin.AddStore.Button.AddStore']}"/>
                         <p:commandButton type="reset" value="Reset"/>
                     </h:form>
                     <p:messages for="add-store-form"/>
                 </p:panel>
                 <p:panel header="#{bundle['Ui.Admin.RemoveStore.Title']}">
-                    <h:form id="remove-store-form">
+                    <h:form id="remove-store-form" styleClass="select-store">
                         <p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
                             <p:outputLabel for="remove-store" value="#{bundle['Ui.Label.Store']}"/>
                             <components:selectStore id="remove-store" required="true"
