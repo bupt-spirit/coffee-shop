@@ -10,4 +10,6 @@ public interface StoreManager {
     List<Store> getStores();
     
     Store getStoreById(int id) throws StoreManagerException;
+    
+    void removeStore(Store selectedStore) throws StoreManagerException;
 }
