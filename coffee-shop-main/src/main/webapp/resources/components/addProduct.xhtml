@@ -96,13 +96,11 @@
                         <f:selectItems value="#{adminAddProductController.ingredientCategories}" var="ingredientCategory"
                                        itemLabel="#{ingredientCategory.name}" itemValue="#{ingredientCategory}"/>
                     </p:selectManyButton>
-                </p:outputPanel>       
-
+                </p:outputPanel>  
                 <p:commandButton action="#{adminAddProductController.createProduct}" type="submit" ajax="false"
                                  value="${bundle['Ui.Product.Add']}"/>
             </h:form>
         </div>
-
     </cc:implementation>
 </html>
 

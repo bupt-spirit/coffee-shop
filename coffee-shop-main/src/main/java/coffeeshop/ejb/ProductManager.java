@@ -34,4 +34,8 @@ public interface ProductManager {
             byte[] bytes, String contentType, List<IngredientCategory> ingredientCategoies) throws IOException, URISyntaxException;
 
     void removeProduct(Product selectedProduct) throws ProductManagerException,SeasonSpecialManagerException;
+    
+    Product editProduct(Product selectedProduct,String name, String description, BigDecimal price, Category category,
+            boolean addNutrition, int calories, int fat, int carbon, int fiber, int protein, int sodium,
+            byte[] bytes, String contentType, List<IngredientCategory> ingredientCategoies) throws ProductManagerException;
 }

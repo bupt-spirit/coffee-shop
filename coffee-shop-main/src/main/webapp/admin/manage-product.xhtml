@@ -4,7 +4,9 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:components="http://xmlns.jcp.org/jsf/composite/components">
+      xmlns:components="http://xmlns.jcp.org/jsf/composite/components"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:body>
         <ui:composition template="/templates/main-aside.xhtml">
             <ui:define name="aside">
@@ -14,7 +16,12 @@
             <ui:define name="main">
                 <h1 class="main-title"><h:outputText value="${bundle['Ui.Admin.ManageProduct.Title']}"/></h1>
                 <p:panel header="#{bundle['Ui.Product.Add']}">
-                    <components:addProduct />
+                    <components:addProduct>
+                        <f:facet name="actionButton">
+                            <p:commandButton action="#{adminAddProductController.createProduct}" type="submit" ajax="false"
+                                 value="${bundle['Ui.Product.Add']}"/>
+                        </f:facet>
+                    </components:addProduct>
                 </p:panel>
 
                 <p:panel id="all-product" header="#{bundle['Ui.Product.Remove']}">
@@ -26,6 +33,13 @@
                                          action="#{adminRemoveProductController.removeProduct}" type="submit"
                                          value="#{bundle['Ui.Product.Remove']}" />
                     </h:form>
+                     <h:form>
+                        <components:selectProduct list="#{adminRemoveProductController.allProducts}"
+                                                  selected="#{adminAddProductController.selectedProduct}"
+                                                  required="true" />
+                        <p:commandButton icon="fa fa-edit"  action="#{adminAddProductController.beforeJumpToEditProduct}"
+                                         value="#{bundle['Ui.Product.Edit']}" type="submit"/>
+                     </h:form>
                 </p:panel>
 
                 <p:panel header="${bundle['Ui.Admin.SeasonSpecial.Title']}" id="season-special">
