@@ -21,6 +21,7 @@ mvn package
 
 Deploy:
 
-Add a new data source ```jdbc/CoffeeShop``` to your glassfish, run ```coffee-shop-main/src/main/resources/coffeeshop.setup/create.sql``` on your database, and a database named coffee_shop will be created.
+Run ```coffee-shop-main/src/main/resources/coffeeshop.setup/create.sql``` on your database, and a database named coffee_shop will be created.
+Add a new data source ```jdbc/CoffeeShop``` to your glassfish.
 
-Deploy the war package in ```coffee-shop-main/target``` to your glassfish server, start then application and login using default admin account - username: admin, password: admin.
+Deploy the war package in ```coffee-shop-main/target``` to your glassfish server, start then application and login using default admin account - username: admin, password: admin. Switch to data tab, use the button to initialize demo data.
