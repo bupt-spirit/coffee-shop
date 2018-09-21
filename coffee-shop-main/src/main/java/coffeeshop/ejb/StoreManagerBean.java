@@ -1,5 +1,6 @@
 package coffeeshop.ejb;
 
+import coffeeshop.entity.Staff;
 import coffeeshop.entity.Store;
 import coffeeshop.facade.StoreFacade;
 import java.util.ArrayList;
@@ -13,6 +14,12 @@ public class StoreManagerBean implements StoreManager {
     @EJB
     private StoreFacade storeFacade;
 
+    @EJB
+    private UserManager userManager;
+
+    @EJB
+    private OrderManager orderManager;
+
     @Override
     public Store addStore(String country, String province, String city, String district, String detail) {
         Store newStore = new Store(null, country, province, city, district, detail, (short) 1);
@@ -20,6 +27,14 @@ public class StoreManagerBean implements StoreManager {
         newStore.setStaffList(new ArrayList<>());
         storeFacade.create(newStore);
         return newStore;
+    }
+
+    @Override
+    public Store addStore(Store store) {
+        store.setOrderInfoList(new ArrayList<>());
+        store.setStaffList(new ArrayList<>());
+        storeFacade.create(store);
+        return store;
     }
 
     @Override
@@ -35,4 +50,20 @@ public class StoreManagerBean implements StoreManager {
         }
         return store;
     }
+
+    @Override
+    public void removeStore(Store selectedStore) throws StoreManagerException {
+        if (orderManager.getStoreUnfinishedOrder(selectedStore).isEmpty()) {
+            List<Staff> staffs = selectedStore.getStaffList();
+            selectedStore.setStaffList(null);
+            selectedStore.setIsAvailable((short) 0);
+            for (Staff staff : staffs) {
+                userManager.removeStaff(staff);
+            }
+            storeFacade.edit(selectedStore);
+        } else {
+            throw new StoreManagerException("Unfinish order exist");
+        }
+    }
+
 }

@@ -13,43 +13,55 @@
                 <components:asideNavOfAdmin current="manage-store" />
             </ui:define>
             <ui:define name="main">
-                <h1 class="main-title"><h:outputText value="${bundle['Ui.Admin.ManageStore.Title']}"/></h1>
-                <p:panel header="${bundle['Ui.Admin.AddStore.Title']}">
+                <h1 class="main-title"><h:outputText value="#{bundle['Ui.Admin.ManageStore.Title']}"/></h1>
+                <p:panel header="#{bundle['Ui.Admin.AddStore.Title']}">
                     <h:form id="add-store-form">
-                        <p:panelGrid columns="3" styleClass="ui-panelgrid-blank">
-                            <p:outputLabel for="admin-add-store-countryname" value="${bundle['Ui.Store.Country']}"/>
-                            <p:inputText id="admin-add-store-countryname" value="#{adminAddStoreController.country}"
-                                         type="text" required="true" maxlength="#{limit['Store.Common.Max']}"/>
-                            <p:message for="admin-add-store-countryname"/>
+                        <p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
+                            <p:outputLabel for="admin-add-store-countryname" value="#{bundle['Ui.Store.Country']}"/>
+                            <p:inputText id="admin-add-store-countryname" value="#{adminAddStoreController.store.country}"
+                                         type="text" required="true"/>
+                            <p:outputPanel /><p:message for="admin-add-store-countryname"/>
 
-                            <p:outputLabel for="admin-add-store-province" value="${bundle['Ui.Store.Province']}"/>
-                            <p:inputText id="admin-add-store-province" value="#{adminAddStoreController.province}"
-                                         type="text" required="true" maxlength="#{limit['Store.Common.Max']}"/>
-                            <p:message for="admin-add-store-province"/>
+                            <p:outputLabel for="admin-add-store-province" value="#{bundle['Ui.Store.Province']}"/>
+                            <p:inputText id="admin-add-store-province" value="#{adminAddStoreController.store.province}"
+                                         type="text" required="true"/>
+                            <p:outputPanel /><p:message for="admin-add-store-province"/>
 
-                            <p:outputLabel for="admin-add-store-city" value="${bundle['Ui.Store.City']}"/>
-                            <p:inputText id="admin-add-store-city" value="#{adminAddStoreController.city}"
-                                         type="text" required="true" maxlength="#{limit['Store.Common.Max']}"/>
-                            <p:message for="admin-add-store-city"/>
+                            <p:outputLabel for="admin-add-store-city" value="#{bundle['Ui.Store.City']}"/>
+                            <p:inputText id="admin-add-store-city" value="#{adminAddStoreController.store.city}"
+                                         type="text" required="true"/>
+                            <p:outputPanel /><p:message for="admin-add-store-city"/>
 
-                            <p:outputLabel for="admin-add-store-district" value="${bundle['Ui.Store.District']}"/>
-                            <p:inputText id="admin-add-store-district" value="#{adminAddStoreController.district}"
-                                         type="text" required="true" maxlength="#{limit['Store.Common.Max']}"/>
-                            <p:message for="admin-add-store-district"/>
+                            <p:outputLabel for="admin-add-store-district" value="#{bundle['Ui.Store.District']}"/>
+                            <p:inputText id="admin-add-store-district" value="#{adminAddStoreController.store.district}"
+                                         type="text" required="true"/>
+                            <p:outputPanel /><p:message for="admin-add-store-district"/>
 
-                            <p:outputLabel for="admin-add-store-detail" value="${bundle['Ui.Store.Detail']}"/>
-                            <p:inputText id="admin-add-store-detail" value="#{adminAddStoreController.detail}"
-                                         type="text" required="true" maxlength="#{limit['Store.Detail.Max']}"/>
-                            <p:message for="admin-add-store-detail"/>
+                            <p:outputLabel for="admin-add-store-detail" value="#{bundle['Ui.Store.Detail']}"/>
+                            <p:inputText id="admin-add-store-detail" value="#{adminAddStoreController.store.detail}"
+                                         type="text" required="true"/>
+                            <p:outputPanel /><p:message for="admin-add-store-detail"/>
 
                         </p:panelGrid>
                         <p:commandButton  icon="fa fa-plus" action="#{adminAddStoreController.addStore}"
                                           type="submit" ajax="false"
-                                          value="${bundle['Ui.Admin.AddStore.Button.AddStore']}"/>
+                                          value="#{bundle['Ui.Admin.AddStore.Button.AddStore']}"/>
                         <p:commandButton type="reset" value="Reset"/>
                     </h:form>
                     <p:messages for="add-store-form"/>
-                </p:panel>  
+                </p:panel>
+                <p:panel header="#{bundle['Ui.Admin.RemoveStore.Title']}">
+                    <h:form id="remove-store-form">
+                        <p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
+                            <p:outputLabel for="remove-store" value="#{bundle['Ui.Label.Store']}"/>
+                            <components:selectStore id="remove-store" required="true"
+                                                    value="#{adminRemoveStoreController.selectedStore}" />
+                            <p:outputPanel /><p:message for="remove-store"/>
+                        </p:panelGrid>
+                        <p:commandButton value="remove" actionListener="#{adminRemoveStoreController.setStoreUnavailable}"
+                                         update="remove-store-form" />
+                    </h:form>
+                </p:panel>
             </ui:define>
         </ui:composition>
     </h:body>
