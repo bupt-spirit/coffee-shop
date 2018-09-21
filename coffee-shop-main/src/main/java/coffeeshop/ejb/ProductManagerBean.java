@@ -111,8 +111,8 @@ public class ProductManagerBean implements ProductManager {
     }
 
     @Override
-    public Product createProduct(Product newProduct,boolean addNutrition,Nutrition newNutrition,Image newImage) throws IOException, URISyntaxException {
-        this.createProduct(newProduct,newImage);
+    public Product createProduct(Product newProduct, boolean addNutrition, Nutrition newNutrition, Image newImage) throws IOException, URISyntaxException {
+        this.createProduct(newProduct, newImage);
         if (addNutrition) {
             nutritionFacade.create(newNutrition);
             newProduct.setNutritionId(newNutrition);
@@ -121,19 +121,19 @@ public class ProductManagerBean implements ProductManager {
         return newProduct;
     }
 
-    private Product createProduct(Product newProduct,Image newImage) throws IOException, URISyntaxException {
+    private Product createProduct(Product newProduct, Image newImage) throws IOException, URISyntaxException {
         newProduct.setNutritionId(null);
         newProduct.setLastUpdate(new Date());
         newProduct.setIsAvailable((short) 1);
-        
+
         String uuid = null;
         do {
             uuid = UUID.randomUUID().toString();
         } while (imageFacade.find(uuid) != null);
         newImage.setUuid(uuid);
-        
+
         imageFacade.create(newImage);
-        
+
         newProduct.setImageUuid(newImage);
         newImage.setProduct(newProduct);
 
@@ -172,7 +172,7 @@ public class ProductManagerBean implements ProductManager {
         return image;
     }
 
-    private void enableProductIngredient(Product product, List<IngredientCategory> ingredientCategoies) {       
+    private void enableProductIngredient(Product product, List<IngredientCategory> ingredientCategoies) {
         for (IngredientCategory category : ingredientCategoies) {
             category.getProductList().add(product);
         }
@@ -223,8 +223,8 @@ public class ProductManagerBean implements ProductManager {
         selectedProduct.setName(name);
         selectedProduct.setDescription(description);
         selectedProduct.setCost(price);
-        if(addNutrition==true && selectedProduct.getNutritionId()!=null){
-            Nutrition nutrition=selectedProduct.getNutritionId();
+        if (addNutrition == true && selectedProduct.getNutritionId() != null) {
+            Nutrition nutrition = selectedProduct.getNutritionId();
             nutrition.setCalories(calories);
             nutrition.setFat(fat);
             nutrition.setCarbon(carbon);
@@ -232,11 +232,25 @@ public class ProductManagerBean implements ProductManager {
             nutrition.setProtein(protein);
             nutrition.setSodium(sodium);
             nutritionFacade.edit(nutrition);
-        }else if(addNutrition==false && selectedProduct.getNutritionId()==null){
+        } else if (addNutrition == false && selectedProduct.getNutritionId() == null) {
             selectedProduct.setNutritionId(createNutrition(calories, fat, carbon, fiber, protein, sodium));
         }
         selectedProduct.getImageUuid().setMediaType(contentType);
         selectedProduct.getImageUuid().setContent(bytes);
+
+        for (IngredientCategory ingredientCategory : selectedProduct.getIngredientCategoryList()) {
+            for (int i = 0; i < ingredientCategory.getProductList().size(); i++) {
+                if (ingredientCategory.getProductList().get(i) == selectedProduct
+                        || ingredientCategory.getProductList().get(i).getId().equals(selectedProduct.getId())) {
+                    ingredientCategory.getProductList().remove(i);
+                    ingredientCategoryFacade.edit(ingredientCategory);
+                    break;
+                }
+            }
+        }
+
+        enableProductIngredient(selectedProduct, ingredientCategoies);
+
         imageFacade.edit(selectedProduct.getImageUuid());
         productFacade.edit(selectedProduct);
         return selectedProduct;

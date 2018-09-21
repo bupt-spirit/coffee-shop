@@ -38,15 +38,17 @@
                                            chooseOne="true"/>
                 </p:panel>
 
-                <p:panel id="all-product" header="#{bundle['Ui.Product.Remove']}">
+                <p:panel id="remove-product" header="#{bundle['Ui.Product.Remove']}">
                     <h:form>
                         <components:selectProduct list="#{adminRemoveProductController.allProducts}"
                                                   selected="#{adminRemoveProductController.selectedProduct}"
                                                   required="true" />
-                        <p:commandButton icon="fa fa-remove" update="season-special all-product"
+                        <p:commandButton icon="fa fa-remove" update="season-special edit-product remove-product"
                                          action="#{adminRemoveProductController.removeProduct}" type="submit"
                                          value="#{bundle['Ui.Product.Remove']}" />
                     </h:form>
+                </p:panel>
+                <p:panel id="edit-product" header="#{bundle['Ui.Product.Edit']}">
                     <h:form>
                         <components:selectProduct list="#{adminRemoveProductController.allProducts}"
                                                   selected="#{adminEditProductController.selectedProduct}"
