@@ -1,6 +1,6 @@
 # Real Java Coffee shop
 
-A online coffee shop project written in Java EE, WIP.
+A online coffee shop project written in Java EE. [Project Repository](https://github.com/bupt-spirit/coffee-shop).
 
 ## Build
 
