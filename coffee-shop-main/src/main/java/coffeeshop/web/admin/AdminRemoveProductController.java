@@ -41,4 +41,5 @@ public class AdminRemoveProductController {
         productManager.removeProduct(selectedProduct);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Success!", bundle.getString("Ui.Product.Remove")));
     }
+    
 }

@@ -43,7 +43,7 @@ public class ProductManagerBean implements ProductManager {
 
     @EJB
     private ImageFacade imageFacade;
-    
+
     @EJB
     private IngredientFacade ingredientFacade;
 
@@ -111,39 +111,40 @@ public class ProductManagerBean implements ProductManager {
     }
 
     @Override
-    public Product createProduct(String name, String description, BigDecimal price, Category category,
-            boolean addNutrition, int calories, int fat, int carbon, int fiber, int protein, int sodium,
-            byte[] bytes, String contentType, List<IngredientCategory> ingredientCategoies) throws IOException, URISyntaxException {
-        Product product = this.createProduct(name, description, price, category, bytes, contentType, ingredientCategoies);
+    public Product createProduct(Product newProduct, boolean addNutrition, Nutrition newNutrition, Image newImage) throws IOException, URISyntaxException {
+        this.createProduct(newProduct, newImage);
         if (addNutrition) {
-            product.setNutritionId(createNutrition(calories, fat, carbon, fiber, protein, sodium));
-            productFacade.edit(product);
+            nutritionFacade.create(newNutrition);
+            newProduct.setNutritionId(newNutrition);
+            productFacade.edit(newProduct);
         }
-        return product;
+        return newProduct;
     }
 
-    private Product createProduct(String name, String description, BigDecimal price, Category category,
-            byte[] bytes, String contentType, List<IngredientCategory> ingredientCategoies) throws IOException, URISyntaxException {
-        Product product = new Product();
-        product.setName(name);
-        product.setDescription(description);
-        product.setCost(price);
-        product.setCategoryId(category);
-        product.setNutritionId(null);
-        product.setLastUpdate(new Date());
-        product.setIsAvailable((short) 1);
-        Image image = createImage(contentType, bytes);
-        product.setImageUuid(image);
-        image.setProduct(product);
-        product.setIngredientCategoryList(new ArrayList<>());
-        category.getProductList().add(product);
-        productFacade.create(product);
-        imageFacade.edit(image);
-        categoryFacade.edit(category);
+    private Product createProduct(Product newProduct, Image newImage) throws IOException, URISyntaxException {
+        newProduct.setNutritionId(null);
+        newProduct.setLastUpdate(new Date());
+        newProduct.setIsAvailable((short) 1);
+
+        String uuid = null;
+        do {
+            uuid = UUID.randomUUID().toString();
+        } while (imageFacade.find(uuid) != null);
+        newImage.setUuid(uuid);
+
+        imageFacade.create(newImage);
+
+        newProduct.setImageUuid(newImage);
+        newImage.setProduct(newProduct);
+
+        newProduct.getCategoryId().getProductList().add(newProduct);
+        productFacade.create(newProduct);
+        imageFacade.edit(newImage);
+        categoryFacade.edit(newProduct.getCategoryId());
         LOG.log(Level.INFO, "start enable productingredientcategory");
-        enableProductIngredient(product, ingredientCategoies);
+        enableProductIngredient(newProduct, newProduct.getIngredientCategoryList());
         LOG.log(Level.INFO, "finish enable");
-        return product;
+        return newProduct;
     }
 
     private Nutrition createNutrition(int calories, int fat, int carbon, int fiber, int protein, int sodium) {
@@ -172,7 +173,6 @@ public class ProductManagerBean implements ProductManager {
     }
 
     private void enableProductIngredient(Product product, List<IngredientCategory> ingredientCategoies) {
-        product.getIngredientCategoryList().addAll(ingredientCategoies);
         for (IngredientCategory category : ingredientCategoies) {
             category.getProductList().add(product);
         }
@@ -183,7 +183,7 @@ public class ProductManagerBean implements ProductManager {
     }
 
     @Override
-    public void removeProduct(Product selectedProduct) throws ProductManagerException,SeasonSpecialManagerException {
+    public void removeProduct(Product selectedProduct) throws ProductManagerException, SeasonSpecialManagerException {
         selectedProduct.setIsAvailable((short) 0);
         Category category = selectedProduct.getCategoryId();
         List<Product> products = category.getProductList();
@@ -197,9 +197,63 @@ public class ProductManagerBean implements ProductManager {
         }
         selectedProduct.setCategoryId(null);
         if (selectedProduct.getSeasonSpecial() != null) {
-            seasonSpecialManager.removeSeasonSpecial(selectedProduct);           
+            seasonSpecialManager.removeSeasonSpecial(selectedProduct);
         }
         productFacade.edit(selectedProduct);
+    }
+
+    @Override
+    public Product editProduct(Product selectedProduct, String name, String description, BigDecimal price, Category category,
+            boolean addNutrition, int calories, int fat, int carbon, int fiber, int protein, int sodium,
+            byte[] bytes, String contentType, List<IngredientCategory> ingredientCategoies) throws ProductManagerException {
+        if (selectedProduct.getCategoryId() != category) {
+            List<Product> products = selectedProduct.getCategoryId().getProductList();
+            for (int i = 0; i < products.size(); ++i) {
+                if (products.get(i) == selectedProduct || products.get(i).getId().equals(selectedProduct.getId())) {
+                    LOG.log(Level.INFO, "Remove product from category product list");
+                    products.remove(i);
+                    category.getProductList().add(selectedProduct);
+                    categoryFacade.edit(selectedProduct.getCategoryId());
+                    categoryFacade.edit(category);
+                    break;
+                }
+            }
+            selectedProduct.setCategoryId(category);
+        }
+        selectedProduct.setName(name);
+        selectedProduct.setDescription(description);
+        selectedProduct.setCost(price);
+        if (addNutrition == true && selectedProduct.getNutritionId() != null) {
+            Nutrition nutrition = selectedProduct.getNutritionId();
+            nutrition.setCalories(calories);
+            nutrition.setFat(fat);
+            nutrition.setCarbon(carbon);
+            nutrition.setFiber(fiber);
+            nutrition.setProtein(protein);
+            nutrition.setSodium(sodium);
+            nutritionFacade.edit(nutrition);
+        } else if (addNutrition == false && selectedProduct.getNutritionId() == null) {
+            selectedProduct.setNutritionId(createNutrition(calories, fat, carbon, fiber, protein, sodium));
+        }
+        selectedProduct.getImageUuid().setMediaType(contentType);
+        selectedProduct.getImageUuid().setContent(bytes);
+
+        for (IngredientCategory ingredientCategory : selectedProduct.getIngredientCategoryList()) {
+            for (int i = 0; i < ingredientCategory.getProductList().size(); i++) {
+                if (ingredientCategory.getProductList().get(i) == selectedProduct
+                        || ingredientCategory.getProductList().get(i).getId().equals(selectedProduct.getId())) {
+                    ingredientCategory.getProductList().remove(i);
+                    ingredientCategoryFacade.edit(ingredientCategory);
+                    break;
+                }
+            }
+        }
+
+        enableProductIngredient(selectedProduct, ingredientCategoies);
+
+        imageFacade.edit(selectedProduct.getImageUuid());
+        productFacade.edit(selectedProduct);
+        return selectedProduct;
     }
 
     @Override

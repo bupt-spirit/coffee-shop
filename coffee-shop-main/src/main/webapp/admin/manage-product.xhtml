@@ -4,7 +4,9 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:components="http://xmlns.jcp.org/jsf/composite/components">
+      xmlns:components="http://xmlns.jcp.org/jsf/composite/components"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:body>
         <ui:composition template="/templates/main-aside.xhtml">
             <ui:define name="aside">
@@ -14,17 +16,45 @@
             <ui:define name="main">
                 <h1 class="main-title"><h:outputText value="${bundle['Ui.Admin.ManageProduct.Title']}"/></h1>
                 <p:panel header="#{bundle['Ui.Product.Add']}">
-                    <components:addProduct />
+                    <h:form id="image-upload-form" enctype="multipart/form-data">
+                        <p:fileUpload id="image-upload"
+                                      styleClass="file-upload"
+                                      value="#{adminAddProductController.image}"
+                                      allowTypes="/(\.|\/)(jpe?g|png)$/"
+                                      mode="simple" skinSimple="true" required="true"
+                                      binding="#{adminAddProductController.imageUploadComponent}"/>
+                        <p:commandButton styleClass="file-upload-button"
+                                         value="#{bundle['Ui.Product.Upload']}" ajax="false" 
+                                         actionListener="#{adminAddProductController.uploadHandler}" />
+                        <p:graphicImage value="#{adminAddProductController.selectedFileContent}" cache="false"
+                                        rendered="#{adminAddProductController.selectedFileContent != null}"
+                                        styleClass="product-new-image"/>
+                        <p:message for="image-upload" />
+                    </h:form>
+                    <components:addProduct product="#{adminAddProductController.newProduct}"
+                                           image="#{adminAddProductController.newImage}"
+                                           nutrition="#{adminAddProductController.newNutrition}"
+                                           addNutrition="#{adminAddProductController.addNutrition}"
+                                           chooseOne="true"/>
                 </p:panel>
 
-                <p:panel id="all-product" header="#{bundle['Ui.Product.Remove']}">
+                <p:panel id="remove-product" header="#{bundle['Ui.Product.Remove']}">
                     <h:form>
                         <components:selectProduct list="#{adminRemoveProductController.allProducts}"
                                                   selected="#{adminRemoveProductController.selectedProduct}"
                                                   required="true" />
-                        <p:commandButton icon="fa fa-remove" update="season-special all-product"
+                        <p:commandButton icon="fa fa-remove" update="season-special edit-product remove-product"
                                          action="#{adminRemoveProductController.removeProduct}" type="submit"
                                          value="#{bundle['Ui.Product.Remove']}" />
+                    </h:form>
+                </p:panel>
+                <p:panel id="edit-product" header="#{bundle['Ui.Product.Edit']}">
+                    <h:form>
+                        <components:selectProduct list="#{adminRemoveProductController.allProducts}"
+                                                  selected="#{adminEditProductController.selectedProduct}"
+                                                  required="true" />
+                        <p:commandButton icon="fa fa-edit"  action="#{adminEditProductController.beforeJumpToEditProduct}"
+                                         value="#{bundle['Ui.Product.Edit']}" type="submit"/>
                     </h:form>
                 </p:panel>
 
