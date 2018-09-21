@@ -30,7 +30,7 @@
 
                     <p:outputLabel for="product-cost" value="#{bundle['Ui.Product.Cost']} #{bundle['Ui.CurrencySymbol']}"/>
 
-                    <p:inputNumber id="product-cost" value="#{adminAddProductController.cost}"
+                    <p:inputNumber id="product-cost" value="#{cc.attrs.product.cost}"
                                    required="true"  maxValue="#{limit['Product.Cost.Max']}" minValue="0" decimalPlaces="2"/>
 
                     <p:outputPanel /><p:message for="product-cost"/>
