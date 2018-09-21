@@ -3,7 +3,9 @@ package coffeeshop.web.admin;
 import coffeeshop.ejb.ProductManager;
 import coffeeshop.ejb.ProductManagerException;
 import coffeeshop.entity.Category;
+import coffeeshop.entity.Image;
 import coffeeshop.entity.IngredientCategory;
+import coffeeshop.entity.Nutrition;
 import coffeeshop.entity.Product;
 import coffeeshop.web.util.MessageBundle;
 import java.io.ByteArrayInputStream;
@@ -15,6 +17,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
@@ -33,16 +36,14 @@ public class AdminAddProductController implements Serializable {
 
     private static final Logger LOG = Logger.getLogger(AdminAddProductController.class.getName());
 
+    private Product newProduct;
+    private Nutrition newNutrition;
+    private Image newImage;
     @Inject
     private MessageBundle bundle;
 
     @EJB
     ProductManager productManager;
-
-    private String name;
-    private String description;
-    private Category category;
-    private BigDecimal cost;
 
     private UploadedFile image;
     private byte[] bytes;
@@ -50,17 +51,40 @@ public class AdminAddProductController implements Serializable {
     private String imageContentType;
 
     private boolean addNutrition;
-    private int calories;
-    private int fat;
-    private int carbon;
-    private int fiber;
-    private int protein;
-    private int sodium;
-
-    private boolean addIngredientCategory;
-    private List<IngredientCategory> selectedIngredientCategories;
 
     private UIComponent imageUploadComponent;
+
+    @PostConstruct
+    private void init() {
+        newProduct = new Product();
+        newNutrition = new Nutrition();
+        newImage = new Image();
+        addNutrition = false;
+    }
+
+    public Product getNewProduct() {
+        return newProduct;
+    }
+
+    public void setNewProduct(Product newProduct) {
+        this.newProduct = newProduct;
+    }
+
+    public Nutrition getNewNutrition() {
+        return newNutrition;
+    }
+
+    public void setNewNutrition(Nutrition newNutrition) {
+        this.newNutrition = newNutrition;
+    }
+
+    public Image getNewImage() {
+        return newImage;
+    }
+
+    public void setNewImage(Image newImage) {
+        this.newImage = newImage;
+    }
 
     private static String getContentType(String fileName) {
         if (fileName == null) {
@@ -109,6 +133,8 @@ public class AdminAddProductController implements Serializable {
             }
             InputStream is = image.getInputstream();
             this.bytes = IOUtils.toByteArray(is);
+            newImage.setContent(bytes);
+            newImage.setMediaType(imageContentType);
             FacesMessage message = new FacesMessage(
                     bundle.getFormatted("Ui.Message.UploadSuccess", image.getFileName()));
             FacesContext.getCurrentInstance().addMessage(imageUploadComponent.getClientId(), message);
@@ -134,92 +160,12 @@ public class AdminAddProductController implements Serializable {
         LOG.log(Level.INFO, "current isAddNutrition {0}", addNutrition);
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
-    public BigDecimal getCost() {
-        return cost;
-    }
-
-    public void setCost(BigDecimal cost) {
-        this.cost = cost;
-    }
-
     public ProductManager getProductManager() {
         return productManager;
     }
 
     public void setProductManager(ProductManager productManager) {
         this.productManager = productManager;
-    }
-
-    public int getCalories() {
-        return calories;
-    }
-
-    public void setCalories(int calories) {
-        this.calories = calories;
-    }
-
-    public int getFat() {
-        return fat;
-    }
-
-    public void setFat(int fat) {
-        this.fat = fat;
-    }
-
-    public int getCarbon() {
-        return carbon;
-    }
-
-    public void setCarbon(int carbon) {
-        this.carbon = carbon;
-    }
-
-    public int getFiber() {
-        return fiber;
-    }
-
-    public void setFiber(int fiber) {
-        this.fiber = fiber;
-    }
-
-    public int getProtein() {
-        return protein;
-    }
-
-    public void setProtein(int protein) {
-        this.protein = protein;
-    }
-
-    public int getSodium() {
-        return sodium;
-    }
-
-    public void setSodium(int sodium) {
-        this.sodium = sodium;
     }
 
     public UIComponent getImageUploadComponent() {
@@ -237,93 +183,18 @@ public class AdminAddProductController implements Serializable {
                             bundle.getString("Ui.Product.PhotoError"), null));
             return;
         }
-
-        LOG.log(Level.INFO, "selectedIngredientCategory:{0}", selectedIngredientCategories);
-        Product newProduct = productManager.createProduct(name, description, cost, category,
-                addNutrition, calories, fat, carbon, fiber, protein, sodium,
-                bytes, imageContentType, selectedIngredientCategories);
+        productManager.createProduct(newProduct, addNutrition, newNutrition, newImage);
         LOG.log(Level.INFO, "create product with nutrition success{0}", newProduct.getId());
-        name = description = null;
-        category = null;
-        cost = null;
+        init();
         image = null;
         bytes = null;
-        imageContentType = selectedFile = null;
-        addNutrition = false;
-        calories = fat = carbon = fiber = protein = sodium = 0;
-        selectedIngredientCategories = null;
+        selectedFile = null;
+        imageContentType = null;
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(bundle.getString("Ui.Product.Success")));
-    }
-
-    public boolean isAddIngredientCategory() {
-        return addIngredientCategory;
-    }
-
-    public void setAddIngredientCategory(boolean addIngredientCategory) {
-        this.addIngredientCategory = addIngredientCategory;
     }
 
     public List<IngredientCategory> getIngredientCategories() {
         return productManager.getIngredientCategories();
     }
 
-    public List<IngredientCategory> getSelectedIngredientCategories() {
-        return selectedIngredientCategories;
-    }
-
-    public void setSelectedIngredientCategories(List<IngredientCategory> selectedIngredientCategories) {
-        this.selectedIngredientCategories = selectedIngredientCategories;
-    }
-
-    private Product selectedProduct;
-
-    public Product getSelectedProduct() {
-        return selectedProduct;
-    }
-
-    public void setSelectedProduct(Product selectedProduct) {
-        LOG.log(Level.INFO, "selected Product changed");
-        this.selectedProduct = selectedProduct;
-    }
-
-    public String beforeJumpToEditProduct() {
-        name = selectedProduct.getName();
-        description = selectedProduct.getDescription();
-        cost = selectedProduct.getCost();
-        category = selectedProduct.getCategoryId();
-        if (selectedProduct.getNutritionId() == null) {
-            addNutrition = false;
-        } else {
-            addNutrition = true;
-            calories = selectedProduct.getNutritionId().getCalories();
-            fat = selectedProduct.getNutritionId().getFat();
-            carbon = selectedProduct.getNutritionId().getCarbon();
-            fiber = selectedProduct.getNutritionId().getFiber();
-            protein = selectedProduct.getNutritionId().getProtein();
-            sodium = selectedProduct.getNutritionId().getSodium();
-        }
-        LOG.log(Level.INFO, "start to get image");
-        bytes = selectedProduct.getImageUuid().getContent();
-        imageContentType = selectedProduct.getImageUuid().getMediaType();
-        LOG.log(Level.INFO, "get image finish");
-        selectedIngredientCategories = selectedProduct.getIngredientCategoryList();
-        return "/admin/edit-product";
-    }
-
-    public String editProduct() throws ProductManagerException {
-        productManager.editProduct(selectedProduct, name, description, cost, category,
-                addNutrition, calories, fat, carbon, fiber, protein, sodium,
-                bytes, imageContentType, selectedIngredientCategories);
-        name = description = null;
-        category = null;
-        cost = null;
-        image = null;
-        bytes = null;
-        imageContentType = selectedFile = null;
-        addNutrition = false;
-        calories = fat = carbon = fiber = protein = sodium = 0;
-        selectedIngredientCategories = null;
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Success!", bundle.getString("Ui.Product.Edit")));
-        return "/admin/manage-product";
-    }
 }

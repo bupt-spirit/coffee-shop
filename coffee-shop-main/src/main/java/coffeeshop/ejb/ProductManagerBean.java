@@ -111,39 +111,40 @@ public class ProductManagerBean implements ProductManager {
     }
 
     @Override
-    public Product createProduct(String name, String description, BigDecimal price, Category category,
-            boolean addNutrition, int calories, int fat, int carbon, int fiber, int protein, int sodium,
-            byte[] bytes, String contentType, List<IngredientCategory> ingredientCategoies) throws IOException, URISyntaxException {
-        Product product = this.createProduct(name, description, price, category, bytes, contentType, ingredientCategoies);
+    public Product createProduct(Product newProduct,boolean addNutrition,Nutrition newNutrition,Image newImage) throws IOException, URISyntaxException {
+        this.createProduct(newProduct,newImage);
         if (addNutrition) {
-            product.setNutritionId(createNutrition(calories, fat, carbon, fiber, protein, sodium));
-            productFacade.edit(product);
+            nutritionFacade.create(newNutrition);
+            newProduct.setNutritionId(newNutrition);
+            productFacade.edit(newProduct);
         }
-        return product;
+        return newProduct;
     }
 
-    private Product createProduct(String name, String description, BigDecimal price, Category category,
-            byte[] bytes, String contentType, List<IngredientCategory> ingredientCategoies) throws IOException, URISyntaxException {
-        Product product = new Product();
-        product.setName(name);
-        product.setDescription(description);
-        product.setCost(price);
-        product.setCategoryId(category);
-        product.setNutritionId(null);
-        product.setLastUpdate(new Date());
-        product.setIsAvailable((short) 1);
-        Image image = createImage(contentType, bytes);
-        product.setImageUuid(image);
-        image.setProduct(product);
-        product.setIngredientCategoryList(new ArrayList<>());
-        category.getProductList().add(product);
-        productFacade.create(product);
-        imageFacade.edit(image);
-        categoryFacade.edit(category);
+    private Product createProduct(Product newProduct,Image newImage) throws IOException, URISyntaxException {
+        newProduct.setNutritionId(null);
+        newProduct.setLastUpdate(new Date());
+        newProduct.setIsAvailable((short) 1);
+        
+        String uuid = null;
+        do {
+            uuid = UUID.randomUUID().toString();
+        } while (imageFacade.find(uuid) != null);
+        newImage.setUuid(uuid);
+        
+        imageFacade.create(newImage);
+        
+        newProduct.setImageUuid(newImage);
+        newImage.setProduct(newProduct);
+
+        newProduct.getCategoryId().getProductList().add(newProduct);
+        productFacade.create(newProduct);
+        imageFacade.edit(newImage);
+        categoryFacade.edit(newProduct.getCategoryId());
         LOG.log(Level.INFO, "start enable productingredientcategory");
-        enableProductIngredient(product, ingredientCategoies);
+        enableProductIngredient(newProduct, newProduct.getIngredientCategoryList());
         LOG.log(Level.INFO, "finish enable");
-        return product;
+        return newProduct;
     }
 
     private Nutrition createNutrition(int calories, int fat, int carbon, int fiber, int protein, int sodium) {
@@ -171,8 +172,7 @@ public class ProductManagerBean implements ProductManager {
         return image;
     }
 
-    private void enableProductIngredient(Product product, List<IngredientCategory> ingredientCategoies) {
-        product.getIngredientCategoryList().addAll(ingredientCategoies);
+    private void enableProductIngredient(Product product, List<IngredientCategory> ingredientCategoies) {       
         for (IngredientCategory category : ingredientCategoies) {
             category.getProductList().add(product);
         }

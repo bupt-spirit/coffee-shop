@@ -13,76 +13,76 @@
                     <h:form id="image-upload-form" enctype="multipart/form-data">
                         <p:fileUpload id="image-upload"
                                       styleClass="file-upload"
-                                      value="#{adminAddProductController.image}"
+                                      value="#{adminEditProductController.image}"
                                       allowTypes="/(\.|\/)(jpe?g|png)$/"
                                       mode="simple" skinSimple="true" required="true"
                                       binding="#{adminAddProductController.imageUploadComponent}"/>
                         <p:commandButton styleClass="file-upload-button"
                                          value="#{bundle['Ui.Product.Upload']}" ajax="false" 
-                                         actionListener="#{adminAddProductController.uploadHandler}" />
-                        <p:graphicImage value="#{adminAddProductController.selectedFileContent}" cache="false"
-                                        rendered="#{adminAddProductController.selectedFileContent != null}"
+                                         actionListener="#{adminEditProductController.uploadHandler}" />
+                        <p:graphicImage value="#{adminEditProductController.selectedFileContent}" cache="false"
+                                        rendered="#{adminEditProductController.selectedFileContent != null}"
                                         styleClass="product-new-image"/>
                         <p:message for="image-upload" />
                     </h:form>
                     <h:form>
                         <p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
                             <p:outputLabel for="product-name" value="#{bundle['Ui.Product.Name']}"/>
-                            <p:inputText type="text" id="product-name" value="#{adminAddProductController.name}"
+                            <p:inputText type="text" id="product-name" value="#{adminEditProductController.name}"
                                          required="true" maxlength="#{limit['Product.Name.Max']}"/>
                             <p:outputPanel /><p:message for="product-name"/>
 
                             <p:outputLabel for="product-description" value="#{bundle['Ui.Product.Description']}"/>
-                            <p:inputTextarea id="product-description" value="#{adminAddProductController.description}"
+                            <p:inputTextarea id="product-description" value="#{adminEditProductController.description}"
                                              required="true" maxlength="#{limit['Product.Description.Max']}"/>
                             <p:outputPanel /><p:message for="product-description"/>
 
                             <p:outputLabel for="product-cost" value="#{bundle['Ui.Product.Cost']} #{bundle['Ui.CurrencySymbol']}"/>
-                            <p:inputNumber id="product-cost" value="#{adminAddProductController.cost}"
+                            <p:inputNumber id="product-cost" value="#{adminEditProductController.cost}"
                                            required="true"  maxValue="#{limit['Product.Cost.Max']}" minValue="0" decimalPlaces="2" emptyValue="0"/>
                             <p:outputPanel /><p:message for="product-cost"/>
 
                             <p:outputLabel for="product-category" value="#{bundle['Ui.Product.Category']}"/>
-                            <p:selectOneMenu id="product-category" value="#{adminAddProductController.category}" 
+                            <p:selectOneMenu id="product-category" value="#{adminEditProductController.category}" 
                                              converter="#{categoryConverter}" required="true">
                                 <f:selectItems value="#{productController.categories}" var="category" itemLabel="#{category.name}"
                                                itemValue="#{category}"/>
                             </p:selectOneMenu>
                             <p:outputPanel /><p:message for="product-category"/>
                             <h:outputText value="#{bundle['Ui.Product.Nutrition']} " />
-                            <p:inputSwitch value="#{adminAddProductController.addNutrition}" offLabel="OFF" onLabel="ON" id="nutrition-switch">
+                            <p:inputSwitch value="#{adminEditProductController.addNutrition}" offLabel="OFF" onLabel="ON" id="nutrition-switch">
                                 <p:ajax event="change" update="add-nutrition" />
                             </p:inputSwitch>
                         </p:panelGrid>
                         <p:outputPanel id="add-nutrition" layout="block">
                             <p:panelGrid columns="2"  styleClass="ui-panelgrid-blank" rendered="#{adminAddProductController.addNutrition}">
                                 <p:outputLabel for="nutrition-calories" value="#{bundle['Ui.Nutrition.Calories']}" /> 
-                                <p:inputNumber id="nutrition-calories" value="#{adminAddProductController.calories}"
+                                <p:inputNumber id="nutrition-calories" value="#{adminEditProductController.calories}"
                                                required="true" minValue="0" decimalPlaces="0" emptyValue="0" maxValue="#{limit['Nutrition.Common.Max']}" />
                                 <p:outputPanel /><p:message for="nutrition-calories"/>
 
                                 <p:outputLabel for="nutrition-fat" value="#{bundle['Ui.Nutrition.Fat']}"/>
-                                <p:inputNumber id="nutrition-fat" value="#{adminAddProductController.fat}"
+                                <p:inputNumber id="nutrition-fat" value="#{adminEditProductController.fat}"
                                                required="true" minValue="0" decimalPlaces="0" emptyValue="0" maxValue="#{limit['Nutrition.Common.Max']}"/>
                                 <p:outputPanel /><p:message for="nutrition-fat"/>
 
                                 <p:outputLabel for="nutrition-carbon" value="#{bundle['Ui.Nutrition.Carbohydrate']}"/>
-                                <p:inputNumber id="nutrition-carbon" value="#{adminAddProductController.carbon}"
+                                <p:inputNumber id="nutrition-carbon" value="#{adminEditProductController.carbon}"
                                                required="true" minValue="0" decimalPlaces="0" emptyValue="0" maxValue="#{limit['Nutrition.Common.Max']}"/>
                                 <p:outputPanel /><p:message for="nutrition-carbon"/>
 
                                 <p:outputLabel for="nutrition-fiber" value="#{bundle['Ui.Nutrition.Fiber']}"/>
-                                <p:inputNumber id="nutrition-fiber" value="#{adminAddProductController.fiber}"
+                                <p:inputNumber id="nutrition-fiber" value="#{adminEditProductController.fiber}"
                                                required="true" minValue="0" decimalPlaces="0" emptyValue="0" maxValue="#{limit['Nutrition.Common.Max']}"/>
                                 <p:outputPanel /><p:message for="nutrition-fiber"/>
 
                                 <p:outputLabel for="nutrition-protein" value="#{bundle['Ui.Nutrition.Protein']}"/>
-                                <p:inputNumber id="nutrition-protein" value="#{adminAddProductController.protein}"
+                                <p:inputNumber id="nutrition-protein" value="#{adminEditProductController.protein}"
                                                required="true" minValue="0" decimalPlaces="0" emptyValue="0"  maxValue="#{limit['Nutrition.Common.Max']}"/>
                                 <p:outputPanel /><p:message for="nutrition-protein"/>
 
                                 <p:outputLabel for="nutrition-sodium" value="#{bundle['Ui.Nutrition.Sodium']}"/>
-                                <p:inputNumber id="nutrition-sodium" value="#{adminAddProductController.sodium}"
+                                <p:inputNumber id="nutrition-sodium" value="#{adminEditProductController.sodium}"
                                                required="true" minValue="0" decimalPlaces="0" emptyValue="0" maxValue="#{limit['Nutrition.Common.Max']}"/>
                                 <p:outputPanel /><p:message for="nutrition-sodium"/>
                             </p:panelGrid>
@@ -90,14 +90,14 @@
 
                         <h:outputLabel for="ingredient-category" value="#{bundle['Ui.Product.IngredientCategory']} " />
                         <p:outputPanel layout="block">
-                            <p:selectManyButton id="ingredient-category"  value="#{adminAddProductController.selectedIngredientCategories}"
+                            <p:selectManyButton id="ingredient-category"  value="#{adminEditProductController.selectedIngredientCategories}"
                                                 required="false">
-                                <f:selectItems value="#{adminAddProductController.ingredientCategories}" var="ingredientCategory"
+                                <f:selectItems value="#{adminEditProductController.ingredientCategories}" var="ingredientCategory"
                                                itemLabel="#{ingredientCategory.name}" itemValue="#{ingredientCategory}"/>
                             </p:selectManyButton>
                         </p:outputPanel>  
                         <p:commandButton icon="fa fa-edit" 
-                                         action="#{adminAddProductController.editProduct}" type="submit"
+                                         action="#{adminEditProductController.editProduct}" type="submit"
                                          value="#{bundle['Ui.Product.Edit']}" ajax="false" />
                     </h:form>          
                 </p:panel>
