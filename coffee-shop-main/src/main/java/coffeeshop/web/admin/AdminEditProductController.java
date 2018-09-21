@@ -298,6 +298,7 @@ public class AdminEditProductController implements Serializable {
         addNutrition = false;
         calories = fat = carbon = fiber = protein = sodium = 0;
         selectedIngredientCategories = null;
+        selectedProduct=null;
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Success!", bundle.getString("Ui.Product.Edit")));
         return "/admin/manage-product";
     }

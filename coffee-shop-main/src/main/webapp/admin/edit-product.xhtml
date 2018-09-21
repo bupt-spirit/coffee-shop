@@ -16,7 +16,7 @@
                                       value="#{adminEditProductController.image}"
                                       allowTypes="/(\.|\/)(jpe?g|png)$/"
                                       mode="simple" skinSimple="true" required="true"
-                                      binding="#{adminAddProductController.imageUploadComponent}"/>
+                                      binding="#{adminEditProductController.imageUploadComponent}"/>
                         <p:commandButton styleClass="file-upload-button"
                                          value="#{bundle['Ui.Product.Upload']}" ajax="false" 
                                          actionListener="#{adminEditProductController.uploadHandler}" />
@@ -55,7 +55,7 @@
                             </p:inputSwitch>
                         </p:panelGrid>
                         <p:outputPanel id="edit-add-nutrition" layout="block">
-                            <p:panelGrid columns="2"  styleClass="ui-panelgrid-blank" rendered="#{adminAddProductController.addNutrition}">
+                            <p:panelGrid columns="2"  styleClass="ui-panelgrid-blank" rendered="#{adminEditProductController.addNutrition}">
                                 <p:outputLabel for="edit-nutrition-calories" value="#{bundle['Ui.Nutrition.Calories']}" /> 
                                 <p:inputNumber id="edit-nutrition-calories" value="#{adminEditProductController.calories}"
                                                required="true" minValue="0" decimalPlaces="0" emptyValue="0" maxValue="#{limit['Nutrition.Common.Max']}" />
