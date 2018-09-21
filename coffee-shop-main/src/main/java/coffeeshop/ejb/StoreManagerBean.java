@@ -17,17 +17,16 @@ public class StoreManagerBean implements StoreManager {
 
     @EJB
     private UserManager userManager;
-    
+
     @EJB
     private OrderManager orderManager;
 
     @Override
-    public Store addStore(String country, String province, String city, String district, String detail) {
-        Store newStore = new Store(null, country, province, city, district, detail, (short) 1);
-        newStore.setOrderInfoList(new ArrayList<>());
-        newStore.setStaffList(new ArrayList<>());
-        storeFacade.create(newStore);
-        return newStore;
+    public Store addStore(Store store) {
+        store.setOrderInfoList(new ArrayList<>());
+        store.setStaffList(new ArrayList<>());
+        storeFacade.create(store);
+        return store;
     }
 
     @Override
@@ -58,5 +57,5 @@ public class StoreManagerBean implements StoreManager {
             throw new StoreManagerException("Unfinish order exist");
         }
     }
-    
+
 }
