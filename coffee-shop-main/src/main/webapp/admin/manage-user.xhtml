@@ -16,16 +16,16 @@
                 <h1 class="main-title"><h:outputText value="${bundle['Ui.Admin.ManageUser.Title']}"/></h1>
                 <p:panel header="${bundle['Ui.Admin.AddUser.Title']}">
                     <h:form id="add-user-form">
-                        <p:panelGrid columns="3" styleClass="ui-panelgrid-blank">
+                        <p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
                             <p:outputLabel for="admin-add-user-username" value="${bundle['Ui.Label.Username']}"/>
                             <p:inputText id="admin-add-user-username" value="#{adminAddUserController.username}"
                                          type="text" required="true" maxlength="#{limit['User.Name.Max']}"/>
-                            <p:message for="admin-add-user-username"/>
+                            <p:outputPanel /><p:message for="admin-add-user-username"/>
 
                             <p:outputLabel for="admin-add-user-password" value="${bundle['Ui.Label.Password']}"/>
                             <p:inputText id="admin-add-user-password" value="#{adminAddUserController.password}"
                                          type="password" required="true"/>
-                            <p:message for="admin-add-user-password"/>
+                            <p:outputPanel /><p:message for="admin-add-user-password"/>
 
                             <p:outputLabel for="admin-add-user-role" value="${bundle['Ui.Admin.AddUser.Label.Role']}"/>
                             <p:selectOneButton id="admin-add-user-role" value="#{adminAddUserController.role}"
@@ -34,24 +34,24 @@
                                 <p:ajax event="change"
                                         update="admin-add-user-nickname-container admin-add-user-store-container" />
                             </p:selectOneButton>
-                            <p:message for="admin-add-user-role"/>
+                            <p:outputPanel /><p:message for="admin-add-user-role"/>
                         </p:panelGrid>
                         <p:outputPanel id="admin-add-user-nickname-container">
-                            <p:panelGrid columns="3" styleClass="ui-panelgrid-blank"
+                            <p:panelGrid columns="2" styleClass="ui-panelgrid-blank"
                                          rendered="#{adminAddUserController.role == 'customer'}">
                                 <p:outputLabel for="admin-add-user-nickname" value="${bundle['Ui.Label.Nickname']}"/>
                                 <p:inputText id="admin-add-user-nickname" type="text" required="true"
                                              value="#{adminAddUserController.nickname}" maxlength="#{limit['Customer.Nickname.Max']}"/>
-                                <p:message for="admin-add-user-nickname"/>
+                                <p:outputPanel /><p:message for="admin-add-user-nickname"/>
                             </p:panelGrid>
                         </p:outputPanel>
                         <p:outputPanel id="admin-add-user-store-container">
-                            <p:panelGrid columns="3" styleClass="ui-panelgrid-blank"
+                            <p:panelGrid columns="2" styleClass="ui-panelgrid-blank"
                                          rendered="#{adminAddUserController.role == 'staff'}">
                                 <p:outputLabel for="admin-add-user-store" value="${bundle['Ui.Label.Store']}"/>
                                 <components:selectStore id="admin-add-user-store" required="true"
                                                         value="#{adminAddUserController.store}"/>
-                                <p:message for="admin-add-user-store"/>
+                                <p:outputPanel /><p:message for="admin-add-user-store"/>
                             </p:panelGrid>
                         </p:outputPanel>
                         <p:commandButton action="#{adminAddUserController.addUser}" type="submit" ajax="false"

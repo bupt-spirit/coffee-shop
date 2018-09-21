@@ -29,7 +29,6 @@ public class AdminAddStoreController {
     @PostConstruct
     private void init() {
         store = new Store();
-        store.setIsAvailable((short) 1);
     }
 
     public Store getStore() {
