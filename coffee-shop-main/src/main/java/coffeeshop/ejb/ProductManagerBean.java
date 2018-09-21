@@ -253,6 +253,8 @@ public class ProductManagerBean implements ProductManager {
 
         imageFacade.edit(selectedProduct.getImageUuid());
         productFacade.edit(selectedProduct);
+        
+                
         return selectedProduct;
     }
 
