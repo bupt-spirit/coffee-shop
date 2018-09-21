@@ -21,6 +21,9 @@
 
                 <h2><h:outputText value="#{bundle['Ui.Select.Address']}" /></h2>
                 <components:selectCustomerAddress value="#{cartController.selectedAddress}" required="true" />
+                <p:button icon="fa fa-plus"
+                          outcome="/customer/addresses"
+                          value="#{bundle['Ui.Checkout.ManageAddress']}" />
                 <h2><h:outputText value="#{bundle['Ui.Select.Store']}" /></h2>
                 <components:selectStore value="#{cartController.selectedStore}" required="true" />
                 <h2><h:outputText value="#{bundle['Ui.Order.Detail']}" /></h2>
