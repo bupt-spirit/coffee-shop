@@ -19,9 +19,15 @@ Build:
 mvn package
 ```
 
-Deploy:
+## Deploy
 
 Run ```coffee-shop-main/src/main/resources/coffeeshop.setup/create.sql``` on your database, and a database named coffee_shop will be created.
 Add a new data source ```jdbc/CoffeeShop``` to your glassfish.
 
 Deploy the war package in ```coffee-shop-main/target``` to your glassfish server, start then application and login using default admin account - username: admin, password: admin. Switch to data tab, use the button to initialize demo data.
+
+## LICENSE
+
+This project is a group project for the Java EE course of BUPT SSE , you should not use any code from this project in your project of the course.
+
+Any other uses of the codes of the project are licensed under MIT License.
